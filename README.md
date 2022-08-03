@@ -1,6 +1,6 @@
 # LEDA
 
-*L*iterally an
-*E*igine for
-*D*eveloping
-*A*pplications
+***L***iterally an
+***E***ngine for
+***D***eveloping
+***A***pplications
