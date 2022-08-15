@@ -24,7 +24,7 @@ namespace LEDA {
 		// member functions
 		Vec2D normalize() const;
 		Vec2D outward_normal() const;
-		double magnitude() const;
-
+		double length() const;
+		
 	};
 }
