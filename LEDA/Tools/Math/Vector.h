@@ -1,7 +1,19 @@
+/**
+ * @file        Vector.h
+ * @author      your name (you@domain.com)
+ * @brief       The class representing a Vector
+ * @version     0.1
+ * @date        15-08-2022
+ *
+ * @copyright   Copyright (c) 2022
+ *
+ */
+
 #pragma once
+
 namespace LEDA {
 
-	union Vec2D {
+	typedef union {
 		// data members
 		struct {
 			double x, y;
@@ -25,6 +37,6 @@ namespace LEDA {
 		Vec2D normalize() const;
 		Vec2D outward_normal() const;
 		double length() const;
-		
-	};
+
+	} Vec2D, Vector2D, Vec2;;
 }
