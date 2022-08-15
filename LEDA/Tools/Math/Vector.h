@@ -54,5 +54,5 @@ namespace LEDA {
 	Vec2D operator*(double lhs, Vec2D const& rhs); // scalar multiplication
 	Vec2D operator/(Vec2D const& lhs, double rhs); // scalar division
 
-	// 
+	double operator*(Vec2D const& lhs, Vec2D const& rhs); // dot product shorthand
 }
