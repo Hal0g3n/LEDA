@@ -15,10 +15,10 @@
 namespace LEDA {
 	// constructors
 	// default constructor: initialize to 0, 0
-	Vec2D::Vec2D() : x(0), y(0) {};
+	Vec2D::Vec2D() : x(0), y(0) {}
 
 	// constructor that initializes with specified values
-	Vec2D::Vec2D(double _x, double _y) : x(_x), y(_y) {};
+	Vec2D::Vec2D(double _x, double _y) : x(_x), y(_y) {}
 
 	// assignment operators
 	Vec2D& Vec2D::operator+=(Vec2D const& rhs) {
@@ -98,19 +98,19 @@ namespace LEDA {
 		return this->x * other.y - other.x * this->y;
 	}
 
-	double length() const {
+	double Vec2D::length() const {
 		return sqrt(this->squareLength());
 	}
 
-	double squareLength() const {
+	double Vec2D::squareLength() const {
 		return this->x * this->x + this->y * this->y;
 	}
 
-	double distTo(Vec2D const& other) {
+	double Vec2D::distTo(Vec2D const& other) {
 		return sqrt(this->squareDistTo(other));
 	}
 
-	double squareDistTo(Vec2D const& other) {
+	double Vec2D::squareDistTo(Vec2D const& other) {
 		return squareLength(other - *this);
 	}
 }
