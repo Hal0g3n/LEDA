@@ -8,8 +8,9 @@
  * @copyright   Copyright (c) 2022
  *
  */
-
-#include "Vector.h"
+#include "pch.h"
+#include "LEDA_Math.h"
+#include <cmath>
 
 namespace LEDA {
 	// constructors
@@ -71,5 +72,45 @@ namespace LEDA {
 		return lhs.x * rhs.x + lhs.y * rhs.y;
 	}
 
-	
+	// member functions
+	Vec2D Vec2D::normalize() const {
+		return *this / this->length();
+	}
+
+	Vec2D Vec2D::rotateDeg(double angle) const {
+		return Mtx33::rotateDeg(angle) * *this;
+	}
+
+	Vec2D Vec2D::rotateRad(double angle) const {
+		return Mtx33::rotateRad(angle) * *this;
+	}
+
+	Vec2D Vec2D::rotateOutward() const {
+		// special function to rotate by -pi/2, avoiding the trigo step and saving some computation
+		return Vec2D(this->y, -this->x);
+	}
+
+	double Vec2D::dot(Vec2D const& other) const {
+		return *this * other;
+	}
+
+	double Vec2D::cross(Vec2D const& other) const {
+		return this->x * other.y - other.x * this->y;
+	}
+
+	double length() const {
+		return sqrt(this->squareLength());
+	}
+
+	double squareLength() const {
+		return this->x * this->x + this->y * this->y;
+	}
+
+	double distTo(Vec2D const& other) {
+		return sqrt(this->squareDistTo(other));
+	}
+
+	double squareDistTo(Vec2D const& other) {
+		return squareLength(other - *this);
+	}
 }
