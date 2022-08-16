@@ -111,6 +111,6 @@ namespace LEDA {
 	}
 
 	double Vec2D::squareDistTo(Vec2D const& other) {
-		return squareLength(other - *this);
+		return (other - *this).squareLength();
 	}
 }
