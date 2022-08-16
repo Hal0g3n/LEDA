@@ -31,7 +31,7 @@ namespace LEDA {
 	}
 
 	Mtx33 Mtx33::inverse() const {
-		//TODO
+		// TODO
 	}
 
 	// static methods
@@ -57,10 +57,19 @@ namespace LEDA {
 
 	//binary operators
 	Mtx33 operator*(Mtx33 const& lhs, Mtx33 const& rhs) {
-		//TODO
-	}
+		return Mtx33{ lhs.m00 * rhs.m00 + lhs.m01 * rhs.m10 + lhs.m02 * rhs.m20,
+					lhs.m00 * rhs.m01 + lhs.m01 * rhs.m11 + lhs.m02 * rhs.m21,
+					lhs.m00 * rhs.m02 + lhs.m01 * rhs.m12 + lhs.m02 * rhs.m22,
+					lhs.m10 * rhs.m00 + lhs.m11 * rhs.m10 + lhs.m12 * rhs.m20,
+					lhs.m10 * rhs.m01 + lhs.m11 * rhs.m11 + lhs.m12 * rhs.m21,
+					lhs.m10 * rhs.m02 + lhs.m11 * rhs.m12 + lhs.m12 * rhs.m22,
+					lhs.m20 * rhs.m00 + lhs.m21 * rhs.m10 + lhs.m22 * rhs.m20,
+					lhs.m20 * rhs.m01 + lhs.m21 * rhs.m11 + lhs.m22 * rhs.m21,
+					lhs.m20 * rhs.m02 + lhs.m21 * rhs.m12 + lhs.m22 * rhs.m22 }; // standard matrix multiplication
+	,
 
 	Vec2D operator*(Mtx33 const& lhs, Mtx33 const& rhs) {
-		//TODO
+		double w = lhs.m20 * rhs.x + lhs.m21 * rhs.y + lhs.m22;
+		return Vec2D{ (lhs.m00 * rhs.x + lhs.m01 * rhs.y + lhs.m02) / w, (lhs.m10 * rhs.x + lhs.m11 * rhs.y + lhs.m12) / w };
 	}
 }
