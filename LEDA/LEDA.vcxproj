@@ -124,7 +124,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Users\yuanx\Desktop\CS\LEDA\LEDA\Core Engine;C:\Users\yuanx\Desktop\CS\LEDA\LEDA\Graphics;C:\Users\yuanx\Desktop\CS\LEDA\LEDA\Math;C:\Users\yuanx\Desktop\CS\LEDA\LEDA\Physics;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Core Engine;$(ProjectDir)Graphics;$(ProjectDir)Physics;$(ProjectDir)Tools\Shapes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,7 +142,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Users\yuanx\Desktop\CS\LEDA\LEDA\Core Engine;C:\Users\yuanx\Desktop\CS\LEDA\LEDA\Graphics;C:\Users\yuanx\Desktop\CS\LEDA\LEDA\Math;C:\Users\yuanx\Desktop\CS\LEDA\LEDA\Physics;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Core Engine;$(ProjectDir)Graphics;$(ProjectDir)Physics;$(ProjectDir)Tools\Shapes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -154,11 +154,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="Math\LEDA_Math.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physics\Collision.h" />
     <ClInclude Include="Physics\LEDA_Physics.h" />
     <ClInclude Include="Physics\Movement.h" />
+    <ClInclude Include="Tools\Math\LEDA_Math.h" />
+    <ClInclude Include="Tools\Math\Matrix.h" />
+    <ClInclude Include="Tools\Math\Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -170,6 +172,7 @@
     </ClCompile>
     <ClCompile Include="Physics\Collision.cpp" />
     <ClCompile Include="Physics\Movement.cpp" />
+    <ClCompile Include="Tools\Math\Vector.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

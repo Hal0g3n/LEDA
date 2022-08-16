@@ -13,7 +13,7 @@
 
 namespace LEDA {
 
-	typedef union {
+	typedef union Vec2D {
 		// data members
 		struct {
 			double x, y;
@@ -27,6 +27,7 @@ namespace LEDA {
 		// assignment operators
 		Vec2D& operator+=(Vec2D const& rhs);
 		Vec2D& operator-=(Vec2D const& rhs);
+		Vec2D& operator*=(Vec2D const& rhs); // Dot Product
 		Vec2D& operator*=(double rhs);
 		Vec2D& operator/=(double rhs);
 
@@ -34,16 +35,16 @@ namespace LEDA {
 		Vec2D operator-() const;
 
 		// member functions
-		Vec2D normalize() const;
-		Vec2D outward_normal() const;
+		Vec2D  normalize() const;
+		Vec2D  rotate(double) const;
+		double cross(Vec2D) const;
+		double dot(Vec2D) const;
 		double length() const;
 		double squareLength() const;
 
 		// static functions
-		static distance(Vec2D vec0, Vec2D vec1); // get the distance between two points represented as vectors
-		static squareDistance(Vec2D vec0, Vec2D vec1);
-		static dotProduct(Vec2D vec0, Vec2D vec1);
-		static crossProductMagnitude(Vec2D vec0, Vec2D vec1);
+		double distTo(Vec2D); // get the distance between two points represented as vectors
+		double squareDistTo(Vec2D);
 
 	} Vec2D, Vector2D, Vec2;;
 

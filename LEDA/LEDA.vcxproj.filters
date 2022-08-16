@@ -42,7 +42,13 @@
     <ClInclude Include="Physics\Movement.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Math\LEDA_Math.h">
+    <ClInclude Include="Tools\Math\LEDA_Math.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\Math\Matrix.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\Math\Vector.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
   </ItemGroup>
@@ -58,6 +64,9 @@
     </ClCompile>
     <ClCompile Include="Physics\Collision.cpp">
       <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\Math\Vector.cpp">
+      <Filter>Source Files\Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
