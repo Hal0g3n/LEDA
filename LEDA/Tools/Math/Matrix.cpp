@@ -31,7 +31,23 @@ namespace LEDA {
 	}
 
 	Mtx33 Mtx33::inverse() const {
-		// TODO
+		double determinant = m00 * m11 * m22
+			+ m01 * m12 * m20
+			+ m02 * m10 * m21
+			- m20 * m11 * m02
+			- m21 * m12 * m00
+			- m22 * m10 * m01;
+		if (determinant != 0)
+			return Mtx33{ (m11 * m22 - m21 * m12) / determinant,
+							(m02 * m21 - m01 * m22) / determinant,
+							(m01 * m12 - m02 * m11) / determinant,
+							(m12 * m20 - m10 * m22) / determinant,
+							(m00 * m22 - m02 * m20) / determinant,
+							(m10 * m02 - m00 * m12) / determinant,
+							(m10 * m21 - m20 * m11) / determinant,
+							(m20 * m01 - m00 * m21) / determinant,
+							(m00 * m11 - m10 * m01) / determinant }
+
 	}
 
 	// static methods
