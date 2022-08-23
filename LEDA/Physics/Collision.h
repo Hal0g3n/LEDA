@@ -1,16 +1,13 @@
-/******************************************************************************/
-/*!
-\file		Collision.h
-\author 	DigiPen
-\par    	email: digipen\@digipen.edu
-\date   	January 01, 20xx
-\brief
-
-Copyright (C) 20xx DigiPen Institute of Technology.
-Reproduction or disclosure of this file or its contents without the
-prior written consent of DigiPen Institute of Technology is prohibited.
+/**
+ * @file        Collision.h
+ * @author      your name (you@domain.com)
+ * @brief       The class representing a Matrix
+ * @version     0.1
+ * @date        15-08-2022
+ *
+ * @copyright   Copyright (c) 2022
+ *
  */
-/******************************************************************************/
 
 #ifndef LEDA_COLLISION_H_
 #define LEDA_COLLISION_H_

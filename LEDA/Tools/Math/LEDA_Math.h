@@ -13,5 +13,3 @@
 
 #include "Vector.h"
 #include "Matrix.h"
-#include "LineSegment.h"
-#include "AABB.h"
