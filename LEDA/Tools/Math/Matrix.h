@@ -12,7 +12,7 @@
 #pragma once
 
 namespace LEDA {
-    typedef union {
+    typedef union Mtx33 {
         // data members
         struct {
             double m00, m01, m02,
@@ -24,8 +24,8 @@ namespace LEDA {
 
         // constructors
         Mtx33();
-        Mtx33(const double* arr);
-        Mtx33(double _00, double _01, double _02, double _10, double _11, double _12, double _20, double _21, double _22);
+        Mtx33(const double*);
+        Mtx33(double, double, double, double, double, double, double, double, double);
 
         // assignment operators
         Mtx33& operator*= (Mtx33 const& rhs); // performs matrix multiplication
@@ -36,14 +36,14 @@ namespace LEDA {
 
         // static functions
         static Mtx33 identity();
-        static Mtx33 translate();
-        static Mtx33 scale();
-        static Mtx33 rotateDeg();
-        static Mtx33 rotateRad();
+        static Mtx33 translate(double, double);
+        static Mtx33 scale(double, double);
+        static Mtx33 rotateDeg(double);
+        static Mtx33 rotateRad(double);
 
-    } Matrix3x3, Mtx3x3, Mtx33;
+    } Mtx33, Matrix3x3, Mtx3x3;
 
     // binary operators
-    Mtx33 operator*(Mtx33 const& lhs, Mtx33 const& rhs); // matrix multiplication
-    Vec2D operator*(Mtx33 const& lhs, Vec2D const& rhs); // applying matrix to vector
+    Mtx33 operator*(Mtx33 const&, Mtx33 const&); // matrix multiplication
+    Vec2D operator*(Mtx33 const&, Vec2D const&); // applying matrix to vector
 }
