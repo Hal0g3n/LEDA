@@ -1,2 +1,11 @@
 .vs/
+Snake/x64/
+LEDA/x64/
+x64/
+*.exe
+*.idb
+*.ilk
+*.obj
+*.pdb
+*.tlog
 *.vcxproj

@@ -26,7 +26,7 @@ double frameTime = 0.0, appTime = 0.0;
 
 void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, IGameState *initialState) {
 
-	std::cout << "skill issue";
+	std::cout << "LEDA runs!\n";
 
 	// Initializes all our systems
 

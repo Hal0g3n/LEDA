@@ -23,6 +23,8 @@ const unsigned int WINDOW_HEIGHT = 600;
 
 int main() {
 
+    std::cout << "graphics test runs!\n";
+
     glfwInit();
 
     // OpenGL version 3.3
@@ -34,7 +36,7 @@ int main() {
     // create GLFW window
     GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Skill Issue?", NULL, NULL);
     if (window == NULL) {
-        std::cout << "Error: failed to create GLFWindow" << '\n';
+        std::cout << "Error: failed to create GLFWindow\n";
         glfwTerminate();
         return -1;
     }
@@ -46,7 +48,7 @@ int main() {
 
     // be glad
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cout << "Error: failed to initialize GLAD! [>:( <-- not glad]" << '\n';
+        std::cout << "Error: failed to initialize GLAD! [>:( <-- not glad]\n";
         return -1;
     }
 
@@ -75,14 +77,14 @@ void resize(GLFWwindow* window, int width, int height) {
 void input(GLFWwindow* window) {
 
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, true);
+        glfwSetWindowShouldClose(window, GLFW_TRUE); // be funny and use GLFW_TRUE
     }
 
 }
 
 void draw(GLFWwindow* window) {
 
-    glClearColor(0.123f, 0.456f, 0.789f, 1.0f);
+    glClearColor(0.123f, 0.456f, 0.789f, 1.0f); // around #1f74c9
     glClear(GL_COLOR_BUFFER_BIT);
 
 }
