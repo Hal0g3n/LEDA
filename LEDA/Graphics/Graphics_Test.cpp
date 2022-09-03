@@ -29,11 +29,15 @@ int LEDA::test() {
 
     glfwInit();
 
+    std::cout << "1\n";
+
     // OpenGL version 3.3
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // for mac, haha
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // for mac, 
+
+    std::cout << "2\n";
 
     // create GLFW window
     GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Skill Issue?", NULL, NULL);
@@ -44,15 +48,21 @@ int LEDA::test() {
     }
     glfwMakeContextCurrent(window);
 
-    // set viewport and viewport resize event function
-    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-    glfwSetFramebufferSizeCallback(window, resize);
+    std::cout << "3\n";
 
     // be glad
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cout << "Error: failed to initialize GLAD! [>:( <-- not glad]\n";
         return -1;
     }
+
+    std::cout << "4\n";
+
+    // set viewport and viewport resize event function
+    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    glfwSetFramebufferSizeCallback(window, resize);
+
+    std::cout << "5\n";
 
     // main loop
     while (!glfwWindowShouldClose(window)) { // while esc button is not pressed...
@@ -65,6 +75,8 @@ int LEDA::test() {
         glfwPollEvents();
 
     }
+
+    std::cout << "999\n";
 
     glfwTerminate();
 
