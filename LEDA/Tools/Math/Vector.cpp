@@ -13,6 +13,7 @@
 #include <cmath>
 
 namespace LEDA {
+
 	// constructors
 	// default constructor: initialize to 0, 0
 	Vec2D::Vec2D() : x(0), y(0) {}
@@ -113,4 +114,5 @@ namespace LEDA {
 	double Vec2D::squareDistTo(Vec2D const& other) {
 		return (other - *this).squareLength();
 	}
+
 }

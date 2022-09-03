@@ -1,4 +1,4 @@
-z/**
+/**
  * @file        LEDA_System.h
  * @author      your name (you@domain.com)
  * @brief       Implementation of Main Game Loop
@@ -8,8 +8,9 @@ z/**
  * @copyright   Copyright (c) 2022
  */
 
-#include <winnt.h>
+#include <iostream>
 #include "LEDA_System.h"
+#include "LEDA_Graphics.h"
 
 using namespace LEDA;
 
@@ -24,16 +25,17 @@ IGameState *QUIT = (IGameState*) 1, *RESTART = (IGameState*) 2;
 double frameTime = 0.0, appTime = 0.0;
 
 void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, IGameState *initialState) {
-	// Initializes all our systems
-	UNREFERENCED_PARAMETER(showConsole);
 
-	// Sets Initial Game State
+	std::cout << "skill issue";
+
+	// Initializes all our systems
+
+	// Sets initial game state
 	pre = cur = nxt = initialState;
 
-	while (cur != QUIT) { // While Application is not quitted yet
+	while (cur != QUIT) { // while the application is not quitted yet
 
 		// reset the system modules
-		UNREFERENCED_PARAMETER(showConsole);
 		
 
 		// If not restarting, load the new Game State
@@ -46,20 +48,20 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 		while (cur == nxt) { // While State is unchanged
 
 			// Start Frame Timer
-			AESysFrameStart();
+			// AESysFrameStart();
 
 			cur->update();
 			cur->draw();
 			
 			// End Frame Timer
-			AESysFrameEnd();
+			// AESysFrameEnd();
 
 			// Check for Forced Exit
-			if ((AESysDoesWindowExist() == false) || AEInputCheckTriggered(AEVK_ESCAPE))
-				nxt = QUIT;
+			// if ((AESysDoesWindowExist() == false) || AEInputCheckTriggered(AEVK_ESCAPE))
+			// 	nxt = QUIT;
 
-			frameTime = (f32)AEFrameRateControllerGetFrameTime();
-			appTime += frameTime;
+			// frameTime = (f32)AEFrameRateControllerGetFrameTime();
+			// appTime += frameTime;
 		}
 
 		cur->free();

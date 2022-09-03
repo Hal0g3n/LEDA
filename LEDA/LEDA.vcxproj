@@ -78,6 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)LEDA\Libraries\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)LEDA\Libraries\lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -159,6 +161,7 @@
     <ClInclude Include="Core Engine\IGameObject.h" />
     <ClInclude Include="Core Engine\LEDA_System.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Graphics\LEDA_Graphics.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physics\Collision.h" />
     <ClInclude Include="Physics\LEDA_Physics.h" />
@@ -169,6 +172,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Graphics\glad.c" />
+    <ClCompile Include="Graphics\Graphics_Test.cpp" />
     <ClCompile Include="LEDA_System.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

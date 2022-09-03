@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Core">
       <UniqueIdentifier>{18d8f3e6-bbd1-4650-8d2e-1555430cb695}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{c5cfbd3a-cba3-4de2-97e5-3163a9242fc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics">
+      <UniqueIdentifier>{a575b540-370b-47af-a2b0-5b68ece78b2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -72,6 +78,9 @@
     <ClInclude Include="Core Engine\LEDA_System.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\LEDA_Graphics.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -91,6 +100,12 @@
     </ClCompile>
     <ClCompile Include="LEDA_System.cpp">
       <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Graphics_Test.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\glad.c">
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
