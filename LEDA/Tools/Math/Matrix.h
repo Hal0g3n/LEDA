@@ -9,13 +9,15 @@
  *
  */
 
-#include "LEDA_Math.h"
-
 #ifndef LEDA_MATRIX_H_
 #define LEDA_MATRIX_H_
 
+#include "pch.h"
+#include "LEDA_Math.h"
+
 namespace LEDA {
-    typedef union Mtx33 {
+
+    typedef union LEDA_API Mtx33 {
         // data members
         struct {
             double m00, m01, m02,
@@ -49,6 +51,7 @@ namespace LEDA {
     // binary operators
     Mtx33 operator*(Mtx33 const&, Mtx33 const&); // matrix multiplication
     Vec2D operator*(Mtx33 const&, Vec2D const&); // applying matrix to vector
+
 }
 
 #endif // LEDA_MATRIX_H_

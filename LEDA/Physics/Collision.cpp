@@ -24,8 +24,8 @@ using namespace LEDA;
 /******************************************************************************/
 void LEDA::BuildLineSegment(LEDA::LineSegment &lineSegment,
 	                  const LEDA::Vec2D &pos,
-	                  float scale,
-	                  float dir) {
+	                  double scale,
+	                  double dir) {
 	
 	lineSegment = LEDA::LineSegment{};
 
@@ -53,7 +53,7 @@ int LEDA::CollisionIntersection_CircleLineSegment(const Circle &circle,
 											const LineSegment &lineSeg,
 											LEDA::Vec2D &interPt,
 											LEDA::Vec2D &normalAtCollision,
-											float &interTime,
+											double &interTime,
 											bool & checkLineEdges) {
 
 	// d indicates signed distance from line
@@ -109,7 +109,7 @@ int LEDA::CheckMovingCircleToLineEdge(bool withinBothLines,
 								const LineSegment &lineSeg,
 								LEDA::Vec2D &interPt,
 								LEDA::Vec2D &normalAtCollision,
-								float &interTime) {
+								double &interTime) {
 	// Calculate velocity vector v
 	Vec2D v = ptEnd - circle.m_center;
 
@@ -199,17 +199,17 @@ int LEDA::CollisionIntersection_CircleCircle(const Circle &circleA,
 									   const LEDA::Vec2D &velB,
 									   LEDA::Vec2D &interPtA,
 									   LEDA::Vec2D &interPtB,
-									   float &interTime) {
+									   double &interTime) {
 	// Compute Relative Velocity
 	LEDA::Vec2D v_rel = velA - velB;
 	LEDA::Vec2D v_rel_normal = { v_rel.y, -v_rel.x };
-	float rad_sum = circleA.m_radius + circleB.m_radius;
+	double rad_sum = circleA.m_radius + circleB.m_radius;
 
 	// m is distance from circle to closest point
-	float m = ((circleB.m_center - circleA.m_center) * v_rel) / v_rel.length();
+	double m = ((circleB.m_center - circleA.m_center) * v_rel) / v_rel.length();
 
 	// s is shortast distance from closest point in circle's path
-	float s = (fabs((circleB.m_center - circleA.m_center) * v_rel_normal)) / v_rel.length();
+	double s = (fabs((circleB.m_center - circleA.m_center) * v_rel_normal)) / v_rel.length();
 
 	if (m < 0) return 0; // A moving away from circle
 	if (s > rad_sum) return 0; // Line does not intersect circle
@@ -252,7 +252,7 @@ void LEDA::CollisionResponse_CircleLineSegment(const LEDA::Vec2D &ptInter,
  */
 /******************************************************************************/
 void LEDA::CollisionResponse_CirclePillar(const LEDA::Vec2D &normal,
-	const float &interTime,
+	const double &interTime,
 	const LEDA::Vec2D &ptStart,
 	const LEDA::Vec2D &ptInter,
 	LEDA::Vec2D &ptEnd,
@@ -274,12 +274,12 @@ void LEDA::CollisionResponse_CirclePillar(const LEDA::Vec2D &normal,
  */
 /******************************************************************************/
 void LEDA::CollisionResponse_CircleCircle(LEDA::Vec2D &normal,
-									const float interTime,
+									const double interTime,
 									LEDA::Vec2D &velA,
-									const float &massA,
+									const double &massA,
 									LEDA::Vec2D &interPtA,
 									LEDA::Vec2D &velB,
-									const float &massB,
+									const double &massB,
 									LEDA::Vec2D &interPtB,
 									LEDA::Vec2D &reflectedVectorA,
 									LEDA::Vec2D &ptEndA,

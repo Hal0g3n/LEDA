@@ -12,9 +12,11 @@
 #ifndef LEDA_VECTOR_H_
 #define LEDA_VECTOR_H_
 
+#include "pch.h"
+
 namespace LEDA {
 
-	typedef union Vec2D {
+	typedef union LEDA_API Vec2D {
 		// data members
 		struct {
 			double x, y;

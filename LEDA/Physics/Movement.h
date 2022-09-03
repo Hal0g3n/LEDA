@@ -9,6 +9,13 @@
  *
  */
 
+#ifndef LEDA_MOVEMENT_H_
+#define LEDA_MOVEMENT_H_
+
+#include "pch.h"
+
 namespace LEDA {
 
 }
+
+#endif // LEDA_MOVEMENT_H_

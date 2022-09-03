@@ -9,12 +9,12 @@
  *
  */
 
-# pragma once
+#pragma once
 
 // Dependencies
 // #include "LEDA_Core.h"
-#include "../Math/LEDA_Math.h"
+#include "LEDA_Math.h"
 
 // Physics Components
 #include "Collision.h"
-#include "Movements.h"
+#include "Movement.h"

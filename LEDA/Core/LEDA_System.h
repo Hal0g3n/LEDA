@@ -8,9 +8,10 @@
  * @copyright   Copyright (c) 2022
  */
 
-#pragma once
+#ifndef LEDA_SYSTEM_H_
+#define LEDA_SYSTEM_H_
 
-#include <string>
+#include "pch.h"
 #include "IComponent.h"
 #include "IGameObject.h"
 #include "IGameState.h"
@@ -23,5 +24,7 @@ namespace LEDA {
 	 * @param windowTitle  The Initial Window Title
 	 * @param initState    The Initial Window State
 	*/
-	void LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, IGameState *initState);
+	void LEDA_API LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, IGameState *initState);
 }
+
+#endif // LEDA_SYSTEM_H_

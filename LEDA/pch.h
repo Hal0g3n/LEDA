@@ -13,6 +13,14 @@
 // STL
 #include <iostream>
 #include <vector>
+#include <string>
 #include <math.h>
+
+// DLL
+#ifdef LEDA_EXPORTS
+#define LEDA_API __declspec(dllexport)
+#else
+#define LEDA_API __declspec(dllimport)
+#endif
 
 #endif // PCH_H

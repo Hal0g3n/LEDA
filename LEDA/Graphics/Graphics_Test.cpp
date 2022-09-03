@@ -9,6 +9,8 @@
  */
 
 #include "pch.h"
+#include "LEDA_Graphics.h"
+
 #define GLFW_DLL
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -21,8 +23,7 @@ void draw(GLFWwindow* window);
 const unsigned int WINDOW_WIDTH = 800;
 const unsigned int WINDOW_HEIGHT = 600;
 
-
-int main() {
+int LEDA::test() {
 
     std::cout << "graphics test runs!\n";
 

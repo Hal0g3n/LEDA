@@ -9,16 +9,20 @@
  * 
  */
 
-#pragma once
+#ifndef LEDA_GRAPHICS_H_
+#define LEDA_GRAPHICS_H_
 
 // dependencies
-#include "../Math/LEDA_Math.h"
-
-#include "Graphics_Test.cpp"
+#include "pch.h"
+#include "LEDA_Math.h"
 
 namespace LEDA {
 
     // renders the object passed in
     // void render(IObject& obj);
+
+    int LEDA_API test();
     
 }
+
+#endif // LEDA_GRAPHICS_H_

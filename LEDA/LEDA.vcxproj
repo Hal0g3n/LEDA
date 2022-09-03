@@ -126,7 +126,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Core Engine;$(ProjectDir)Graphics;$(ProjectDir)Physics;$(ProjectDir)Tools\Shapes;$(ProjectDir)Tools\Math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Core;$(ProjectDir)Graphics;$(ProjectDir)Physics;$(ProjectDir)Tools\Shapes;$(ProjectDir)Tools\Math;$(ProjectDir)Input;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -157,13 +157,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Core Engine\FrameRateManager.h" />
-    <ClInclude Include="Core Engine\IGameState.h" />
-    <ClInclude Include="Core Engine\IComponent.h" />
-    <ClInclude Include="Core Engine\IGameObject.h" />
-    <ClInclude Include="Core Engine\LEDA_System.h" />
+    <ClInclude Include="Core\FrameRateManager.h" />
+    <ClInclude Include="Core\GameStateManager.h" />
+    <ClInclude Include="Core\IComponent.h" />
+    <ClInclude Include="Core\IGameObject.h" />
+    <ClInclude Include="Core\IGameState.h" />
+    <ClInclude Include="Core\LEDA_System.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Graphics\LEDA_Graphics.h" />
+    <ClInclude Include="Input\LEDA_Input.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physics\Collision.h" />
     <ClInclude Include="Physics\LEDA_Physics.h" />
