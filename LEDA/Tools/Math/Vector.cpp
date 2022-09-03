@@ -68,6 +68,10 @@ namespace LEDA {
 		return rhs * lhs;
 	}
 
+	Vec2D operator/(Vec2D const& lhs, double rhs) {
+		return lhs * (1.0 / rhs);
+	}
+
 	// dot product binary operator
 	double operator*(Vec2D const& lhs, Vec2D const& rhs) {
 		return lhs.x * rhs.x + lhs.y * rhs.y;

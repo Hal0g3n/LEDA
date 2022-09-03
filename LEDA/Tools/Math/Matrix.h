@@ -9,7 +9,10 @@
  *
  */
 
-#pragma once
+#include "LEDA_Math.h"
+
+#ifndef LEDA_MATRIX_H_
+#define LEDA_MATRIX_H_
 
 namespace LEDA {
     typedef union Mtx33 {
@@ -47,3 +50,5 @@ namespace LEDA {
     Mtx33 operator*(Mtx33 const&, Mtx33 const&); // matrix multiplication
     Vec2D operator*(Mtx33 const&, Vec2D const&); // applying matrix to vector
 }
+
+#endif // LEDA_MATRIX_H_

@@ -9,7 +9,8 @@
  *
  */
 
-#pragma once
+#ifndef LEDA_VECTOR_H_
+#define LEDA_VECTOR_H_
 
 namespace LEDA {
 
@@ -27,7 +28,7 @@ namespace LEDA {
 		// assignment operators
 		Vec2D& operator+=(Vec2D const&);
 		Vec2D& operator-=(Vec2D const&);
-		Vec2D& operator*=(Vec2D const&); // Dot Product
+		// Vec2D& operator*=(Vec2D const&); // Dot Product
 		Vec2D& operator*=(double);
 		Vec2D& operator/=(double);
 
@@ -46,7 +47,7 @@ namespace LEDA {
 		double distTo(Vec2D const&); // get the distance between two points represented as vectors
 		double squareDistTo(Vec2D const&);
 
-	} Vec2D, Vector2D, Vec2;;
+	} Vec2D, Vector2D, Vec2;
 
 	// binary operators
 	Vec2D operator+(Vec2D const&, Vec2D const&); // vector addition
@@ -57,3 +58,5 @@ namespace LEDA {
 
 	double operator*(Vec2D const&, Vec2D const&); // dot product shorthand
 }
+
+#endif // LEDA_VECTOR_H_

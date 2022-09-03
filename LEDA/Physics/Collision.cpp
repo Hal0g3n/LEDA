@@ -4,7 +4,7 @@
 \author 	Yap Yuan Xi
 \par    	email: yuanxi.yap@digipen.edu
 \date   	August 1, 2022
-\brief		Implementation of Collision functions
+\brief		Implementation of collision functions
 
 Copyright (C) 2022 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
@@ -19,13 +19,14 @@ using namespace LEDA;
 
 /******************************************************************************/
 /*!
-Builds a line segment with the given center, scale dir
+	Builds a line segment with the given center, scale dir
  */
 /******************************************************************************/
-void BuildLineSegment(LEDA::LineSegment &lineSegment,
+void LEDA::BuildLineSegment(LEDA::LineSegment &lineSegment,
 	                  const LEDA::Vec2D &pos,
 	                  float scale,
 	                  float dir) {
+	
 	lineSegment = LEDA::LineSegment{};
 
 	// Calculate pt0, pt1
@@ -39,14 +40,15 @@ void BuildLineSegment(LEDA::LineSegment &lineSegment,
 
 	// Normalise the normal
 	lineSegment.m_normal = lineSegment.m_normal.normalize();
+
 }
 
 /******************************************************************************/
 /*!
-Checks for collision between circle and line
+	Checks for collision between circle and line
  */
 /******************************************************************************/
-int CollisionIntersection_CircleLineSegment(const Circle &circle,
+int LEDA::CollisionIntersection_CircleLineSegment(const Circle &circle,
 											const LEDA::Vec2D &ptEnd,
 											const LineSegment &lineSeg,
 											LEDA::Vec2D &interPt,
@@ -55,7 +57,7 @@ int CollisionIntersection_CircleLineSegment(const Circle &circle,
 											bool & checkLineEdges) {
 
 	// d indicates signed distance from line
-	float d = lineSeg.m_normal.dot(circle.m_center - lineSeg.m_pt0);
+	float d = lineSeg.m_normal * (circle.m_center - lineSeg.m_pt0);
 
 	// Calculates the location of collision (neg/pos half plane)
 	d = (d >= circle.m_radius) ? 1.0f : (d <= -circle.m_radius) ? -1.0f : 0.0f;
@@ -65,22 +67,22 @@ int CollisionIntersection_CircleLineSegment(const Circle &circle,
 		return checkLineEdges ? LEDA::CheckMovingCircleToLineEdge(true, circle, ptEnd, lineSeg, interPt, normalAtCollision, interTime) : 0;
 
 	// Calculate v
-	Vec2 v = ptEnd - circle.m_center;
+	Vec2D v = ptEnd - circle.m_center;
 
 	// Normal (m) of Bs -> Be
-	Vec2 m{v.y, -v.x};
+	Vec2D m{v.y, -v.x};
 	// Save normalise computation as m only used to determine dir
 
 	// Project Line towards circle by R (point vs line collision)
-	Vec2 p0 = lineSeg.m_pt0 + d * circle.m_radius * lineSeg.m_normal, p1 = lineSeg.m_pt1 + d * circle.m_radius * lineSeg.m_normal;
+	Vec2D p0 = lineSeg.m_pt0 + d * circle.m_radius * lineSeg.m_normal, p1 = lineSeg.m_pt1 + d * circle.m_radius * lineSeg.m_normal;
 
 	// Check for edge collision if line does not pass through path (P0, P1 on same side of path)
-	if (m.dot(p0 - circle.m_center) * m.dot(p1 - circle.m_center) >= 0)
+	if ((m * (p0 - circle.m_center)) * (m * (p1 - circle.m_center)) >= 0)
 		return checkLineEdges ? LEDA::CheckMovingCircleToLineEdge(false, circle, ptEnd, lineSeg, interPt, normalAtCollision, interTime) : 0;
 
 	// Calculate Time of Intersection
-	interTime = lineSeg.m_normal.dot(lineSeg.m_pt0 - circle.m_center) + d * circle.m_radius;
-	interTime /= lineSeg.m_normal.dot(v);
+	interTime = (lineSeg.m_normal * (lineSeg.m_pt0 - circle.m_center)) + d * circle.m_radius;
+	interTime /= lineSeg.m_normal * v;
 
 	// Ignore if intersection does not happen this loop
 	if (interTime < 0 || interTime > 1) return 0;
@@ -91,28 +93,28 @@ int CollisionIntersection_CircleLineSegment(const Circle &circle,
 	// Calculate Normal at collision
 	normalAtCollision = lineSeg.m_normal * d;
 
-	// Collision Detected
+	// Collision detected
 	return 1;
+
 }
 
 /******************************************************************************/
 /*!
-Checks specifically for line edges
-(Extra Credit)
+	Checks for collision between circle and line edges (specifically)
 */
 /******************************************************************************/
-int CheckMovingCircleToLineEdge(bool withinBothLines,
+int LEDA::CheckMovingCircleToLineEdge(bool withinBothLines,
 								const Circle &circle,
 								const LEDA::Vec2D &ptEnd,
 								const LineSegment &lineSeg,
 								LEDA::Vec2D &interPt,
 								LEDA::Vec2D &normalAtCollision,
 								float &interTime) {
-	// Calculate Velocity Vector v
+	// Calculate velocity vector v
 	Vec2D v = ptEnd - circle.m_center;
 
 	// Compute Normal to v
-	Vec2D M{ v.y, -v.x };
+	Vec2D M { v.y, -v.x };
 	M = M.normalize();
 		
 	// m is distance from circle to closest point
@@ -172,7 +174,7 @@ int CheckMovingCircleToLineEdge(bool withinBothLines,
 	// Now compute the actual s defined in notes
 	s = sqrt(circle.m_radius * circle.m_radius - s * s);
 
-	// Compute collision Time based on m and s
+	// Compute collision time based on m and s
 	interTime = (m - s) / v.length();
 
 	if (interTime > 1) return 0;
@@ -188,10 +190,10 @@ int CheckMovingCircleToLineEdge(bool withinBothLines,
 
 /******************************************************************************/
 /*!
-Checks for Collision between 2 circles
+	Checks for collision between 2 circles
  */
 /******************************************************************************/
-int CollisionIntersection_CircleCircle(const Circle &circleA,
+int LEDA::CollisionIntersection_CircleCircle(const Circle &circleA,
 									   const LEDA::Vec2D &velA,
 									   const Circle &circleB,
 									   const LEDA::Vec2D &velB,
@@ -232,15 +234,16 @@ int CollisionIntersection_CircleCircle(const Circle &circleA,
 	Calculates end point after circle collides with line
  */
 /******************************************************************************/
-void CollisionResponse_CircleLineSegment(const LEDA::Vec2D &ptInter,
+void LEDA::CollisionResponse_CircleLineSegment(const LEDA::Vec2D &ptInter,
 										 const LEDA::Vec2D &normal,
 										 LEDA::Vec2D &ptEnd,
 										 LEDA::Vec2D &reflected) {
-	// Calculate End using formula
+	// Calculate end using formula
 	ptEnd = ptEnd - 2 * ((ptEnd - ptInter) * normal) * normal;
 
 	// Normalise reflected displacement vector
 	reflected = (ptEnd - ptInter).normalize();
+
 }
 
 /******************************************************************************/
@@ -248,7 +251,7 @@ void CollisionResponse_CircleLineSegment(const LEDA::Vec2D &ptInter,
 	Calculates end point for dynamic circles when collided with static circle
  */
 /******************************************************************************/
-void CollisionResponse_CirclePillar(const LEDA::Vec2D &normal,
+void LEDA::CollisionResponse_CirclePillar(const LEDA::Vec2D &normal,
 	const float &interTime,
 	const LEDA::Vec2D &ptStart,
 	const LEDA::Vec2D &ptInter,
@@ -262,14 +265,15 @@ void CollisionResponse_CirclePillar(const LEDA::Vec2D &normal,
 
 	// Normalise reflected displacement vector
 	reflected = (ptEnd - ptInter).normalize();
+
 }
 
 /******************************************************************************/
 /*!
-	Extra credits (Circle Collision with COM and COE)
+	Calculates end points for both circles when colliding
  */
 /******************************************************************************/
-void CollisionResponse_CircleCircle(LEDA::Vec2D &normal,
+void LEDA::CollisionResponse_CircleCircle(LEDA::Vec2D &normal,
 									const float interTime,
 									LEDA::Vec2D &velA,
 									const float &massA,
@@ -289,7 +293,9 @@ void CollisionResponse_CircleCircle(LEDA::Vec2D &normal,
 	reflectedVectorA = (velA - P * massB * normal);
 	reflectedVectorB = (velB + P * massA * normal);
 
-	// Calculate End Points
+	// Calculate end points
 	ptEndA = interPtA + reflectedVectorA * (1.0f - interTime);
 	ptEndB = interPtB + reflectedVectorB * (1.0f - interTime);
+
 }
+

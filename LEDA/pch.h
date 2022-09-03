@@ -15,4 +15,4 @@
 #include <vector>
 #include <math.h>
 
-#endif //PCH_H
+#endif // PCH_H
