@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)LEDA\Libraries\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)LEDA\Libraries\lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)LEDA\Libraries\include\;$(SolutionDir)LEDA\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)LEDA\Libraries\lib\;$(SolutionDir)LEDA;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -172,7 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="Graphics\glad.c" />
+    <ClCompile Include="Graphics\glad.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Graphics\Graphics_Test.cpp" />
     <ClCompile Include="LEDA_System.cpp" />
     <ClCompile Include="pch.cpp">

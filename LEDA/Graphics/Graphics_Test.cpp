@@ -1,5 +1,5 @@
 /**
- * @file        Graphics_Test.h
+ * @file        Graphics_Test.cpp
  * @author      your name (you@domain.com)
  * @brief       A test for graphics. Skill issue?
  * @version     0.1
@@ -8,7 +8,8 @@
  * @copyright   Copyright (c) 2022
  */
 
-#include <iostream>
+#include "pch.h"
+#define GLFW_DLL
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -53,14 +54,15 @@ int main() {
     }
 
     // main loop
-    while (!glfwWindowShouldClose(window)) // while esc button is not pressed...
-    {
+    while (!glfwWindowShouldClose(window)) { // while esc button is not pressed...
+
         input(window);
         
         draw(window);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
+
     }
 
     glfwTerminate();

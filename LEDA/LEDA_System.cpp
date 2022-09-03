@@ -1,5 +1,5 @@
 /**
- * @file        LEDA_System.h
+ * @file        LEDA_System.cpp
  * @author      your name (you@domain.com)
  * @brief       Implementation of Main Game Loop
  * @version     0.1
@@ -8,9 +8,8 @@
  * @copyright   Copyright (c) 2022
  */
 
-#include <iostream>
+#include "pch.h"
 #include "LEDA_System.h"
-#include "LEDA_Graphics.h"
 
 using namespace LEDA;
 

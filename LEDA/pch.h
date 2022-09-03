@@ -10,4 +10,9 @@
 // add headers that you want to pre-compile here
 #include "framework.h"
 
+// STL
+#include <iostream>
+#include <vector>
+#include <math.h>
+
 #endif //PCH_H
