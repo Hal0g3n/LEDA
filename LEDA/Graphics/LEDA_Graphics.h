@@ -18,5 +18,13 @@
 #include "Graphics_Test.h"
 #include "Shader.h"
 
+#include <GLFW/glfw3.h>
+
+namespace LEDA {
+
+	extern GLFWwindow* window;
+
+}
+
 
 #endif // LEDA_GRAPHICS_H_

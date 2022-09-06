@@ -40,6 +40,9 @@
     <Filter Include="Header Files\Input">
       <UniqueIdentifier>{1b2a871e-d093-40be-a044-b126c0e95a71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{d4bf4a00-bb46-410e-9f62-7fa31495a1e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -127,6 +130,9 @@
     </ClCompile>
     <ClCompile Include="Graphics\Shader.cpp">
       <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\LEDA_Input.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

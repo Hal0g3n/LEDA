@@ -9,11 +9,16 @@
  */
 
 #include "pch.h"
+#include "Graphics_Test.h"
 #include "LEDA_Graphics.h"
 
-#define GLFW_DLL
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+using namespace LEDA;
+
+// declare extern variable here
+GLFWwindow* LEDA::window;
 
 void resize(GLFWwindow* window, int width, int height);
 void input(GLFWwindow* window);
@@ -54,8 +59,8 @@ int LEDA::test() {
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // for os x and ios
     #endif
 
-    // create GLFW window
-    GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Skill Issue?", NULL, NULL);
+    // create GLFW window (global)
+    window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Skill Issue?", NULL, NULL);
     if (window == NULL) {
         std::cout << "Error: failed to create GLFWindow\n";
         glfwTerminate();

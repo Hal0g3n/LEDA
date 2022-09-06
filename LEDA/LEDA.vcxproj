@@ -183,6 +183,7 @@
     </ClCompile>
     <ClCompile Include="Graphics\Graphics_Test.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
+    <ClCompile Include="Input\LEDA_Input.cpp" />
     <ClCompile Include="LEDA_System.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

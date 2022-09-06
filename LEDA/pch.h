@@ -23,4 +23,7 @@
 #define LEDA_API __declspec(dllimport)
 #endif
 
+// GLFW
+#define GLFW_DLL
+
 #endif // PCH_H
