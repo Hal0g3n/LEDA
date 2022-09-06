@@ -3,7 +3,7 @@
  * @author      your name (you@domain.com)
  * @brief       Defines some input functions and constants
  * @version     0.1
- * @date        16-08-2022
+ * @date        06-09-2022
  * 
  * @copyright   Copyright (c) 2022
  * 
@@ -16,6 +16,8 @@
 
 #include "LEDA_Graphics.h"
 #include <GLFW/glfw3.h>
+
+using emptyFunction = void(*)();
 
 namespace LEDA {
 
@@ -160,6 +162,12 @@ namespace LEDA {
     bool keyTriggered(LEDA::KEY key);
     bool keyReleased(LEDA::KEY key);
 	*/
+
+	// functions for adding and removing event callbacks
+	void LEDA_API addKeyTriggerCallback(KEY key, emptyFunction function);
+	void LEDA_API addKeyReleaseCallback(KEY key, emptyFunction function);
+	void LEDA_API removeKeyTriggerCallback(KEY key, emptyFunction function);
+	void LEDA_API removeKeyReleaseCallback(KEY key, emptyFunction function);
 
 }
 

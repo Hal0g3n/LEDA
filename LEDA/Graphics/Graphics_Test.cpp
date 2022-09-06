@@ -9,8 +9,9 @@
  */
 
 #include "pch.h"
-#include "Graphics_Test.h"
+
 #include "LEDA_Graphics.h"
+#include "LEDA_Input.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -22,7 +23,7 @@ GLFWwindow* LEDA::window;
 
 void resize(GLFWwindow* window, int width, int height);
 void input(GLFWwindow* window);
-void draw(GLFWwindow* window);
+void drawBackground(GLFWwindow* window);
 
 // settings
 const unsigned int WINDOW_WIDTH = 800;
@@ -115,7 +116,7 @@ int LEDA::test() {
 
         input(window);
         
-        draw(window);
+        drawBackground(window);
         
         // draw third triangle (wow!)
         theshader.use();
@@ -147,13 +148,13 @@ void resize(GLFWwindow* window, int width, int height) {
 
 void input(GLFWwindow* window) {
 
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+    if (keyPressed(KEY::KEY_ESCAPE)) {
         glfwSetWindowShouldClose(window, GLFW_TRUE); // be funny and use GLFW_TRUE
     }
 
 }
 
-void draw(GLFWwindow* window) {
+void drawBackground(GLFWwindow* window) {
 
     glClearColor(0.123f, 0.456f, 0.789f, 1.0f); // around #1f74c9
     glClear(GL_COLOR_BUFFER_BIT);
