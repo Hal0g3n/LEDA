@@ -164,7 +164,9 @@
     <ClInclude Include="Core\IGameState.h" />
     <ClInclude Include="Core\LEDA_System.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Graphics\Graphics_Test.h" />
     <ClInclude Include="Graphics\LEDA_Graphics.h" />
+    <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Input\LEDA_Input.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physics\Collision.h" />
@@ -180,6 +182,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Graphics\Graphics_Test.cpp" />
+    <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="LEDA_System.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

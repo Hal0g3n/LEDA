@@ -12,17 +12,11 @@
 #ifndef LEDA_GRAPHICS_H_
 #define LEDA_GRAPHICS_H_
 
-// dependencies
+
 #include "pch.h"
-#include "LEDA_Math.h"
 
-namespace LEDA {
+#include "Graphics_Test.h"
+#include "Shader.h"
 
-    // renders the object passed in
-    // void render(IObject& obj);
-
-    int LEDA_API test();
-    
-}
 
 #endif // LEDA_GRAPHICS_H_
