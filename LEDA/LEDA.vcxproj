@@ -157,8 +157,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Core\FrameRateManager.h" />
-    <ClInclude Include="Core\GameStateManager.h" />
     <ClInclude Include="Core\IComponent.h" />
     <ClInclude Include="Core\IGameObject.h" />
     <ClInclude Include="Core\IGameState.h" />

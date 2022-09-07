@@ -16,7 +16,11 @@
 
 namespace LEDA {
 	class IGameObject {
-		uint16_t id;
 		std::unordered_map<std::string, IComponent> components{};
+
+	public:
+		virtual void init()    const = 0;
+		virtual void update()  const = 0;
+		virtual void destroy() const = 0;
 	};
 }

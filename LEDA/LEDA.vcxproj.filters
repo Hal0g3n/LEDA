@@ -72,12 +72,6 @@
     <ClInclude Include="Graphics\LEDA_Graphics.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Core\FrameRateManager.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\GameStateManager.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\IComponent.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
