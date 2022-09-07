@@ -15,10 +15,8 @@
 #include "IComponent.h"
 
 namespace LEDA {
-
 	class IGameObject {
 		uint16_t id;
 		std::unordered_map<std::string, IComponent> components{};
 	};
-
 }

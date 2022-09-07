@@ -25,6 +25,16 @@ namespace LEDA {
 	 * @param initState    The Initial Window State
 	*/
 	void LEDA_API LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, IGameState *initState);
+
+
+	// GameStateManager Functions //
+	bool registerGameState(std::string id, IGameState* state);
+	IGameState* retrieveGameState(std::string id);
+
+	IGameState* getPreviousGameState();
+	IGameState* getCurrentGameState();
+	IGameState* getNextGameState();
+	void setNextGameState(IGameState* state);
 }
 
 #endif // LEDA_SYSTEM_H_

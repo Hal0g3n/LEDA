@@ -10,6 +10,6 @@
 
 #pragma once
 
-__interface IComponent {
+class IComponent {
 
 };
