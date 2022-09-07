@@ -16,14 +16,19 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 using namespace LEDA;
 
 // declare extern variable here
 GLFWwindow* LEDA::window;
 
 void resize(GLFWwindow* window, int width, int height);
-void input(GLFWwindow* window);
-void drawBackground(GLFWwindow* window);
+void initializeInput();
+void drawBackground();
+void drawForeground();
 
 // settings
 const unsigned int WINDOW_WIDTH = 800;
@@ -111,12 +116,16 @@ int LEDA::test() {
 
     glBindVertexArray(0);
 
+    initializeInput();
+
     // main loop
     while (!glfwWindowShouldClose(window)) { // while esc button is not pressed...
 
-        input(window);
+        doInput();
         
-        drawBackground(window);
+        drawBackground();
+
+        drawForeground();
         
         // draw third triangle (wow!)
         theshader.use();
@@ -146,17 +155,21 @@ void resize(GLFWwindow* window, int width, int height) {
 
 }
 
-void input(GLFWwindow* window) {
+void initializeInput() {
 
-    if (keyPressed(KEY::KEY_ESCAPE)) {
-        glfwSetWindowShouldClose(window, GLFW_TRUE); // be funny and use GLFW_TRUE
-    }
+    addKeyTriggerCallback(KEY::KEY_ESCAPE, []() {
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+    });
 
 }
 
-void drawBackground(GLFWwindow* window) {
+void drawBackground() {
 
     glClearColor(0.123f, 0.456f, 0.789f, 1.0f); // around #1f74c9
     glClear(GL_COLOR_BUFFER_BIT);
+
+}
+
+void drawForeground() {
 
 }

@@ -106,7 +106,7 @@ bool LEDA::keyReleased(LEDA::KEY key) {
 
 // functions to add key callbacks
 
-void addKeyTriggerCallback(KEY key, emptyFunction function) {
+void LEDA::addKeyTriggerCallback(KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = triggerCallbacks.find(key);
 	if (found == triggerCallbacks.end()) {
@@ -119,7 +119,7 @@ void addKeyTriggerCallback(KEY key, emptyFunction function) {
 
 }
 
-void addKeyReleaseCallback(KEY key, emptyFunction function) {
+void LEDA::addKeyReleaseCallback(KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = releaseCallbacks.find(key);
 	if (found == releaseCallbacks.end()) {
@@ -135,7 +135,7 @@ void addKeyReleaseCallback(KEY key, emptyFunction function) {
 
 // functions to remove key callbacks
 
-void removeKeyTriggerCallback(KEY key, emptyFunction function) {
+void LEDA::removeKeyTriggerCallback(KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = triggerCallbacks.find(key);
 	if (found == triggerCallbacks.end()) {
@@ -152,7 +152,7 @@ void removeKeyTriggerCallback(KEY key, emptyFunction function) {
 
 }
 
-void removeKeyReleaseCallback(KEY key, emptyFunction function) {
+void LEDA::removeKeyReleaseCallback(KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = releaseCallbacks.find(key);
 	if (found == releaseCallbacks.end()) {
