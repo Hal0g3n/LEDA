@@ -26,7 +26,7 @@ using namespace LEDA;
 GLFWwindow* LEDA::window;
 
 void resize(GLFWwindow* window, int width, int height);
-void initializeInput();
+void initializeInput2();
 void drawBackground();
 void drawForeground();
 
@@ -117,6 +117,7 @@ int LEDA::test() {
     glBindVertexArray(0);
 
     initializeInput();
+    initializeInput2();
 
     // main loop
     while (!glfwWindowShouldClose(window)) { // while esc button is not pressed...
@@ -135,7 +136,6 @@ int LEDA::test() {
         // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
-        glfwPollEvents();
 
     }
 
@@ -155,7 +155,7 @@ void resize(GLFWwindow* window, int width, int height) {
 
 }
 
-void initializeInput() {
+void initializeInput2() {
 
     addKeyTriggerCallback(KEY::KEY_ESCAPE, []() {
         glfwSetWindowShouldClose(window, GLFW_TRUE);

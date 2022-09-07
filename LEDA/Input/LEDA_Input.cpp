@@ -20,6 +20,7 @@ using callbackMap = std::map<int, std::vector<emptyFunction>>;
 
 callbackMap triggerCallbacks;
 callbackMap releaseCallbacks;
+callbackMap repeatCallbacks;
 
 
 // for (storage purposes; how to iterate through all KEY::s; is shown in the comment below) { ignore all punctuation in this line }
@@ -40,6 +41,14 @@ void mainKeyCallback(GLFWwindow* window, int key, int scancode, int action, int 
 	else if (action == GLFW_RELEASE) {
 		callbackMap::iterator found = releaseCallbacks.find(key);
 		if (found != releaseCallbacks.end()) {
+			for (emptyFunction function : (*found).second) {
+				function();
+			}
+		}
+	}
+	else if (action == GLFW_REPEAT) {
+		callbackMap::iterator found = repeatCallbacks.find(key);
+		if (found != repeatCallbacks.end()) {
 			for (emptyFunction function : (*found).second) {
 				function();
 			}
@@ -132,6 +141,19 @@ void LEDA::addKeyReleaseCallback(KEY key, emptyFunction function) {
 
 }
 
+void LEDA::addKeyRepeatCallback(KEY key, emptyFunction function) {
+
+	callbackMap::iterator found = repeatCallbacks.find(key);
+	if (found == repeatCallbacks.end()) {
+		std::vector<emptyFunction> tempVector;
+		repeatCallbacks.emplace(key, tempVector);
+		found = repeatCallbacks.find(key);
+	}
+	found->second.push_back(function);
+	return;
+
+}
+
 
 // functions to remove key callbacks
 
@@ -156,6 +178,23 @@ void LEDA::removeKeyReleaseCallback(KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = releaseCallbacks.find(key);
 	if (found == releaseCallbacks.end()) {
+		// there's nothing to remove!
+		return;
+	}
+	std::vector<emptyFunction> vector = found->second;
+	std::vector<emptyFunction>::iterator foundAgain = std::find(vector.begin(), vector.end(), function);
+	if (foundAgain != vector.end()) {
+		// only remove if the function is found
+		vector.erase(foundAgain);
+	}
+	return;
+
+}
+
+void LEDA::removeKeyRepeatCallback(KEY key, emptyFunction function) {
+
+	callbackMap::iterator found = repeatCallbacks.find(key);
+	if (found == repeatCallbacks.end()) {
 		// there's nothing to remove!
 		return;
 	}

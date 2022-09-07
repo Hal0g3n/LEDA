@@ -166,8 +166,11 @@ namespace LEDA {
 	// functions for adding and removing event callbacks
 	void LEDA_API addKeyTriggerCallback(KEY key, emptyFunction function);
 	void LEDA_API addKeyReleaseCallback(KEY key, emptyFunction function);
+	void LEDA_API addKeyRepeatCallback(KEY key, emptyFunction function);
+
 	void LEDA_API removeKeyTriggerCallback(KEY key, emptyFunction function);
 	void LEDA_API removeKeyReleaseCallback(KEY key, emptyFunction function);
+	void LEDA_API removeKeyRepeatCallback(KEY key, emptyFunction function);
 
 }
 
