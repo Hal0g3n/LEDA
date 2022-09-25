@@ -34,12 +34,21 @@ void drawForeground();
 const unsigned int WINDOW_WIDTH = 800;
 const unsigned int WINDOW_HEIGHT = 800;
 
+double x = 200.0;
+double y = 200.0;
+double x2 = -400.0;
+double y2 = -400.0;
+double s = 1.0;
+double rotation = 0.0;
+
 std::string vertexShaderCode = "#version 460 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "layout (location = 1) in vec3 aColor;\n"
     "out vec3 color;\n"
+    "uniform mat4 transform;\n"
+    "uniform mat4 projection;\n"
     "void main() {\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "   gl_Position = projection * transform * vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
     "   color = aColor;\n"
     "}\n\0";
 std::string fragmentShaderCode = "#version 460 core\n"
@@ -84,7 +93,7 @@ int LEDA::test() {
     // glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glfwSetFramebufferSizeCallback(window, resize);
 
-    Shader theshader { vertexShaderCode, fragmentShaderCode };
+    Shader theShader { vertexShaderCode, fragmentShaderCode };
 
     // draw the triangle!
     float vertices[] = {
@@ -123,17 +132,48 @@ int LEDA::test() {
     while (!glfwWindowShouldClose(window)) { // while esc button is not pressed...
 
         doInput();
+
+        if (keyPressed(KEY::KEY_UP) || keyPressed(KEY::KEY_W)) y += 0.1;
+        if (keyPressed(KEY::KEY_DOWN) || keyPressed(KEY::KEY_S)) y -= 0.1;
+        if (keyPressed(KEY::KEY_LEFT) || keyPressed(KEY::KEY_A)) x -= 0.1;
+        if (keyPressed(KEY::KEY_RIGHT) || keyPressed(KEY::KEY_D)) x += 0.1;
+        if (keyPressed(KEY::KEY_SPACE) || keyPressed(KEY::KEY_Q)) rotation -= 0.005;
+        if (keyPressed(KEY::KEY_F) || keyPressed(KEY::KEY_E)) rotation += 0.005;
+        if (keyPressed(KEY::KEY_Z)) rotation -= 0.05;
+        if (keyPressed(KEY::KEY_X)) rotation += 0.05;
+        if (keyPressed(KEY::KEY_C)) s -= 0.05;
+        if (keyPressed(KEY::KEY_V)) s += 0.05;
         
         drawBackground();
 
         drawForeground();
         
         // draw third triangle (wow!)
-        theshader.use();
+
+        unsigned int projectionLocation = glGetUniformLocation(theShader.id, "projection");
+        glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, transformMatrix(Vector2D(0.0, 0.0), Vector2D(1.0 / WINDOW_WIDTH, 1.0 / WINDOW_HEIGHT), 0.0));
+
+        unsigned int transformLocation = glGetUniformLocation(theShader.id, "transform");
+        glUniformMatrix4fv(transformLocation, 1, GL_FALSE, transformMatrix(Vector2D(x, y), Vector2D(100, 100), rotation));
+
+        theShader.use();
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         // glDrawArrays(GL_TRIANGLES, 0, 6);
         // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+
+                unsigned int transformLocatio2n = glGetUniformLocation(theShader.id, "transform");
+                glUniformMatrix4fv(transformLocatio2n, 1, GL_FALSE, transformMatrix(Vector2D(i * 80 - 800, j * 80 - 800), Vector2D(100 * s, 100 * s), rotation));
+
+                glBindVertexArray(VAO);
+                glDrawArrays(GL_TRIANGLES, 0, 3);
+
+            }
+
+        }
 
         glfwSwapBuffers(window);
 
@@ -151,7 +191,8 @@ int LEDA::test() {
 
 void resize(GLFWwindow* window, int width, int height) {
 
-    glViewport(0, 0, width, height);
+    // glViewport(0, 0, width, height);
+    glOrtho(0.0, width, 0.0, height, -1.0, 1.0);
 
 }
 

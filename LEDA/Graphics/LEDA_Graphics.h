@@ -17,6 +17,7 @@
 
 #include "Graphics_Test.h"
 #include "Shader.h"
+#include "Transform.h"
 
 #include <GLFW/glfw3.h>
 
