@@ -157,11 +157,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Core\FrameRateManager.h" />
-    <ClInclude Include="Core\GameStateManager.h" />
     <ClInclude Include="Core\IComponent.h" />
     <ClInclude Include="Core\IGameObject.h" />
     <ClInclude Include="Core\IGameState.h" />
+    <ClInclude Include="Core\ISystem.h" />
     <ClInclude Include="Core\LEDA_System.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Graphics\Graphics_Test.h" />

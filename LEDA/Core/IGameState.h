@@ -15,18 +15,10 @@ namespace LEDA {
 	 * @brief GameState Interface to inherit
 	 *
 	 * load() => Called at first
-	 * init() => Called when (re)starting current state
-	 * update() => Called every frame
-	 * draw() => Called every frame (For Graphical Things)
-	 * free() => Called when ending current state (called before restart too)
 	 * unload() => Called when exiting current state
 	*/
 	__interface IGameState {
 		virtual void load() const = 0;
-		virtual void init() const = 0;
-		virtual void update() const = 0;
-		virtual void draw() const = 0;
-		virtual void free() const = 0;
 		virtual void unload() const = 0;
 	};
 

@@ -10,6 +10,7 @@
 
 #include "pch.h"
 #include "LEDA_System.h"
+#include "ISystem.h"
 
 using namespace LEDA;
 
@@ -19,34 +20,34 @@ double frameTime = 0.0, appTime = 0.0;
 // Tracking Previous, Current and Next GameStates
 IGameState *pre, *cur, *nxt;
 
+
+// List of Systems
+std::vector<ISystem *> systems;
+
 void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, IGameState* initialState) {
 
 	std::cout << "LEDA runs!\n";
-
-	// Initializes all our systems
 
 	// Sets initial game state
 	pre = cur = nxt = initialState;
 
 	while (cur != Quit_GameState) { // while the application is not quitted yet
 
-		// reset the system modules
+		// Initializes all our systems for the current state
+		for (ISystem* system : systems) system->init();
 		
 
-		// If not restarting, load the new Game State
-		if (cur != Restart_GameState) cur->load();
-		else nxt = cur = pre;
+		//loadGameState();
 
-		// Initialize the gamestate
-		cur->init();
 
 		while (cur == nxt) { // While State is unchanged
 
 			// Start Frame Timer
 			// AESysFrameStart();
 
-			cur->update();
-			cur->draw();
+			// System Game Loop Updates
+			for (ISystem* system : systems) system->update();
+
 			
 			// End Frame Timer
 			// AESysFrameEnd();
@@ -59,15 +60,14 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 			// appTime += frameTime;
 		}
 
-		cur->free();
-
 		if (nxt != Restart_GameState) cur->unload();
 
 		pre = cur;
 		cur = nxt;
 	}
 
-	// Exits the system
+	// Destroys all systems
+	for (ISystem* system : systems) system->destroy();
 }
 
 // GameStateManager Functions //
