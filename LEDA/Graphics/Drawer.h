@@ -21,7 +21,7 @@
 
 namespace LEDA {
 
-	void LEDA_API drawObject(IGameObject obj);
+	void LEDA_API drawObject(IGameObject& obj);
 
 }
 

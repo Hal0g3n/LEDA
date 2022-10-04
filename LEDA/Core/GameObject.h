@@ -16,9 +16,13 @@
 namespace LEDA {
 
 	class GameObject : IGameObject {
+
+		GameObject();
+
 		void init();
 		void update();
 		void destroy();
+		
 		IComponent getComponent(std::string string);
 
 	};

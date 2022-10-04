@@ -17,6 +17,13 @@
 
 using namespace LEDA;
 
+/*
+// todo make transform component
+glm::f32* LEDA::transformMatrix(TransformComponent transformComponent) {
+    
+}
+*/
+
 glm::f32* LEDA::transformMatrix(Vector2D translation, Vector2D scale, double rotation) {
 
     // initialize transformation matrix to the identity matrix
