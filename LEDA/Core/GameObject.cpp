@@ -8,7 +8,11 @@
  * @copyright   Copyright (c) 2022
  */
 
+#include "pch.h"
+
 #include "GameObject.h"
+
+#include "LEDA_System.h"
 
 namespace LEDA {
 
