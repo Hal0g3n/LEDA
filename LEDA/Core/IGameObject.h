@@ -17,15 +17,17 @@
 namespace LEDA {
 	class IGameObject {
 
-	public:
-		std::unordered_map<std::string, IComponent> components{};
+	private:
+		std::unordered_map<std::string, IComponent> components;
 
+	public:
 		// required functions
 		virtual void init()    const = 0;
 		virtual void update()  const = 0;
 		virtual void destroy() const = 0;
 
 		// helper functions
-		virtual IComponent getComponent(std::string string) const = 0;
+		void addComponent(IComponent component) const { components.insert({ typeid(component).name(), component }); };
+		IComponent getComponent(std::string id) const { components.find(id)->second; };
 	};
 }
