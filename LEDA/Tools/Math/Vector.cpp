@@ -119,4 +119,109 @@ namespace LEDA {
 		return (other - *this).squareLength();
 	}
 
+
+	// 3D Vector
+	// constructors
+	// default constructor: initialize to 0, 0
+	Vec3D::Vec3D() : x(0), y(0), z(0) {}
+
+	// constructor that initializes with specified values
+	Vec3D::Vec3D(double _x, double _y, double _z) : x(_x), y(_y), z(_z) {}
+
+	// assignment operators
+	Vec3D& Vec3D::operator+=(Vec3D const& rhs) {
+		this->x += rhs.x;
+		this->y += rhs.y;
+		this->z += rhs.z;
+		return *this;
+	}
+
+	Vec3D& Vec3D::operator-=(Vec3D const& rhs) {
+		this->x -= rhs.x;
+		this->y -= rhs.y;
+		this->z -= rhs.z;
+		return *this;
+	}
+
+	Vec3D& Vec3D::operator*=(double rhs) {
+		this->x *= rhs;
+		this->y *= rhs;
+		this->z *= rhs;
+		return *this;
+	}
+
+	Vec3D& Vec3D::operator/=(double rhs) {
+		this->x /= rhs;
+		this->y /= rhs;
+		this->z /= rhs;
+		return *this;
+	}
+
+	// unary operators
+	Vec3D Vec3D::operator-() const {
+		return Vec3D(-this->x, -this->y, -this->z);
+	}
+
+	// binary operators
+	Vec3D operator+(Vec3D const& lhs, Vec3D const& rhs) {
+		return Vec3D(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
+	}
+
+	Vec3D operator-(Vec3D const& lhs, Vec3D const& rhs) {
+		return Vec3D(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
+	}
+
+	Vec3D operator*(Vec3D const& lhs, double rhs) {
+		return Vec3D(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs);
+	}
+
+	Vec3D operator*(double lhs, Vec3D const& rhs) {
+		return rhs * lhs;
+	}
+
+	Vec3D operator/(Vec3D const& lhs, double rhs) {
+		return lhs * (1.0 / rhs);
+	}
+
+	// dot product binary operator
+	double operator*(Vec3D const& lhs, Vec3D const& rhs) {
+		return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
+	}
+
+	// member functions
+	Vec3D Vec3D::normalize() const {
+		return *this / this->length();
+	}
+
+	Vec3D Vec3D::rotateDeg(double angle) const {
+		return Mtx44::rotateDeg(angle) * *this;
+	}
+
+	Vec3D Vec3D::rotateRad(double angle) const {
+		return Mtx44::rotateRad(angle) * *this;
+	}
+
+	double Vec3D::dot(Vec3D const& other) const {
+		return *this * other;
+	}
+
+	double Vec3D::cross(Vec3D const& other) const {
+		return sqrt((this->x * other.y - other.x * this->y) * (this->x * other.y - other.x * this->y) + (this->y * other.z - other.y * this->z) * (this->y * other.z - other.y * this->z) + (this->z * other.x - other.z * this->x) * (this->z * other.x - other.z * this->x));
+	}
+
+	double Vec3D::length() const {
+		return sqrt(this->squareLength());
+	}
+
+	double Vec3D::squareLength() const {
+		return this->x * this->x + this->y * this->y + this->z * this->z;
+	}
+
+	double Vec3D::distTo(Vec3D const& other) {
+		return sqrt(this->squareDistTo(other));
+	}
+
+	double Vec3D::squareDistTo(Vec3D const& other) {
+		return (other - *this).squareLength();
+	}
 }

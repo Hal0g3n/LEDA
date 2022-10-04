@@ -11,9 +11,10 @@
 
 #pragma once
 #include <LEDA_Math.h>
+#include <LEDA_Shapes.h>
 
 namespace LEDA {
-    class LineSegment {
+    class LineSegment : Shape {
         Vec2 m_pt0, m_pt1, m_normal;
     };
 }

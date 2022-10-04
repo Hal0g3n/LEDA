@@ -11,9 +11,10 @@
 
 #pragma once
 #include <LEDA_Math.h>
+#include <LEDA_Shapes.h>
 
 namespace LEDA {
-	class Circle {
+	class Circle : Shape {
 		Vec2 m_center;
 		double m_radius;
 	};
