@@ -12,5 +12,7 @@
 #pragma once
 
 namespace LEDA {
-
+	class AABB {
+		double m_width, m_height;
+	};
 }

@@ -10,10 +10,10 @@
  */
 
 #pragma once
-
+#include <IComponent.h>
 namespace LEDA {
 
-    class Shape { // The generic shape class
+    class Shape : IComponent { // The generic shape class
         Mesh pMesh;
     }
 
