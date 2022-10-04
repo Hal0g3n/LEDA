@@ -9,6 +9,7 @@
  */
 
 #include "pch.h"
+#include <typeinfo>
 #include "LEDA_System.h"
 #include "ISystem.h"
 
@@ -94,3 +95,16 @@ IGameState* LEDA::getPreviousGameState()		  { return pre; }
 IGameState* LEDA::getCurrentGameState()		  { return cur; }
 IGameState* LEDA::getNextGameState()			  { return nxt; }
 void LEDA::setNextGameState(IGameState* state)  { nxt = state; }
+
+// GameObject Manager Functions //
+std::map<std::string, IGameObject*> objects;
+
+void LEDA::registerGameObject(std::string id, IGameObject* obj) {
+	// Registers the object to each system
+	for (ISystem* system : systems) 
+		system->registerGameObject(obj);
+}
+
+IGameObject* LEDA::retrieveGameObject(std::string id) { 
+	return (objects.find(id) == objects.end()) ? nullptr : objects.find(id)->second; 
+}

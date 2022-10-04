@@ -35,6 +35,10 @@ namespace LEDA {
 	IGameState* getCurrentGameState();
 	IGameState* getNextGameState();
 	void setNextGameState(IGameState* state);
+
+	// GameObjectManager Functions //
+	void registerGameObject(std::string id, IGameObject* obj);
+	IGameObject* retrieveGameObject(std::string id);
 }
 
 #endif // LEDA_SYSTEM_H_

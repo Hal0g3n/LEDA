@@ -10,7 +10,10 @@
  */
 
 #pragma once
+#include <LEDA_Shapes.h>
 
 namespace LEDA {
-
+	class AABB : Shape {
+		double m_width, m_height;
+	};
 }

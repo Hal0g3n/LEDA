@@ -30,7 +30,6 @@ namespace LEDA {
 		// assignment operators
 		Vec2D& operator+=(Vec2D const&);
 		Vec2D& operator-=(Vec2D const&);
-		// Vec2D& operator*=(Vec2D const&); // Dot Product
 		Vec2D& operator*=(double);
 		Vec2D& operator/=(double);
 
@@ -59,6 +58,53 @@ namespace LEDA {
 	Vec2D operator/(Vec2D const&, double); // scalar division
 
 	double operator*(Vec2D const&, Vec2D const&); // dot product shorthand
+
+
+	// 3D vector (mostly for openGL but also good to have)
+	typedef union LEDA_API Vec3D {
+		// data members
+		struct {
+			double x, y, z;
+		};
+		double m[3];
+
+		// constructors
+		Vec3D(); // default
+		Vec3D(double x, double y, double z);
+
+		// assignment operators
+		Vec3D& operator+=(Vec3D const&);
+		Vec3D& operator-=(Vec3D const&);
+		Vec3D& operator*=(double);
+		Vec3D& operator/=(double);
+
+		// unary operators
+		Vec3D operator-() const;
+
+		// member functions
+		Vec3D  normalize() const;
+		Vec3D  rotateDeg(double) const;
+		Vec3D  rotateRad(double) const;
+		Vec3D  rotateOutward() const;
+		double dot(Vec3D const&) const;
+		double cross(Vec3D const&) const;
+		double length() const;
+		double squareLength() const;
+		double distTo(Vec3D const&); // get the distance between two points represented as vectors
+		double squareDistTo(Vec3D const&);
+
+	} Vec3D, Vector3D, Vec3;
+
+	// binary operators
+	Vec3D operator+(Vec3D const&, Vec3D const&); // vector addition
+	Vec3D operator-(Vec3D const&, Vec3D const&); // vector subtraction
+	Vec3D operator*(Vec3D const&, double);
+	Vec3D operator*(double, Vec3D const&); // scalar multiplication
+	Vec3D operator/(Vec3D const&, double); // scalar division
+
+	double operator*(Vec3D const&, Vec3D const&); // dot product shorthand
+
+
 }
 
 #endif // LEDA_VECTOR_H_
