@@ -157,12 +157,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\IComponent.h" />
     <ClInclude Include="Core\IGameObject.h" />
     <ClInclude Include="Core\IGameState.h" />
     <ClInclude Include="Core\ISystem.h" />
     <ClInclude Include="Core\LEDA_System.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Graphics\Drawer.h" />
     <ClInclude Include="Graphics\Graphics_Test.h" />
     <ClInclude Include="Graphics\LEDA_Graphics.h" />
     <ClInclude Include="Graphics\Shader.h" />
@@ -177,7 +179,9 @@
     <ClInclude Include="Tools\Math\Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Graphics\Drawer.cpp" />
     <ClCompile Include="Graphics\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
