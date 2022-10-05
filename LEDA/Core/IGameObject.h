@@ -7,11 +7,11 @@
  *
  * @copyright   Copyright (c) 2022
  */
-
 #pragma once
 
 #include <unordered_map>
 #include <string>
+#include <typeinfo>
 #include "IComponent.h"
 
 namespace LEDA {
@@ -24,9 +24,10 @@ namespace LEDA {
 		virtual void destroy() const = 0;
 
 		// helper functions
-		void addComponent(IComponent& component) {
-			components.emplace(std::string(""), component);
+		void addComponent(IComponent component) const {
+			components.emplace<std::string, IComponent>(std::string(""), component);
 		}
+
 		IComponent getComponent(std::string id) const { components.find(id)->second; };
 	};
 }

@@ -11,6 +11,7 @@
 #include "pch.h"
 #include <typeinfo>
 #include "LEDA_System.h"
+#include "LogicSystem.h"
 #include "ISystem.h"
 
 using namespace LEDA;
@@ -23,7 +24,7 @@ IGameState *pre, *cur, *nxt;
 
 
 // List of Systems
-std::vector<ISystem *> systems;
+std::vector<ISystem*> systems{new LogicSystem()};
 
 void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, IGameState* initialState) {
 
@@ -36,14 +37,11 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 
 	while (cur != Quit_GameState) { // while the application is not quitted yet
 
-		// Game State Load/Initialize (Assets Manager Load level)
-		cur->load();
-
 		// Initializes all our systems for the current state
 		for (ISystem* system : systems) system->init();
-		
 
-		//loadGameState();
+		// Game State Load/Initialize (Assets Manager Load level)
+		cur->load();
 
 
 		while (cur == nxt) { // While State is unchanged
@@ -70,12 +68,15 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 		objects.clear(); // Clear all objects when changing game state
 		if (nxt != Restart_GameState) cur->unload();
 
+		// Free all our systems for the current state
+		for (ISystem* system : systems) system->free();
+
 		pre = cur;
 		cur = nxt;
 	}
 
 	// Destroys all systems
-	for (ISystem* system : systems) system->destroy();
+	for (ISystem* system : systems) delete system;
 }
 
 // GameStateManager Functions //
@@ -110,6 +111,8 @@ void LEDA::registerGameObject(std::string id, IGameObject* obj) {
 	// Registers the object to each system
 	for (ISystem* system : systems) 
 		system->registerGameObject(obj);
+
+	objects.emplace(id, obj);
 }
 
 IGameObject* LEDA::retrieveGameObject(std::string id) { 
