@@ -173,6 +173,7 @@
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Graphics\Transform.h" />
     <ClInclude Include="Input\LEDA_Input.h" />
+    <ClInclude Include="KinematicsComponent.h" />
     <ClInclude Include="Logic\LogicSystem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physics\Collision.h" />
