@@ -10,12 +10,14 @@
 
 #pragma once
 
+
+// Replace with Scenemanager and AssetsManager (GameState = String)
 namespace LEDA {
 	/**
 	 * @brief GameState Interface to inherit
 	 *
-	 * load() => Called at first
-	 * unload() => Called when exiting current state
+	 * load() => Called 
+	 * unload() => Called 
 	*/
 	__interface IGameState {
 		// Registers Every Game Object Necessary
