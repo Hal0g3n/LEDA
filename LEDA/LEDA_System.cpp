@@ -32,7 +32,12 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 	// Sets initial game state
 	pre = cur = nxt = initialState;
 
+	// Assets Manager -> Initialize
+
 	while (cur != Quit_GameState) { // while the application is not quitted yet
+
+		// Game State Load/Initialize (Assets Manager Load level)
+		cur->load();
 
 		// Initializes all our systems for the current state
 		for (ISystem* system : systems) system->init();
@@ -61,6 +66,8 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 			// appTime += frameTime;
 		}
 
+		// Game State Unload (Assets Manager Unload level)
+		objects.clear(); // Clear all objects when changing game state
 		if (nxt != Restart_GameState) cur->unload();
 
 		pre = cur;
