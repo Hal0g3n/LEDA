@@ -17,11 +17,8 @@
 
 void LEDA::drawObject(IGameObject& object) {
 
-	TransformComponent transformComponent = (TransformComponent) object.getComponent("TransformComponent"); // todo: transform component
-	double x = transformComponent.x;
-	double y = transformComponent.y;
+	TransformComponent transformComponent = (TransformComponent) getComponent(object, "TransformComponent"); // todo: transform component
 
 	transformMatrix(transformComponent);
-
 
 }

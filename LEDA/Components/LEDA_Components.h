@@ -8,9 +8,12 @@
  * @copyright   Copyright (c) 2022
  */
 
-#pragma once
+#ifndef LEDA_COMPONENTS_H_
+#define LEDA_COMPONENTS_H_
 
 #include "pch.h"
 
 #include "IComponent.h"
 #include "TransformComponent.h"
+
+#endif // LEDA_COMPONENTS_H_

@@ -15,6 +15,11 @@
 #include "IComponent.h"
 #include "IGameObject.h"
 #include "IGameState.h"
+#include "ISystem.h"
+#include "GameObject.h"
+
+// should this be here?
+#include "LogicSystem.h"
 
 namespace LEDA {
 	/**

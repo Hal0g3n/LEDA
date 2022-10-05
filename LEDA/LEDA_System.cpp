@@ -9,9 +9,8 @@
  */
 
 #include "pch.h"
-#include <typeinfo>
+
 #include "LEDA_System.h"
-#include "LogicSystem.h"
 #include "ISystem.h"
 
 using namespace LEDA;

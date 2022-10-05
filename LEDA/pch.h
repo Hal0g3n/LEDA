@@ -17,6 +17,8 @@
 #include <queue>
 #include <map>
 #include <math.h>
+#include <typeinfo>
+#include <unordered_map>
 
 // DLL
 #ifdef LEDA_EXPORTS

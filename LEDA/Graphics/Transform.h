@@ -28,7 +28,7 @@ namespace LEDA {
 	glm::f32 LEDA_API* transformMatrix(TransformComponent tc);
 	glm::f32 LEDA_API* transformMatrix(double x, double y, double sx, double sy, double rotation);
 	glm::f32 LEDA_API* transformMatrix(double x, double y, Vector2D scale, double rotation);
-	glm::f32 LEDA_API * transformMatrix(Vector2D translation, Vector2D scale, double rotation);
+	glm::f32 LEDA_API* transformMatrix(Vector2D translation, Vector2D scale, double rotation);
 
 }
 
