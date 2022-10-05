@@ -15,7 +15,7 @@
 
 namespace LEDA {
 
-	class GameObject : IGameObject {
+	class GameObject : public IGameObject {
 
 		GameObject();
 

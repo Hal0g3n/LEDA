@@ -33,6 +33,36 @@ namespace LEDA {
         
 	}
 
+    Shader::Shader(std::string shaderType) {
+
+        std::string vertexShaderCode, fragmentShaderCode;
+
+        if (shaderType == "solid") {
+
+        }
+
+        if (shaderType == "rainbow") {
+            vertexShaderCode = "#version 460 core\n"
+                "layout (location = 0) in vec3 aPos;\n"
+                "layout (location = 1) in vec3 aColor;\n"
+                "out vec3 color;\n"
+                "uniform mat4 transform;\n"
+                "uniform mat4 projection;\n"
+                "void main() {\n"
+                "   gl_Position = projection * transform * vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+                "   color = aColor;\n"
+                "}\n\0";
+            fragmentShaderCode = "#version 460 core\n"
+                "out vec4 FragColor;\n"
+                "in vec3 color;\n"
+                "void main() {\n"
+                "   FragColor = vec4(color, 1.0f);\n"
+                "}\n\0";
+            Shader(vertexShaderCode, fragmentShaderCode);
+        }
+
+    }
+
     Shader::Shader(std::string vertexString, std::string fragmentString) {
 
         const char* vertexCharArray = vertexString.c_str();

@@ -13,7 +13,7 @@ namespace LEDA {
 		// Called on Destroy
 		~LogicSystem() { for (IGameObject* obj : objects) delete obj; };
 
-		void init() {};
+		void init() { for (IGameObject* obj : objects) obj->init(); };
 		void update() { for (IGameObject* obj : objects) obj->update(); };
 		void free() { for (IGameObject* obj : objects) obj->destroy(); objects.clear(); };
 		

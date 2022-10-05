@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Logic">
       <UniqueIdentifier>{f9163ac3-8bf6-47cb-92cc-58d812116680}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{d4043eb3-bc0c-4db4-9f8f-72154932dca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{38ba35a6-bce6-475f-9ecc-45904d76a5a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -113,6 +119,12 @@
     </ClInclude>
     <ClInclude Include="Logic\LogicSystem.h">
       <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\TransformComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\LEDA_Components.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

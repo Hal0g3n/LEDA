@@ -165,14 +165,13 @@ int LEDA::test() {
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
 
-                unsigned int transformLocatio2n = glGetUniformLocation(theShader.id, "transform");
-                glUniformMatrix4fv(transformLocatio2n, 1, GL_FALSE, transformMatrix(Vector2D(i * 80 - 800, j * 80 - 800), Vector2D(100 * s, 100 * s), rotation));
+                unsigned int transformLocation2 = glGetUniformLocation(theShader.id, "transform");
+                glUniformMatrix4fv(transformLocation2, 1, GL_FALSE, transformMatrix(Vector2D(i * 80 - 800, j * 80 - 800), Vector2D(100 * s, 100 * s), rotation));
 
                 glBindVertexArray(VAO);
                 glDrawArrays(GL_TRIANGLES, 0, 3);
 
             }
-
         }
 
         glfwSwapBuffers(window);
