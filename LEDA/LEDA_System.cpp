@@ -24,7 +24,9 @@ IGameState *pre, *cur, *nxt;
 
 
 // List of Systems
-std::vector<ISystem*> systems{new LogicSystem()};
+std::vector<ISystem*> systems{
+	new LogicSystem()
+};
 
 void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, IGameState* initialState) {
 
@@ -99,9 +101,9 @@ IGameState* LEDA::retrieveGameState(std::string id) {
 }
 
 // Exposes certain GameState values for usage
-IGameState* LEDA::getPreviousGameState()		  { return pre; }
-IGameState* LEDA::getCurrentGameState()		  { return cur; }
-IGameState* LEDA::getNextGameState()			  { return nxt; }
+IGameState* LEDA::getPreviousGameState()		{ return pre; }
+IGameState* LEDA::getCurrentGameState()			{ return cur; }
+IGameState* LEDA::getNextGameState()			{ return nxt; }
 void LEDA::setNextGameState(IGameState* state)  { nxt = state; }
 
 // GameObject Manager Functions //

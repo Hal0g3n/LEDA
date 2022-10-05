@@ -21,6 +21,7 @@ void LEDA::drawObject(IGameObject& object) {
 	double x = transformComponent.x;
 	double y = transformComponent.y;
 
+	transformMatrix(transformComponent);
 
 
 }

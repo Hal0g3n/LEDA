@@ -20,6 +20,10 @@ namespace LEDA {
 		
 	}
 
+	GameObject::~GameObject() {
+
+	}
+
 	// helper functions for game objects
 
 	void addComponent(GameObject& obj, IComponent component) {

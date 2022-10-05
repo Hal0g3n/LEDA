@@ -9,6 +9,9 @@
  */
 #pragma once
 
+#ifndef LEDA_I_GAME_OBJECT_H_
+#define LEDA_I_GAME_OBJECT_H_
+
 #include <unordered_map>
 #include <string>
 #include <typeinfo>
@@ -19,10 +22,8 @@ namespace LEDA {
 	class IGameObject {
 	public:
 		std::unordered_map<std::string, IComponent> components{};
-		// required functions - not anymore!
-		//virtual void init()    const = 0;
-		//virtual void update()  const = 0;
-		//virtual void destroy() const = 0;
 	};
 
 }
+
+#endif // LEDA_I_GAME_OBJECT_H_
