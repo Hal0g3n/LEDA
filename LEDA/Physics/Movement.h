@@ -13,9 +13,12 @@
 #define LEDA_MOVEMENT_H_
 
 #include "pch.h"
+#include "ISystem.h"
 
 namespace LEDA {
-
+	class MovementSystem : ISystem {
+		
+	};
 }
 
 #endif // LEDA_MOVEMENT_H_
