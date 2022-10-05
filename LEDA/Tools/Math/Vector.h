@@ -83,8 +83,8 @@ namespace LEDA {
 
 		// member functions
 		Vec3D  normalize() const;
-		Vec3D  rotateDeg(double) const;
-		Vec3D  rotateRad(double) const;
+		Vec3D  rotateDeg(double, Vec3D) const;
+		Vec3D  rotateRad(double, Vec3D) const;
 		Vec3D  rotateOutward() const;
 		double dot(Vec3D const&) const;
 		double cross(Vec3D const&) const;
