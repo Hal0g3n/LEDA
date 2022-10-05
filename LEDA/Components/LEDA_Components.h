@@ -15,5 +15,6 @@
 
 #include "IComponent.h"
 #include "TransformComponent.h"
+#include "KinematicsComponent.h"
 
 #endif // LEDA_COMPONENTS_H_
