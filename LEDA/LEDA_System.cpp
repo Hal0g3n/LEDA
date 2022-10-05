@@ -31,17 +31,15 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 
 	std::cout << "LEDA runs!\n";
 
-	// Sets initial game state
-	pre = cur = nxt = initialState;
-
 	// Assets Manager -> Initialize
+	
+	//// Initializes all our systems for the current state
+	//for (ISystem* system : systems) system->init();
 
 	while (cur != Quit_GameState) { // while the application is not quitted yet
 
-		// Initializes all our systems for the current state
-		for (ISystem* system : systems) system->init();
 
-		// Game State Load/Initialize (Assets Manager Load level)
+		// Scene Load/Initialize (Assets Manager Load level)
 		cur->load();
 
 
@@ -65,47 +63,47 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 			// appTime += frameTime;
 		}
 
-		// Game State Unload (Assets Manager Unload level)
-		objects.clear(); // Clear all objects when changing game state
-		if (nxt != Restart_GameState) cur->unload();
+		// SceneManager->onSceneExit()
+		objects.clear(); 
+
+		// Assets Manager Unload level (Persistent Assets)
+		if (nxt != Restart_GameState) cur->unload(nxt);
 
 		// Free all our systems for the current state
 		for (ISystem* system : systems) system->free();
-
-		pre = cur;
-		cur = nxt;
 	}
 
 	// Destroys all systems
 	for (ISystem* system : systems) delete system;
 }
 
-// GameStateManager Functions //
+// AssetsManager Functions //
 std::map<std::string, IGameState*> states;
 
 // Stores States
-bool LEDA::registerGameState(std::string id, IGameState* state) {
-	// Already Exists
-	if (states.find(id) != states.end()) return false;
+//bool LEDA::registerGameState(std::string id, IGameState* state) {
+//	// Already Exists
+//	if (states.find(id) != states.end()) return false;
+//
+//	// Register the Game State
+//	states.insert({ id, state });
+//	return true;
+//}
 
-	// Register the Game State
-	states.insert({ id, state });
-	return true;
-}
-
-// Retrieves registered states
-IGameState* LEDA::retrieveGameState(std::string id) {
+// Retrieves registered states (from json file)
+IGameState* LEDA::retrieveGameState(std::string file) {
 	if (states.find(id) == states.end()) return 0;
 	else return states.find(id)->second;
 }
 
+// Replace with SceneManager->onSceneEnter(state);
 // Exposes certain GameState values for usage
 IGameState* LEDA::getPreviousGameState()		{ return pre; }
 IGameState* LEDA::getCurrentGameState()			{ return cur; }
 IGameState* LEDA::getNextGameState()			{ return nxt; }
 void LEDA::setNextGameState(IGameState* state)  { nxt = state; }
 
-// GameObject Manager Functions //
+// SceneManager Functions //
 std::map<std::string, IGameObject*> objects;
 
 void LEDA::registerGameObject(std::string id, IGameObject* obj) {
