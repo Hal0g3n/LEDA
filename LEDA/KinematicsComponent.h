@@ -16,7 +16,7 @@
 namespace LEDA {
 	
 	struct LEDA_API KinematicsComponent : public IComponent {
-		Vec2 vel;
-		Vec2 acc;
+		Vec2 vel{ 0.0, 0.0 };
+		Vec2 acc{ 0.0, 0.0 };
 	};
 }
