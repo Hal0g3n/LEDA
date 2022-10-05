@@ -12,8 +12,14 @@
 
 #include "pch.h"
 
-namespace LEDA {
-	struct IComponent {
+#include "LEDA_Math.h"
 
+namespace LEDA {
+
+	struct LEDA_API TransformComponent : public IComponent {
+		Vector2D position{ 0.0, 0.0 };
+		Vector2D scale{ 1.0, 1.0 };
+		double rotation{ 0.0 };
 	};
+
 }

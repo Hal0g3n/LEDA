@@ -20,26 +20,21 @@ namespace LEDA {
 		
 	}
 
-	void GameObject::init() {
-		// todo
-		std::cout << "init";
-	}
-	
-	void GameObject::update() {
-		// todo
-		// std::cout << "update";
+	GameObject::~GameObject() {
+
 	}
 
-	void GameObject::destroy() {
-		// todo
-		std::cout << "destroy";
+	// helper functions for game objects
+
+	void addComponent(GameObject& obj, IComponent component) {
+		obj.components.emplace(typeid(component).name(), component);
 	}
 
-	IComponent GameObject::getComponent(std::string string) {
-		if (this->components.find(string) == this->components.end()) {
-			throw "Invalid component type string: '" + string + "'!";
+	IComponent getComponent(GameObject& obj, std::string id) {
+		if (obj.components.find(id) == obj.components.end()) {
+			throw "Invalid component type id: '" + id + "'!";
 		}
-		return this->components.at(string);
-	}
+		return obj.components.find(id)->second;
+	};
 
 };

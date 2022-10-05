@@ -193,13 +193,15 @@ namespace LEDA {
 		return *this / this->length();
 	}
 
-	Vec3D Vec3D::rotateDeg(double angle) const {
-		return Mtx44::rotateDeg(angle) * *this;
+	Vec3D Vec3D::rotateDeg(double angle, Vec3D from) const {
+		return Mtx44::rotateDeg(angle, from) * *this;
 	}
 
-	Vec3D Vec3D::rotateRad(double angle) const {
-		return Mtx44::rotateRad(angle) * *this;
+	Vec3D Vec3D::rotateRad(double angle, Vec3D from) const {
+		return Mtx44::rotateRad(angle, from) * *this;
 	}
+
+	// implement rotateOutward
 
 	double Vec3D::dot(Vec3D const& other) const {
 		return *this * other;

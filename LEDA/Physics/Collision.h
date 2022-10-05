@@ -24,7 +24,7 @@ namespace LEDA { // LEDA Namespace
 	struct LEDA_API Circle
 	{
 		LEDA::Vec2D	m_center;
-		float		m_radius;
+		float		m_radius{ 1.0f };
 		float		m_mass{ 1.0f };
 	};
 

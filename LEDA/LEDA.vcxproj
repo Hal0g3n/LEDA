@@ -126,7 +126,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Core;$(ProjectDir)Graphics;$(ProjectDir)Physics;$(ProjectDir)Tools\Shapes;$(ProjectDir)Tools\Math;$(ProjectDir)Logic;$(ProjectDir)Input;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Core;$(ProjectDir)Graphics;$(ProjectDir)Physics;$(ProjectDir)Tools\Shapes;$(ProjectDir)Tools\Math;$(ProjectDir)Logic;$(ProjectDir)Input;$(ProjectDir)Components;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -157,6 +157,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Components\LEDA_Components.h" />
+    <ClInclude Include="Components\TransformComponent.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\IComponent.h" />
     <ClInclude Include="Core\IGameObject.h" />

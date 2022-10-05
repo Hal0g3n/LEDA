@@ -9,28 +9,21 @@
  */
 #pragma once
 
+#ifndef LEDA_I_GAME_OBJECT_H_
+#define LEDA_I_GAME_OBJECT_H_
+
 #include <unordered_map>
 #include <string>
 #include <typeinfo>
 #include "IComponent.h"
 
 namespace LEDA {
+
 	class IGameObject {
 	public:
 		std::unordered_map<std::string, IComponent> components{};
-		// required functions
-		virtual void init()    const = 0;
-		virtual void update()  const = 0;
-		virtual void destroy() const = 0;
-
-		// helper functions
-		void addComponent(IComponent component) {
-			components.emplace(
-				std::string(typeid(component).name()),
-				component
-			);
-		}
-
-		IComponent getComponent(std::string id) const { components.find(id)->second; };
 	};
+
 }
+
+#endif // LEDA_I_GAME_OBJECT_H_

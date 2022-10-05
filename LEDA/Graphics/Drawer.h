@@ -8,6 +8,7 @@
  * @copyright   Copyright (c) 2022
  */
 
+#pragma once
 
 #ifndef LEDA_DRAWER_H_
 #define LEDA_DRAWER_H_
@@ -17,6 +18,7 @@
 #include "LEDA_Graphics.h"
 #include "LEDA_Math.h"
 #include "LEDA_System.h"
+#include "LEDA_Components.h"
 
 
 namespace LEDA {

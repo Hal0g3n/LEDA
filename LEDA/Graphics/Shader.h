@@ -29,6 +29,8 @@ namespace LEDA {
 
         // this constructor just makes a default shader
         Shader();
+        // this constructor is the most useful one...
+        Shader(std::string shaderType);
         // this constructor makes the shader from 2 shader code strings
         Shader(std::string vertexCode, std::string fragmentCode);
         // this constructor makes the shader from 2 file paths (dynamically)
