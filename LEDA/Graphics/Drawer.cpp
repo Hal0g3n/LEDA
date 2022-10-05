@@ -19,6 +19,6 @@ void LEDA::drawObject(IGameObject& object) {
 
 	TransformComponent transformComponent = (TransformComponent) getComponent(object, "TransformComponent"); // todo: transform component
 
-	transformMatrix(transformComponent);
+	glm::f32 * mat = transformMatrix(transformComponent);
 
 }

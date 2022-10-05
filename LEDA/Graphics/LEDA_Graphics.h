@@ -9,9 +9,10 @@
  * 
  */
 
+#pragma once
+
 #ifndef LEDA_GRAPHICS_H_
 #define LEDA_GRAPHICS_H_
-
 
 #include "pch.h"
 

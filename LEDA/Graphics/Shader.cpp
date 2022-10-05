@@ -10,10 +10,12 @@
  */
 
 #include "pch.h"
+
 #include "Shader.h"
 
 #include <glad/glad.h>
 
+// should only be for this class (for now), so it's just here
 #include <fstream>
 #include <sstream>
 

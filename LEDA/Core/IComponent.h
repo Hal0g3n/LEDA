@@ -10,10 +10,17 @@
 
 #pragma once
 
+#ifndef LEDA_I_COMPONENT_H_
+#define LEDA_I_COMPONENT_H_
+
 #include "pch.h"
 
 namespace LEDA {
+
 	struct IComponent {
 
 	};
+
 }
+
+#endif LEDA_I_COMPONENT_H_
