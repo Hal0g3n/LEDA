@@ -21,7 +21,7 @@ using emptyFunction = void(*)();
 
 namespace LEDA {
 
-	namespace input {
+	namespace Input {
 
 		enum LEDA_API KEY {
 

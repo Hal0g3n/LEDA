@@ -24,17 +24,4 @@ namespace LEDA {
 
 	}
 
-	// helper functions for game objects
-
-	void addComponent(GameObject& obj, IComponent component) {
-		obj.components.emplace(typeid(component).name(), component);
-	}
-
-	IComponent getComponent(GameObject& obj, std::string id) {
-		if (obj.components.find(id) == obj.components.end()) {
-			throw "Invalid component type id: '" + id + "'!";
-		}
-		return obj.components.find(id)->second;
-	};
-
 };

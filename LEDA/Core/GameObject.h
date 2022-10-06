@@ -22,8 +22,6 @@ namespace LEDA {
 
 	};
 
-	void addComponent(GameObject& obj, IComponent component);
-	IComponent getComponent(IGameObject& obj, std::string string);
 }
 
 #endif // LEDA_GAME_OBJECT_H_

@@ -158,6 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Components\LEDA_Components.h" />
+    <ClInclude Include="Components\LogicComponent.h" />
     <ClInclude Include="Components\TransformComponent.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\IComponent.h" />

@@ -37,9 +37,6 @@
     <Filter Include="Header Files\Graphics">
       <UniqueIdentifier>{a575b540-370b-47af-a2b0-5b68ece78b2c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Input">
-      <UniqueIdentifier>{1b2a871e-d093-40be-a044-b126c0e95a71}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{d4bf4a00-bb46-410e-9f62-7fa31495a1e5}</UniqueIdentifier>
     </Filter>
@@ -54,6 +51,9 @@
     </Filter>
     <Filter Include="Source Files\Components">
       <UniqueIdentifier>{38ba35a6-bce6-475f-9ecc-45904d76a5a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Input">
+      <UniqueIdentifier>{1b2a871e-d093-40be-a044-b126c0e95a71}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -97,7 +97,7 @@
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="Input\LEDA_Input.h">
-      <Filter>Header Files\Input</Filter>
+      <Filter>Header Files\Core\Input</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Shader.h">
       <Filter>Header Files\Graphics</Filter>

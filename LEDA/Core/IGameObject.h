@@ -20,8 +20,16 @@
 namespace LEDA {
 
 	class IGameObject {
-	public:
+
+	private:
 		std::unordered_map<std::string, IComponent> components{};
+
+	public: 		
+		friend void addComponent(IGameObject&, IComponent);
+
+		template <typename Component>
+		friend IComponent getComponent(IGameObject&);
+
 	};
 
 }
