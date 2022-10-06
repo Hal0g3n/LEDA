@@ -22,9 +22,7 @@ void LEDA::addComponent(IGameObject &obj, IComponent const component) {
 }
 
 template <typename Component>
-IComponent LEDA::getComponent(IGameObject &obj) {
-	if (components.find(typeid(Component).name()) == components.end()) {
-		throw "Invalid component type id: '" + id + "'!";
-	}
-	return obj.components.find(id)->second;
+Component* LEDA::getComponent(IGameObject& obj) {
+	IComponent* value = obj.components.find(id);
+	return value == obj.components.end() ? nullptr : value->second;
 };

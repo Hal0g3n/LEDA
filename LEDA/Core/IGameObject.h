@@ -24,14 +24,19 @@ namespace LEDA {
 	private:
 		std::unordered_map<std::string, IComponent> components{};
 
-	public: 		
+	public:
 		friend void addComponent(IGameObject&, IComponent);
 
+		// Returns nullptr if Component is not found
 		template <typename Component>
-		friend IComponent getComponent(IGameObject&);
+		friend Component* getComponent(IGameObject&);
 
 	};
 
+	void addComponent(IGameObject&, IComponent);
+
+	template <typename Component>
+	Component* getComponent(IGameObject&);
 }
 
 #endif // LEDA_I_GAME_OBJECT_H_
