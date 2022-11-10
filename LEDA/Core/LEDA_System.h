@@ -8,18 +8,21 @@
  * @copyright   Copyright (c) 2022
  */
 
+#pragma once
+
 #ifndef LEDA_SYSTEM_H_
 #define LEDA_SYSTEM_H_
 
 #include "pch.h"
-#include "IComponent.h"
+
 #include "IGameObject.h"
-#include "IGameState.h"
+#include "IComponent.h"
 #include "ISystem.h"
+#include "IGameState.h"
 #include "GameObject.h"
 
 // should this be here?
-#include "LogicSystem.h"
+//#include "LogicSystem.h"
 
 namespace LEDA {
 	/**

@@ -12,9 +12,8 @@
 #ifndef LEDA_I_GAME_OBJECT_H_
 #define LEDA_I_GAME_OBJECT_H_
 
-#include <unordered_map>
-#include <string>
-#include <typeinfo>
+#include "pch.h"
+
 #include "IComponent.h"
 
 namespace LEDA {

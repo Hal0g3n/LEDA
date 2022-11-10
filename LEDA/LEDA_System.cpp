@@ -11,7 +11,7 @@
 #include "pch.h"
 
 #include "LEDA_System.h"
-#include "ISystem.h"
+#include "LogicSystem.h"
 
 using namespace LEDA;
 
@@ -64,10 +64,10 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 		}
 
 		// SceneManager->onSceneExit()
-		objects.clear(); 
+		// objects.clear(); // what is objects?
 
 		// Assets Manager Unload level (Persistent Assets)
-		if (nxt != Restart_GameState) cur->unload(nxt);
+		if (nxt != Restart_GameState) cur->unload(); // cur->unload(nxt);
 
 		// Free all our systems for the current state
 		for (ISystem* system : systems) system->free();
@@ -91,9 +91,10 @@ std::map<std::string, IGameState*> states;
 //}
 
 // Retrieves registered states (from json file)
-IGameState* LEDA::retrieveGameState(std::string file) {
-	if (states.find(id) == states.end()) return 0;
-	else return states.find(id)->second;
+IGameState* LEDA::retrieveGameState(std::string id) { // changed parameter name from file to id to fix errors
+	std::map<std::string, IGameState*>::const_iterator finded = states.find(id);
+	if (finded == states.end()) return 0;
+	else return finded->second;
 }
 
 // Replace with SceneManager->onSceneEnter(state);

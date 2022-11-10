@@ -22,6 +22,8 @@
 
 using namespace LEDA;
 
+using namespace LEDA::Input;
+
 // declare extern variable here
 GLFWwindow* LEDA::window;
 

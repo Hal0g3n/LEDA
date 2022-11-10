@@ -8,11 +8,14 @@
  * @copyright   Copyright (c) 2022
  */
 
+#pragma once
+
 #ifndef LEDA_LOGIC_SYSTEM_H_
 #define LEDA_LOGIC_SYSTEM_H_
 
 #include "pch.h"
 
+#include "ISystem.h"
 #include "LEDA_System.h"
 
 namespace LEDA {
@@ -32,6 +35,10 @@ namespace LEDA {
 		void update() { for (IGameObject* obj : objects) obj->update(); };
 		void free() { for (IGameObject* obj : objects) obj->destroy(); objects.clear(); };
 		*/
+		// ?
+		void init();
+		void update();
+		void free();
 		
 		// Called on new Game Object
 		void registerGameObject(IGameObject*);

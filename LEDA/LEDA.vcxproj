@@ -194,7 +194,6 @@
     <ClCompile Include="Graphics\Graphics_Test.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Graphics\Transform.cpp" />
-    <ClCompile Include="IGameObject.cpp" />
     <ClCompile Include="Input\LEDA_Input.cpp" />
     <ClCompile Include="LEDA_System.cpp" />
     <ClCompile Include="Logic\LogicSystem.cpp" />

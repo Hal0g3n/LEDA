@@ -6,10 +6,10 @@
 #include "IComponent.h"
 
 namespace LEDA {
-	struct LogicComponent: IComponent {
-		virtual void init()	  const;
-		virtual void update() const;
-		virtual void free()	  const;
+	struct LogicComponent : IComponent {
+		// virtual void init()	  const;
+		// virtual void update()  const;
+		// virtual void free()	  const;
 	};
 }
 

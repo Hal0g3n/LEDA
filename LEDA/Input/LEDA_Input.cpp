@@ -13,7 +13,8 @@
 #include "LEDA_Input.h"
 
 using namespace LEDA;
-using namespace LEDA::input;
+
+using namespace LEDA::Input;
 
 // how to store key trigger/release callback functions:
 
@@ -59,7 +60,7 @@ void mainKeyCallback(GLFWwindow* window, int key, int scancode, int action, int 
 }
 
 
-void LEDA::input::initializeInput(bool stickyKeys) {
+void LEDA::Input::initializeInput(bool stickyKeys) {
 
 	// set GLFW input modes below
 
@@ -80,7 +81,7 @@ void LEDA::input::initializeInput(bool stickyKeys) {
 
 }
 
-void LEDA::input::doInput() {
+void LEDA::Input::doInput() {
 
 	// processes received events in the event queue (calling key callbacks)
 	glfwPollEvents();
@@ -90,11 +91,11 @@ void LEDA::input::doInput() {
 }
 
 
-bool LEDA::input::keyPressed(LEDA::input::KEY key) {
+bool LEDA::Input::keyPressed(LEDA::Input::KEY key) {
 	return glfwGetKey(window, key) == GLFW_PRESS;
 }
 
-bool LEDA::keyRepeated(LEDA::input::KEY key) {
+bool LEDA::Input::keyRepeated(LEDA::Input::KEY key) {
 	return glfwGetKey(window, key) == GLFW_REPEAT;
 }
 
@@ -116,7 +117,7 @@ bool LEDA::keyReleased(LEDA::KEY key) {
 
 // functions to add key callbacks
 
-void LEDA::input::addKeyTriggerCallback(KEY key, emptyFunction function) {
+void LEDA::Input::addKeyTriggerCallback(KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = triggerCallbacks.find(key);
 	if (found == triggerCallbacks.end()) {
@@ -129,7 +130,7 @@ void LEDA::input::addKeyTriggerCallback(KEY key, emptyFunction function) {
 
 }
 
-void LEDA::input::addKeyReleaseCallback(KEY key, emptyFunction function) {
+void LEDA::Input::addKeyReleaseCallback(KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = releaseCallbacks.find(key);
 	if (found == releaseCallbacks.end()) {
@@ -142,7 +143,7 @@ void LEDA::input::addKeyReleaseCallback(KEY key, emptyFunction function) {
 
 }
 
-void LEDA::input::addKeyRepeatCallback(KEY key, emptyFunction function) {
+void LEDA::Input::addKeyRepeatCallback(KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = repeatCallbacks.find(key);
 	if (found == repeatCallbacks.end()) {
@@ -158,7 +159,7 @@ void LEDA::input::addKeyRepeatCallback(KEY key, emptyFunction function) {
 
 // functions to remove key callbacks
 
-void LEDA::input::removeKeyTriggerCallback(KEY key, emptyFunction function) {
+void LEDA::Input::removeKeyTriggerCallback(KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = triggerCallbacks.find(key);
 	if (found == triggerCallbacks.end()) {
@@ -175,7 +176,7 @@ void LEDA::input::removeKeyTriggerCallback(KEY key, emptyFunction function) {
 
 }
 
-void LEDA::input::removeKeyReleaseCallback(KEY key, emptyFunction function) {
+void LEDA::Input::removeKeyReleaseCallback(KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = releaseCallbacks.find(key);
 	if (found == releaseCallbacks.end()) {
@@ -192,7 +193,7 @@ void LEDA::input::removeKeyReleaseCallback(KEY key, emptyFunction function) {
 
 }
 
-void LEDA::input::removeKeyRepeatCallback(KEY key, emptyFunction function) {
+void LEDA::Input::removeKeyRepeatCallback(KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = repeatCallbacks.find(key);
 	if (found == repeatCallbacks.end()) {
