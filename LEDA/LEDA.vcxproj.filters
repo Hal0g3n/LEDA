@@ -55,6 +55,12 @@
     <Filter Include="Header Files\Core\Input">
       <UniqueIdentifier>{1b2a871e-d093-40be-a044-b126c0e95a71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\FrameRate">
+      <UniqueIdentifier>{4702496d-f463-4755-b696-fc24c9c39eef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FrameRate">
+      <UniqueIdentifier>{944da557-5cc6-43e3-9c4f-206ddfc4c4ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -67,9 +73,6 @@
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Physics\LEDA_Physics.h">
-      <Filter>Header Files\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\Movement.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Tools\Math\LEDA_Math.h">
@@ -133,7 +136,10 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Components\LogicComponent.h">
-      <Filter>Header Files\Logic</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\FrameRate\FrameRateController.h">
+      <Filter>Header Files\FrameRate</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="Logic\LogicSystem.cpp">
       <Filter>Source Files\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\FrameRate\FrameRateController.cpp">
+      <Filter>Source Files\FrameRate</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

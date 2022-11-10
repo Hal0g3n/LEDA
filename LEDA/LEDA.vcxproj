@@ -179,7 +179,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physics\Collision.h" />
     <ClInclude Include="Physics\LEDA_Physics.h" />
-    <ClInclude Include="Physics\Movement.h" />
+    <ClInclude Include="Tools\FrameRate\FrameRateController.h" />
     <ClInclude Include="Tools\Math\LEDA_Math.h" />
     <ClInclude Include="Tools\Math\Matrix.h" />
     <ClInclude Include="Tools\Math\Vector.h" />
@@ -205,6 +205,7 @@
     </ClCompile>
     <ClCompile Include="Physics\Collision.cpp" />
     <ClCompile Include="Physics\Movement.cpp" />
+    <ClCompile Include="Tools\FrameRate\FrameRateController.cpp" />
     <ClCompile Include="Tools\Math\Matrix.cpp" />
     <ClCompile Include="Tools\Math\Vector.cpp" />
   </ItemGroup>
