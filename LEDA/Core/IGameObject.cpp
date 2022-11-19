@@ -23,6 +23,6 @@ void LEDA::addComponent(IGameObject &obj, IComponent const component) {
 
 template <typename Component>
 Component* LEDA::getComponent(IGameObject& obj) {
-	IComponent* value = obj.components.find(id);
+	IComponent* value = obj.components.find<Component>();
 	return value == obj.components.end() ? nullptr : value->second;
 };

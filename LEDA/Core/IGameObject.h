@@ -28,7 +28,7 @@ namespace LEDA {
 
 		// Returns nullptr if Component is not found
 		template <typename Component>
-		friend Component* getComponent(IGameObject&);
+		friend Component* getComponent();
 
 	};
 

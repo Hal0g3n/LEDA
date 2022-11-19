@@ -8,6 +8,8 @@
  * @copyright   Copyright (c) 2022
  */
 
+#pragma once
+
 #ifndef LEDA_GAME_OBJECT_H_
 #define LEDA_GAME_OBJECT_H_
 

@@ -31,11 +31,11 @@
     <Filter Include="Source Files\Core">
       <UniqueIdentifier>{18d8f3e6-bbd1-4650-8d2e-1555430cb695}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Graphics">
-      <UniqueIdentifier>{c5cfbd3a-cba3-4de2-97e5-3163a9242fc9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Graphics">
       <UniqueIdentifier>{a575b540-370b-47af-a2b0-5b68ece78b2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{c5cfbd3a-cba3-4de2-97e5-3163a9242fc9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{d4bf4a00-bb46-410e-9f62-7fa31495a1e5}</UniqueIdentifier>
@@ -136,7 +136,7 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Components\LogicComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Tools\FrameRate\FrameRateController.h">
       <Filter>Header Files\FrameRate</Filter>
@@ -190,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="Tools\FrameRate\FrameRateController.cpp">
       <Filter>Source Files\FrameRate</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\IGameObject.cpp">
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

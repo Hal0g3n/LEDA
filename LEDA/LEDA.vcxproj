@@ -186,6 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\GameObject.cpp" />
+    <ClCompile Include="Core\IGameObject.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Graphics\Drawer.cpp" />
     <ClCompile Include="Graphics\glad.c">

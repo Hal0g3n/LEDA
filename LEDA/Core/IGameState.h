@@ -10,6 +10,10 @@
 
 #pragma once
 
+#ifndef LEDA_I_GAME_STATE_H_
+#define LEDA_I_GAME_STATE_H_
+
+#include "pch.h"
 
 // Replace with Scenemanager and AssetsManager (GameState = String)
 namespace LEDA {
@@ -18,7 +22,7 @@ namespace LEDA {
 	 *
 	 * load() => Called 
 	 * unload() => Called 
-	*/
+	 */
 	__interface IGameState {
 		// Registers Every Game Object Necessary
 		virtual void load() const = 0;
@@ -31,6 +35,8 @@ namespace LEDA {
 
 	// Setting Reserved Pointers QUIT and RESTART
 	// These addresses are protected by system, so they are "reserved" values
-	IGameState *Quit_GameState		= (IGameState *) 1;
-	IGameState *Restart_GameState	= (IGameState *) 2;
+	extern IGameState *Quit_GameState		= (IGameState *) 1;
+	extern IGameState *Restart_GameState	= (IGameState *) 2;
 }
+
+#endif // LEDA_I_GAME_STATE_H_

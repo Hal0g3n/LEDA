@@ -11,6 +11,7 @@
 
 #include "pch.h"
 
+#include "LEDA_Graphics.h"
 #include "Drawer.h"
 
 #include <GLFW/glfw3.h>
