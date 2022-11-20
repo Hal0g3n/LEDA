@@ -158,6 +158,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Assets\AssetsManager.h" />
+    <ClInclude Include="Assets\json.hpp" />
     <ClInclude Include="Components\GraphicsComponent.h" />
     <ClInclude Include="Components\KinematicsComponent.h" />
     <ClInclude Include="Components\LEDA_Components.h" />
@@ -185,6 +187,7 @@
     <ClInclude Include="Tools\Math\Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Assets\AssetsManager.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Graphics\Drawer.cpp" />
     <ClCompile Include="Graphics\glad.c">

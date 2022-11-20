@@ -61,6 +61,12 @@
     <Filter Include="Source Files\FrameRate">
       <UniqueIdentifier>{944da557-5cc6-43e3-9c4f-206ddfc4c4ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Assets">
+      <UniqueIdentifier>{a150d55d-a767-4a17-a8b1-4712b8f145b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Assets">
+      <UniqueIdentifier>{0dbc8176-9e3a-4bd5-8eea-a3ac6a736935}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -138,6 +144,12 @@
     <ClInclude Include="Components\KinematicsComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Assets\AssetsManager.h">
+      <Filter>Header Files\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Assets\json.hpp">
+      <Filter>Header Files\Assets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -184,6 +196,9 @@
     </ClCompile>
     <ClCompile Include="Tools\FrameRate\FrameRateController.cpp">
       <Filter>Source Files\FrameRate</Filter>
+    </ClCompile>
+    <ClCompile Include="Assets\AssetsManager.cpp">
+      <Filter>Source Files\Assets</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
