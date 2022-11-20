@@ -36,9 +36,9 @@ namespace LEDA {
 		void free() { for (IGameObject* obj : objects) obj->destroy(); objects.clear(); };
 		*/
 		// ?
-		void init();
-		void update();
-		void free();
+		void init() {};
+		void update() {};
+		void free() {};
 		
 		// Called on new Game Object
 		void registerGameObject(IGameObject*);

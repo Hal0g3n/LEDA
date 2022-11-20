@@ -7,6 +7,7 @@
  *
  * @copyright   Copyright (c) 2022
  */
+
 #pragma once
 
 #ifndef LEDA_I_GAME_OBJECT_H_
@@ -21,21 +22,43 @@ namespace LEDA {
 	class IGameObject {
 
 	private:
-		std::unordered_map<std::string, IComponent> components{};
+		std::unordered_map<std::string, IComponent*> components{};
 
 	public:
-		friend void addComponent(IGameObject&, IComponent);
+		/*
+		void addComponent(IComponent component) {
+			this->components.emplace(typeid(component).name(), component);
+		}
 
-		// Returns nullptr if Component is not found
-		template <typename Component>
-		friend Component* getComponent();
+		template <typename C>
+		C* getComponent() {
+			IComponent* value = this->components.find<C>();
+			return value == this->components.end() ? nullptr : value->second;
+		};
+		*/
+
+		friend void addComponent(IGameObject& obj, IComponent* component);
+
+		// Returns nullptr if component is not found
+		template <typename C>
+		friend C* getComponent(IGameObject& obj);
 
 	};
 
-	void addComponent(IGameObject&, IComponent);
+	void addComponent(IGameObject& obj, IComponent* component) {
+		obj.components.emplace(typeid(component).name(), component);
+	}
 
-	template <typename Component>
-	Component* getComponent(IGameObject&);
+	template <typename C>
+	C* getComponent(IGameObject& obj) {
+		std::unordered_map<std::string, IComponent*>::const_iterator value = obj.components.find(typeid(C).name());
+		if (value == obj.components.end()) {
+			throw "No such component in game object!";
+		} else {
+			return dynamic_cast<C*>(value->second);
+		}
+	}
+
 }
 
 #endif // LEDA_I_GAME_OBJECT_H_

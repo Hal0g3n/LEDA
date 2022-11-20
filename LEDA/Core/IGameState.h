@@ -32,11 +32,12 @@ namespace LEDA {
 		virtual void unload() const = 0;
 	};
 
-
+	/*
 	// Setting Reserved Pointers QUIT and RESTART
 	// These addresses are protected by system, so they are "reserved" values
 	extern IGameState *Quit_GameState		= (IGameState *) 1;
 	extern IGameState *Restart_GameState	= (IGameState *) 2;
+	*/
 }
 
 #endif // LEDA_I_GAME_STATE_H_

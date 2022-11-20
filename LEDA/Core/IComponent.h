@@ -19,6 +19,9 @@ namespace LEDA {
 
 	struct IComponent {
 
+		// make this class polymorphic
+		virtual ~IComponent() {};
+
 	};
 
 }

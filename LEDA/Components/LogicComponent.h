@@ -1,3 +1,13 @@
+/**
+ * @file        LogicComponent.h
+ * @author      your name (you@domain.com)
+ * @brief       Stores logic information
+ * @version     0.1
+ * @date        04-10-2022
+ *
+ * @copyright   Copyright (c) 2022
+ */
+
 #ifndef LEDA_COMPONENTS_H_
 #define LEDA_COMPONENTS_H_
 
@@ -6,11 +16,13 @@
 #include "IComponent.h"
 
 namespace LEDA {
-	struct LogicComponent : IComponent {
+
+	struct LEDA_API LogicComponent : IComponent {
 		// virtual void init()	  const;
 		// virtual void update()  const;
 		// virtual void free()	  const;
 	};
+
 }
 
 #endif // LEDA_COMPONENTS_H_

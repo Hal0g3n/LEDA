@@ -36,7 +36,7 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 	//// Initializes all our systems for the current state
 	//for (ISystem* system : systems) system->init();
 
-	while (cur != Quit_GameState) { // while the application is not quitted yet
+	while (cur != nullptr/*Quit_GameState*/) { // while the application is not quitted yet
 
 
 		// Scene Load/Initialize (Assets Manager Load level)
@@ -67,7 +67,7 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 		// objects.clear(); // what is objects?
 
 		// Assets Manager Unload level (Persistent Assets)
-		if (nxt != Restart_GameState) cur->unload(); // cur->unload(nxt);
+		if (nxt != nullptr/*Restart_GameState*/) cur->unload(); // cur->unload(nxt);
 
 		// Free all our systems for the current state
 		for (ISystem* system : systems) system->free();
