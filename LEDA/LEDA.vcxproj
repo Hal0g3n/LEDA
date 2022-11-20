@@ -158,6 +158,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Components\GraphicsComponent.h" />
+    <ClInclude Include="Components\KinematicsComponent.h" />
     <ClInclude Include="Components\LEDA_Components.h" />
     <ClInclude Include="Components\LogicComponent.h" />
     <ClInclude Include="Components\TransformComponent.h" />
@@ -168,14 +170,12 @@
     <ClInclude Include="Core\ISystem.h" />
     <ClInclude Include="Core\LEDA_System.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="GraphicsComponent.h" />
     <ClInclude Include="Graphics\Drawer.h" />
     <ClInclude Include="Graphics\Graphics_Test.h" />
     <ClInclude Include="Graphics\LEDA_Graphics.h" />
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Graphics\Transform.h" />
     <ClInclude Include="Input\LEDA_Input.h" />
-    <ClInclude Include="KinematicsComponent.h" />
     <ClInclude Include="Logic\LogicSystem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physics\Collision.h" />
