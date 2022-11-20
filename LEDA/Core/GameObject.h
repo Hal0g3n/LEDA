@@ -8,21 +8,43 @@
  * @copyright   Copyright (c) 2022
  */
 
-#pragma once
-
 #ifndef LEDA_GAME_OBJECT_H_
 #define LEDA_GAME_OBJECT_H_
 
-#include "LEDA_System.h"
+#include "pch.h"
+
+#include "IComponent.h"
 
 namespace LEDA {
 
-	class GameObject : public IGameObject {
+	class GameObject {
 
-		GameObject();
-		~GameObject();
+	private:
+		std::unordered_map<std::string, IComponent*> components{};
+
+	public:
+		friend void addComponent(GameObject& obj, IComponent* component);
+
+		// Returns nullptr if component is not found
+		template <typename C>
+		friend C* getComponent(GameObject& obj);
 
 	};
+
+	void addComponent(GameObject& obj, IComponent* component) {
+		obj.components.emplace(typeid(component).name(), component);
+	}
+
+	template <typename C>
+	C* getComponent(GameObject& obj) {
+		std::unordered_map<std::string, IComponent*>::const_iterator value = obj.components.find(typeid(C).name());
+		if (value == obj.components.end()) {
+			throw "No such component in game object!";
+		}
+		else {
+			return dynamic_cast<C*>(value->second);
+		}
+	}
 
 }
 

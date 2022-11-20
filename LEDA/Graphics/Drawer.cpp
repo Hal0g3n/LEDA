@@ -17,7 +17,7 @@
 
 #include <GLFW/glfw3.h>
 
-void LEDA::drawObject(IGameObject& object) {
+void LEDA::drawObject(GameObject& object) {
 
 	TransformComponent* transformComponent = getComponent<TransformComponent>(object); // todo: transform component
 

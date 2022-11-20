@@ -17,7 +17,7 @@
 
 namespace LEDA {
 
-	struct IComponent {
+	struct LEDA_API IComponent {
 
 		// make this class polymorphic
 		virtual ~IComponent() {};

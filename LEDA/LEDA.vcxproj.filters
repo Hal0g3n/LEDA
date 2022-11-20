@@ -182,17 +182,11 @@
     <ClCompile Include="Graphics\Drawer.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Core\GameObject.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Logic\LogicSystem.cpp">
       <Filter>Source Files\Logic</Filter>
     </ClCompile>
     <ClCompile Include="Tools\FrameRate\FrameRateController.cpp">
       <Filter>Source Files\FrameRate</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\IGameObject.cpp">
-      <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

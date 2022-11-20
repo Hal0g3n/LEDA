@@ -15,11 +15,10 @@
 
 #include "pch.h"
 
-#include "IGameObject.h"
+#include "GameObject.h"
 #include "IComponent.h"
 #include "ISystem.h"
 #include "IGameState.h"
-#include "GameObject.h"
 
 // should this be here?
 //#include "LogicSystem.h"
@@ -45,8 +44,8 @@ namespace LEDA {
 	void setNextGameState(IGameState* state);
 
 	// GameObjectManager Functions //
-	void registerGameObject(std::string id, IGameObject* obj);
-	IGameObject* retrieveGameObject(std::string id);
+	void registerGameObject(std::string id, GameObject* obj);
+	GameObject* retrieveGameObject(std::string id);
 }
 
 #endif // LEDA_SYSTEM_H_

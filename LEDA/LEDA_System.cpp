@@ -105,9 +105,9 @@ IGameState* LEDA::getNextGameState()			{ return nxt; }
 void LEDA::setNextGameState(IGameState* state)  { nxt = state; }
 
 // SceneManager Functions //
-std::map<std::string, IGameObject*> objects;
+std::map<std::string, GameObject*> objects;
 
-void LEDA::registerGameObject(std::string id, IGameObject* obj) {
+void LEDA::registerGameObject(std::string id, GameObject* obj) {
 	// Registers the object to each system
 	for (ISystem* system : systems) 
 		system->registerGameObject(obj);
@@ -115,6 +115,6 @@ void LEDA::registerGameObject(std::string id, IGameObject* obj) {
 	objects.emplace(id, obj);
 }
 
-IGameObject* LEDA::retrieveGameObject(std::string id) { 
+GameObject* LEDA::retrieveGameObject(std::string id) { 
 	return (objects.find(id) == objects.end()) ? nullptr : objects.find(id)->second; 
 }

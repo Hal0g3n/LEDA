@@ -21,19 +21,19 @@
 namespace LEDA {
 
 	class LogicSystem : public ISystem {
-		std::vector<IGameObject*> objects{};
+		std::vector<GameObject*> objects{};
 
 	public:
 		// Called on Initialize
 		LogicSystem() {};
 
 		// Called on Destroy
-		~LogicSystem() { for (IGameObject* obj : objects) delete obj; };
+		~LogicSystem() { for (GameObject* obj : objects) delete obj; };
 
 		/*
-		void init() { for (IGameObject* obj : objects) obj->init(); };
-		void update() { for (IGameObject* obj : objects) obj->update(); };
-		void free() { for (IGameObject* obj : objects) obj->destroy(); objects.clear(); };
+		void init() { for (GameObject* obj : objects) obj->init(); };
+		void update() { for (GameObject* obj : objects) obj->update(); };
+		void free() { for (GameObject* obj : objects) obj->destroy(); objects.clear(); };
 		*/
 		// ?
 		void init() {};
@@ -41,7 +41,7 @@ namespace LEDA {
 		void free() {};
 		
 		// Called on new Game Object
-		void registerGameObject(IGameObject*);
+		void registerGameObject(GameObject*);
 
 	};
 }

@@ -15,6 +15,8 @@
 
 #include "pch.h"
 
+/* // to remove
+
 #include "IComponent.h"
 
 namespace LEDA {
@@ -25,18 +27,6 @@ namespace LEDA {
 		std::unordered_map<std::string, IComponent*> components{};
 
 	public:
-		/*
-		void addComponent(IComponent component) {
-			this->components.emplace(typeid(component).name(), component);
-		}
-
-		template <typename C>
-		C* getComponent() {
-			IComponent* value = this->components.find<C>();
-			return value == this->components.end() ? nullptr : value->second;
-		};
-		*/
-
 		friend void addComponent(IGameObject& obj, IComponent* component);
 
 		// Returns nullptr if component is not found
@@ -60,5 +50,7 @@ namespace LEDA {
 	}
 
 }
+
+*/
 
 #endif // LEDA_I_GAME_OBJECT_H_

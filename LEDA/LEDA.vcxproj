@@ -134,6 +134,7 @@
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>glfw3.lib;glfw3_mt.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)LEDA\Libraries\lib;$(SolutionDir)LEDA;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -185,8 +186,6 @@
     <ClInclude Include="Tools\Math\Vector.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Core\GameObject.cpp" />
-    <ClCompile Include="Core\IGameObject.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Graphics\Drawer.cpp" />
     <ClCompile Include="Graphics\glad.c">
