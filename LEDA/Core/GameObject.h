@@ -15,6 +15,8 @@
 
 #include "IComponent.h"
 
+#include <unordered_map>
+
 namespace LEDA {
 
 	class GameObject {
@@ -39,9 +41,8 @@ namespace LEDA {
 	C* getComponent(GameObject& obj) {
 		std::unordered_map<std::string, IComponent*>::const_iterator value = obj.components.find(typeid(C).name());
 		if (value == obj.components.end()) {
-			throw "No such component in game object!";
-		}
-		else {
+			return nullptr; // ok don't throw error just handle later (:
+		} else {
 			return dynamic_cast<C*>(value->second);
 		}
 	}

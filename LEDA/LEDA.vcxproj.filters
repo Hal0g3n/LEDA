@@ -90,9 +90,6 @@
     <ClInclude Include="Core\IComponent.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\IGameObject.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\IGameState.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>

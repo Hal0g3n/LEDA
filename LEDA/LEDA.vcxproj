@@ -165,7 +165,6 @@
     <ClInclude Include="Components\TransformComponent.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\IComponent.h" />
-    <ClInclude Include="Core\IGameObject.h" />
     <ClInclude Include="Core\IGameState.h" />
     <ClInclude Include="Core\ISystem.h" />
     <ClInclude Include="Core\LEDA_System.h" />
