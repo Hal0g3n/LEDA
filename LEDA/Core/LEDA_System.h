@@ -19,11 +19,11 @@
 #include "IComponent.h"
 #include "ISystem.h"
 #include "IGameState.h"
+#include "SceneManager.h"
 
 // should this be here?
 //#include "LogicSystem.h"
 
-#include "AssetsManager.h"
 
 namespace LEDA {
 

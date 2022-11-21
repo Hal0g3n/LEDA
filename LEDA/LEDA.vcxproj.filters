@@ -61,10 +61,10 @@
     <Filter Include="Source Files\FrameRate">
       <UniqueIdentifier>{944da557-5cc6-43e3-9c4f-206ddfc4c4ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Assets">
+    <Filter Include="Header Files\Scene &amp; Asset Manager">
       <UniqueIdentifier>{a150d55d-a767-4a17-a8b1-4712b8f145b5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Assets">
+    <Filter Include="Source Files\Scene &amp; Asset Manager">
       <UniqueIdentifier>{0dbc8176-9e3a-4bd5-8eea-a3ac6a736935}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -94,9 +94,6 @@
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Core\IComponent.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\IGameState.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\LEDA_System.h">
@@ -144,11 +141,17 @@
     <ClInclude Include="Components\KinematicsComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Assets\AssetsManager.h">
-      <Filter>Header Files\Assets</Filter>
+    <ClInclude Include="Assets\SceneManager.h">
+      <Filter>Header Files\Scene &amp; Asset Manager</Filter>
     </ClInclude>
     <ClInclude Include="Assets\json.hpp">
-      <Filter>Header Files\Assets</Filter>
+      <Filter>Header Files\Scene &amp; Asset Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset.h">
+      <Filter>Header Files\Scene &amp; Asset Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\IGameState.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -197,8 +200,16 @@
     <ClCompile Include="Tools\FrameRate\FrameRateController.cpp">
       <Filter>Source Files\FrameRate</Filter>
     </ClCompile>
-    <ClCompile Include="Assets\AssetsManager.cpp">
-      <Filter>Source Files\Assets</Filter>
+    <ClCompile Include="Assets\SceneManager.cpp">
+      <Filter>Source Files\Scene &amp; Asset Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Assets\Asset.cpp">
+      <Filter>Source Files\Scene &amp; Asset Manager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sample_level.json">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

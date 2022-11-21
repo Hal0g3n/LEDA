@@ -19,16 +19,17 @@
 #include "IComponent.h"
 #include "ISystem.h"
 #include "IGameState.h"
+#include "Asset.h"
 
 
 namespace LEDA {
 
-	class LEDA_API AssetsManager {
+	class LEDA_API SceneManager {
+		std::map<std::string, Asset*> assets;
 
 	public:
-		bool load(std::string);
-		bool loadNext(std::ifstream);
-		void* getAsset(std::string);
+		void  load(std::string);
+		Asset* getAsset(std::string);
 
 	};
 
