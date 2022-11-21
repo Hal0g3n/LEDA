@@ -19,6 +19,7 @@
 #include <math.h>
 #include <typeinfo>
 #include <unordered_map>
+#include <chrono>
 
 // DLL
 #ifdef LEDA_EXPORTS
