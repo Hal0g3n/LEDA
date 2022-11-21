@@ -27,7 +27,7 @@ void WINDOW_RESIZE(GLFWwindow* window, int width, int height) {
 	glOrtho(0.0, width, 0.0, height, -1.0, 1.0);
 }
 
-void LEDA::drawInit() {
+void LEDA::initializeDrawer() {
 
 	glfwInit();
 
@@ -88,7 +88,7 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 		
 		// bind the material before drawing all objects with the material
 
-		unsigned int VBO = 0, VAO = 0;
+		unsigned int VAO = 0, VBO = 0;
 
 		if (shape == "triangle") {
 			glGenVertexArrays(1, &VAO);
@@ -133,4 +133,20 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 
 }
 
-// glfwSwapBuffers(window); // ?
+void LEDA::updateDrawer(std::vector<GameObject*> objects) {
+
+	// draw background colour
+	glClearColor(0.123f, 0.456f, 0.789f, 1.0f); // around #1f74c9
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	drawObjects(objects);
+
+	glfwSwapBuffers(window);
+
+}
+
+void LEDA::freeDrawer() {
+
+	
+
+}

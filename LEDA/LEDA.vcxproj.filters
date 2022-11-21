@@ -153,6 +153,9 @@
     <ClInclude Include="Assets\Asset.h">
       <Filter>Header Files\Scene &amp; Asset Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\GraphicsSystem.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -205,6 +208,9 @@
     </ClCompile>
     <ClCompile Include="Core\LEDA_System.cpp">
       <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\GraphicsSystem.cpp">
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -173,6 +173,7 @@
     <ClInclude Include="Core\LEDA_System.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Graphics\Drawer.h" />
+    <ClInclude Include="Graphics\GraphicsSystem.h" />
     <ClInclude Include="Graphics\Graphics_Test.h" />
     <ClInclude Include="Graphics\LEDA_Graphics.h" />
     <ClInclude Include="Graphics\Shader.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="Graphics\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Graphics\GraphicsSystem.cpp" />
     <ClCompile Include="Graphics\Graphics_Test.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Graphics\Transform.cpp" />

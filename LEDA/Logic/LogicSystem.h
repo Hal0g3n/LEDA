@@ -44,6 +44,7 @@ namespace LEDA {
 		void registerGameObject(GameObject*);
 
 	};
+
 }
 
 #endif // LEDA_LOGIC_SYSTEM_H_

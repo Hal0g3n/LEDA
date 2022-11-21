@@ -21,9 +21,11 @@
 #include "IGameState.h"
 #include "SceneManager.h"
 
-// should this be here?
-//#include "LogicSystem.h"
-
+// include all systems too
+/*
+#include "LogicSystem.h"
+#include "GraphicsSystem.h"
+*/
 
 namespace LEDA {
 

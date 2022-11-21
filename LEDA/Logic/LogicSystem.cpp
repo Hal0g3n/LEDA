@@ -17,11 +17,12 @@
 using namespace LEDA;
 
 void LogicSystem::registerGameObject(GameObject* obj) {
-	this->objects.push_back(obj);
-	LogicComponent* logic = getComponent<LogicComponent>(*obj);
 
-	if (logic == nullptr) return;
-	
-	// logic->init();
-	objects.push_back(obj);
+	// check if the object contains a logic component
+	LogicComponent* logic = getComponent<LogicComponent>(*obj);
+	if (logic != nullptr) {
+		// if so, add to this system's object list
+		this->objects.push_back(obj);
+	}
+
 }

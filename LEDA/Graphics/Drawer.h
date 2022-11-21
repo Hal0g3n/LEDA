@@ -27,9 +27,13 @@
 
 namespace LEDA {
 
-	void drawInit();
+	void initializeDrawer();
 
 	void LEDA_API drawObjects(std::vector<GameObject*> objects);
+
+	void updateDrawer(std::vector<GameObject*> objects);
+
+	void freeDrawer();
 
 }
 

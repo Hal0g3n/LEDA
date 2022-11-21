@@ -12,6 +12,8 @@
 
 #include "LEDA_System.h"
 #include "LogicSystem.h"
+#include "GraphicsSystem.h"
+
 #include <string>
 
 using namespace LEDA;
@@ -25,13 +27,14 @@ std::string pre, cur, nxt;
 // Frame rate variables
 std::chrono::time_point<std::chrono::system_clock> frameStartTime;
 
-// I moved this to the top to avoid error
+// i moved this to the top to avoid error
 std::map<std::string, GameObject*> objects;
 
 
 // List of Systems
 std::vector<ISystem*> systems{
-	// new LogicSystem()
+	new LogicSystem(),
+	new GraphicsSystem(),
 };
 
 void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, std::string initialState) {
@@ -45,7 +48,7 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 	// TODO: We need a window manager?
 	
 	//// Initializes all our systems for the current state
-	for (ISystem* system : systems) system -> init();
+	for (ISystem* system : systems) system->init();
 
 	while (cur != "quit" /*Quit_GameState*/) { // While the application is not quitted yet
 
