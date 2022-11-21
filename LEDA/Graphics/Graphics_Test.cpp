@@ -66,11 +66,9 @@ int LEDA::test() {
 
     glfwInit();
 
-    std::cout << "1\n";
-
-    // OpenGL version 4.6
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+    // OpenGL version 3.3, latest version is 4.6
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // 4
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); // 6
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     #ifdef __APPLE__
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // for os x and ios

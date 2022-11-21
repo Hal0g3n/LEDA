@@ -16,8 +16,10 @@
 int main()
 {
     std::cout << "Hello World!\n";
-    LEDA::SceneManager testingmanager{};
+    /*
+    LEDA::AssetsManager testingmanager{};
     testingmanager.load("example.json");
+    */
     return LEDA::test();
 }
 

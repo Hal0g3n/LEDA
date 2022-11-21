@@ -15,6 +15,10 @@
 
 #include <glad/glad.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 // should only be for this class (for now), so it's just here
 #include <fstream>
 #include <sstream>
@@ -38,11 +42,41 @@ namespace LEDA {
 
         std::string vertexShaderCode, fragmentShaderCode;
 
+        // WARNING: use of very funny-looking raw strings here
+
         if (shaderType == "solid") {
 
-        }
+            vertexShaderCode = R"SHADER(
 
-        if (shaderType == "rainbow") {
+                #version 330 core
+                layout (location = 0) in vec3 aPos;
+                out vec4 vertexColor;
+                uniform mat4 projection;
+                uniform mat4 transform;
+                uniform vec4 color;
+                void main() {
+                    gl_Position = projection * transform * vec4(aPos, 1.0);
+                    vertexColor = color;
+                }
+
+            )SHADER";
+            
+            fragmentShaderCode = R"SHADER(
+
+                #version 330 core
+                out vec4 FragColor;
+                in vec4 vertexColor;
+                void main() {
+                    FragColor = vertexColor;
+                }
+
+            )SHADER";
+
+            Shader(vertexShaderCode, fragmentShaderCode);
+
+        }
+        else if (shaderType == "rainbow") {
+
             vertexShaderCode = "#version 460 core\n"
                 "layout (location = 0) in vec3 aPos;\n"
                 "layout (location = 1) in vec3 aColor;\n"
@@ -60,6 +94,9 @@ namespace LEDA {
                 "   FragColor = vec4(color, 1.0f);\n"
                 "}\n\0";
             Shader(vertexShaderCode, fragmentShaderCode);
+        }
+        else {
+            Shader();
         }
 
     }
@@ -149,6 +186,11 @@ namespace LEDA {
     void Shader::setFloat(const std::string& name, float value) const
     {
         glUniform1f(glGetUniformLocation(id, name.c_str()), value);
+    }
+
+    void Shader::setMatrix4(const std::string& name, glm::f32 * value) const
+    {
+        glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, value);
     }
 
 
