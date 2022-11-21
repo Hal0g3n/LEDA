@@ -16,7 +16,7 @@
 int main()
 {
     std::cout << "Hello World!\n";
-    LEDA::AssetsManager testingmanager{};
+    LEDA::SceneManager testingmanager{};
     testingmanager.load("example.json");
     return LEDA::test();
 }

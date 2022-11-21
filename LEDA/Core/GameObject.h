@@ -19,7 +19,7 @@
 
 namespace LEDA {
 
-	class GameObject {
+	class LEDA_API GameObject {
 
 	private:
 		std::unordered_map<std::string, IComponent*> components{};
@@ -33,12 +33,12 @@ namespace LEDA {
 
 	};
 
-	void addComponent(GameObject& obj, IComponent* component) {
+	void LEDA_API addComponent(GameObject& obj, IComponent* component) {
 		obj.components.emplace(typeid(component).name(), component);
 	}
 
 	template <typename C>
-	C* getComponent(GameObject& obj) {
+	C* LEDA_API getComponent(GameObject& obj) {
 		std::unordered_map<std::string, IComponent*>::const_iterator value = obj.components.find(typeid(C).name());
 		if (value == obj.components.end()) {
 			return nullptr; // ok don't throw error just handle later (:

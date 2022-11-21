@@ -8,8 +8,8 @@
  * @copyright   Copyright (c) 2022
  */
 
-#ifndef LEDA_COMPONENTS_H_
-#define LEDA_COMPONENTS_H_
+#ifndef LOGIC_COMPONENTS_H_
+#define LOGIC_COMPONENTS_H_
 
 #include "pch.h"
 
@@ -25,4 +25,4 @@ namespace LEDA {
 
 }
 
-#endif // LEDA_COMPONENTS_H_
+#endif // LOGIC_COMPONENTS_H_

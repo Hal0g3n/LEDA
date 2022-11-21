@@ -158,7 +158,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Assets\AssetsManager.h" />
+    <ClInclude Include="Asset.h" />
+    <ClInclude Include="Assets\SceneManager.h" />
     <ClInclude Include="Assets\json.hpp" />
     <ClInclude Include="Components\GraphicsComponent.h" />
     <ClInclude Include="Components\KinematicsComponent.h" />
@@ -187,7 +188,8 @@
     <ClInclude Include="Tools\Math\Vector.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Assets\AssetsManager.cpp" />
+    <ClCompile Include="Assets\Asset.cpp" />
+    <ClCompile Include="Assets\SceneManager.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Graphics\Drawer.cpp" />
     <ClCompile Include="Graphics\glad.c">
@@ -210,6 +212,9 @@
     <ClCompile Include="Tools\FrameRate\FrameRateController.cpp" />
     <ClCompile Include="Tools\Math\Matrix.cpp" />
     <ClCompile Include="Tools\Math\Vector.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sample_level.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

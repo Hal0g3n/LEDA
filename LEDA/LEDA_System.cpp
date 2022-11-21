@@ -108,6 +108,9 @@ void LEDA::setNextGameState(IGameState* state)  { nxt = state; }
 std::map<std::string, GameObject*> objects;
 
 void LEDA::registerGameObject(std::string id, GameObject* obj) {
+	// Delete before replace
+	delete retrieveGameObject(id);
+
 	// Registers the object to each system
 	for (ISystem* system : systems) 
 		system->registerGameObject(obj);
