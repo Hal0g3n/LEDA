@@ -30,9 +30,9 @@ void SceneManager::load(std::string filename) {
 	if (!data["assets"].is_null()) { // If additional assets exist
 		for (auto &asset : data["assets"].items())
 			if ("fonts" == asset.key())
-				for (auto &s : asset.value()) ; // Figure out loading the asset from file name
+				for (auto &s : asset.value()) ; // TODO: Figure out loading the asset from file name
 			else if ("images" == asset.key())
-				for (auto &s : asset.value()) ; // Figure out loading the asset from file name
+				for (auto &s : asset.value()) ; // TODO: Figure out loading the asset from file name
 	}
 
 	if (!data["objects"].is_null()) { // If the game objects actually exist

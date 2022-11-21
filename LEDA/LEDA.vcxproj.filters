@@ -170,9 +170,6 @@
     <ClCompile Include="Tools\Math\Vector.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
-    <ClCompile Include="LEDA_System.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics\Graphics_Test.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
@@ -205,6 +202,9 @@
     </ClCompile>
     <ClCompile Include="Assets\Asset.cpp">
       <Filter>Source Files\Scene &amp; Asset Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\LEDA_System.cpp">
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
