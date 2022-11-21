@@ -21,6 +21,7 @@ namespace LEDA {
 		bool inFrame;
 
 	public:
+		FrameRateController();
 		// functions for frame rate controller
 		void frameStart(); // starts the frame
 		void frameEnd(); // ends the frame and updates the last frame time

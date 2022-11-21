@@ -158,7 +158,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Asset.h" />
+    <ClInclude Include="Assets\Asset.h" />
     <ClInclude Include="Assets\SceneManager.h" />
     <ClInclude Include="Assets\json.hpp" />
     <ClInclude Include="Components\GraphicsComponent.h" />

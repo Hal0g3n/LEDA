@@ -1,5 +1,7 @@
 #pragma once
 
+#include "pch.h"
+
 namespace LEDA {
 	
 	struct LEDA_API Asset {
@@ -17,4 +19,5 @@ namespace LEDA {
 		Font(std::string filename);
 		~Font();
 	};
+
 }

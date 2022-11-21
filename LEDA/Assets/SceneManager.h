@@ -1,5 +1,5 @@
 /**
- * @file        AssetsManager.h
+ * @file        SceneManager.h
  * @author      your name (you@domain.com)
  * @brief       ...
  * @version     0.1
@@ -10,8 +10,8 @@
 
 #pragma once
 
-#ifndef LEDA_ASSETS_MANAGER_H_
-#define LEDA_ASSETS_MANAGER_H_
+#ifndef LEDA_SCENE_MANAGER_H_
+#define LEDA_SCENE_MANAGER_H_
 
 #include "pch.h"
 
@@ -21,6 +21,8 @@
 #include "IGameState.h"
 #include "Asset.h"
 
+#include <map>
+
 
 namespace LEDA {
 
@@ -28,11 +30,11 @@ namespace LEDA {
 		std::map<std::string, Asset*> assets;
 
 	public:
-		void  load(std::string);
+		void load(std::string);
 		Asset* getAsset(std::string);
 
 	};
 
 }
 
-#endif // LEDA_ASSETS_MANAGER_H_
+#endif // LEDA_SCENE_MANAGER_H_

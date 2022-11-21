@@ -147,11 +147,11 @@
     <ClInclude Include="Assets\json.hpp">
       <Filter>Header Files\Scene &amp; Asset Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Asset.h">
-      <Filter>Header Files\Scene &amp; Asset Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Core\IGameState.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Assets\Asset.h">
+      <Filter>Header Files\Scene &amp; Asset Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

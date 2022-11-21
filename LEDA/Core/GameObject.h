@@ -8,6 +8,8 @@
  * @copyright   Copyright (c) 2022
  */
 
+#pragma once
+
 #ifndef LEDA_GAME_OBJECT_H_
 #define LEDA_GAME_OBJECT_H_
 
@@ -25,20 +27,20 @@ namespace LEDA {
 		std::unordered_map<std::string, IComponent*> components{};
 
 	public:
-		friend void addComponent(GameObject& obj, IComponent* component);
+		friend void LEDA_API addComponent(GameObject& obj, IComponent* component);
 
 		// Returns nullptr if component is not found
 		template <typename C>
-		friend C* getComponent(GameObject& obj);
+		friend C LEDA_API * getComponent(GameObject& obj);
 
 	};
 
-	void LEDA_API addComponent(GameObject& obj, IComponent* component) {
+	void addComponent(GameObject& obj, IComponent* component) {
 		obj.components.emplace(typeid(component).name(), component);
 	}
 
 	template <typename C>
-	C* LEDA_API getComponent(GameObject& obj) {
+	C * getComponent(GameObject& obj) {
 		std::unordered_map<std::string, IComponent*>::const_iterator value = obj.components.find(typeid(C).name());
 		if (value == obj.components.end()) {
 			return nullptr; // ok don't throw error just handle later (:

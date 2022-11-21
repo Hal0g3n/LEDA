@@ -1,5 +1,5 @@
 /**
- * @file        AssetsManager.cpp
+ * @file        SceneManager.cpp
  * @author      your name (you@domain.com)
  * @brief       ...
  * @version     0.1
@@ -28,20 +28,20 @@ void SceneManager::load(std::string filename) {
 	json data = json::parse(stream);
 
 	if (!data["assets"].is_null()) { // If additional assets exist
-		for (auto asset : data["assets"].items())
+		for (auto &asset : data["assets"].items())
 			if ("fonts" == asset.key())
-				for (auto s : asset.value()) ; // Figure out loading the asset from file name
+				for (auto &s : asset.value()) ; // Figure out loading the asset from file name
 			else if ("images" == asset.key())
-				for (auto s : asset.value()) ; // Figure out loading the asset from file name
+				for (auto &s : asset.value()) ; // Figure out loading the asset from file name
 	}
 
 	if (!data["objects"].is_null()) { // If the game objects actually exist
-		for (auto obj : data["objects"].items()) {
+		for (auto &obj : data["objects"].items()) {
 
 			GameObject* cur = new GameObject();
 
 			// For each obj component
-			for (auto comp : data["objects"].items())
+			for (auto &comp : data["objects"].items())
 				if ("position" == comp.key()) addComponent(*cur, new LogicComponent()); // Add component
 
 			// Register the game object for retreival later
