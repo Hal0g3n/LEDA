@@ -10,6 +10,7 @@
  */
 
 // credit to https://learnopengl.com/ for the main idea and base code
+// but i changed quite a lot?
 
 #ifndef LEDA_SHADER_H_
 #define LEDA_SHADER_H_
@@ -34,7 +35,7 @@ namespace LEDA {
 
         // this constructor just makes a default shader
         Shader();
-        // this constructor is the most useful one...
+        // this constructor is the most useful one... perhaps
         Shader(std::string shaderType);
         // this constructor makes the shader from 2 shader code strings
         Shader(std::string vertexCode, std::string fragmentCode);
@@ -48,9 +49,15 @@ namespace LEDA {
         void setBool(const std::string& name, bool value) const;
         void setInt(const std::string& name, int value) const;
         void setFloat(const std::string& name, float value) const;
+        void setFloat4(const std::string& name, float* value) const;
+        void setFloat4(const std::string& name, float f1, float f2, float f3, float f4) const;
+        void setFloat4(const std::string& name, double d1, double d2, double d3, double d4) const;
         void setMatrix4(const std::string& name, glm::f32 * value) const;
 
     private:
+
+        // for all the /set.*/ functions
+        unsigned int getUniformLocation(const std::string& name) const;
 
         // checks for errors (used in the second most basic constructor (which one is that again))
         void checkForErrors(unsigned int shader, std::string type);

@@ -39,6 +39,9 @@ namespace LEDA {
 	}
 
     Shader::Shader(std::string shaderType) {
+        
+        // set id here to prevent warning...
+        id = 0;
 
         std::string vertexShaderCode, fragmentShaderCode;
 
@@ -67,12 +70,15 @@ namespace LEDA {
                 out vec4 FragColor;
                 in vec4 vertexColor;
                 void main() {
-                    FragColor = vertexColor;
+                    FragColor = vec4(0.0, 0.0, 0.0, 0.0);
                 }
 
             )SHADER";
 
             Shader(vertexShaderCode, fragmentShaderCode);
+
+        }
+        else if (shaderType == "transparent") {
 
         }
         else if (shaderType == "rainbow") {
@@ -175,26 +181,46 @@ namespace LEDA {
 
     void Shader::setBool(const std::string& name, bool value) const
     {
-        glUniform1i(glGetUniformLocation(id, name.c_str()), (int)value);
+        glUniform1i(getUniformLocation(name), (int)value);
     }
 
     void Shader::setInt(const std::string& name, int value) const
     {
-        glUniform1i(glGetUniformLocation(id, name.c_str()), value);
+        glUniform1i(getUniformLocation(name), value);
     }
 
     void Shader::setFloat(const std::string& name, float value) const
     {
-        glUniform1f(glGetUniformLocation(id, name.c_str()), value);
+        glUniform1f(getUniformLocation(name), value);
+    }
+
+    void Shader::setFloat4(const std::string& name, float* value) const
+    {
+        glUniform4f(getUniformLocation(name), value[0], value[1], value[2], value[3]);
+    }
+
+    void Shader::setFloat4(const std::string& name, float f1, float f2, float f3, float f4) const
+    {
+        glUniform4f(getUniformLocation(name), f1, f2, f3, f4);
+    }
+
+    void Shader::setFloat4(const std::string& name, double d1, double d2, double d3, double d4) const
+    {
+        this->setFloat4(name, (float)d1, (float)d2, (float)d3, (float)d4);
     }
 
     void Shader::setMatrix4(const std::string& name, glm::f32 * value) const
     {
-        glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, value);
+        glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, value);
     }
 
 
     // private:
+
+    unsigned int Shader::getUniformLocation(const std::string& name) const
+    {
+        return glGetUniformLocation(this->id, name.c_str());
+    }
 
     void Shader::checkForErrors(unsigned int shader, std::string type)
     {

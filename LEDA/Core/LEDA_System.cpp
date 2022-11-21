@@ -25,6 +25,9 @@ std::string pre, cur, nxt;
 // Frame rate variables
 std::chrono::time_point<std::chrono::system_clock> frameStartTime;
 
+// I moved this to the top to avoid error
+std::map<std::string, GameObject*> objects;
+
 
 // List of Systems
 std::vector<ISystem*> systems{
@@ -51,7 +54,7 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 		sm.load(cur);
 
 
-		while (cur == nxt) { // While State is unchanged
+		while (cur == nxt) { // While state is unchanged
 
 			// Start Frame Timer
 			frameStartTime = std::chrono::system_clock::now();
@@ -99,7 +102,6 @@ std::string LEDA::getNextGameStateFile()			{ return nxt; }
 void LEDA::setNextGameStateFile(std::string state)  { nxt = state; }
 
 // SceneManager Functions //
-std::map<std::string, GameObject*> objects;
 
 void LEDA::registerGameObject(std::string id, GameObject* obj) {
 	// Delete before replace

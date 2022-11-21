@@ -120,6 +120,8 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 			
 			shader.setMatrix4("projection", transformMatrix(Vector2D(0.0, 0.0), Vector2D(1.0 / WINDOW_WIDTH, 1.0 / WINDOW_HEIGHT), 0.0));
 			shader.setMatrix4("transform", mat);
+			// TODO: replace with object color
+			shader.setFloat4("color", 0.0, 0.0, 0.0, 0.0);
 
 			shader.use();
 
