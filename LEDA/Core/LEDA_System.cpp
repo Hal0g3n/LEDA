@@ -9,67 +9,109 @@
  */
 
 #include "pch.h"
+
 #include "LEDA_System.h"
+#include "LogicSystem.h"
+#include <string>
 
 using namespace LEDA;
-
-// Pointers to the previous, current and next state
-IGameState *pre, *cur, *nxt;
-
-// Setting Reserved Pointers QUIT and RESTART
-// These addresses are protected by system, so they are impossible values
-IGameState *QUIT = (IGameState*) 1, *RESTART = (IGameState*) 2;
 
 // doubles keeping track of frame and app time
 double frameTime = 0.0, appTime = 0.0;
 
-void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, IGameState *initialState) {
+// Tracking Previous, Current and Next GameStates
+std::string pre, cur, nxt;
+
+// Frame rate variables
+std::chrono::time_point<std::chrono::system_clock> frameStartTime;
+
+
+// List of Systems
+std::vector<ISystem*> systems{
+	// new LogicSystem()
+};
+
+void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, std::string initialState) {
 
 	std::cout << "LEDA runs!\n";
 
-	// Initializes all our systems
-
-	// Sets initial game state
 	pre = cur = nxt = initialState;
 
-	while (cur != QUIT) { // while the application is not quitted yet
+	// Initialize important managers
+	SceneManager sm{};
+	// TODO: We need a window manager?
+	
+	//// Initializes all our systems for the current state
+	for (ISystem* system : systems) system -> init();
 
-		// reset the system modules
-		
+	while (cur != "quit" /*Quit_GameState*/) { // While the application is not quitted yet
 
-		// If not restarting, load the new Game State
-		if (cur != RESTART) cur->load();
-		else nxt = cur = pre;
 
-		// Initialize the gamestate
-		cur->init();
+		// Scene Load/Initialize (Assets Manager Load level)
+		sm.load(cur);
+
 
 		while (cur == nxt) { // While State is unchanged
 
 			// Start Frame Timer
-			// AESysFrameStart();
+			frameStartTime = std::chrono::system_clock::now();
 
-			cur->update();
-			cur->draw();
+			// System Game Loop Updates
+			for (ISystem* system : systems) system->update();
+
 			
 			// End Frame Timer
-			// AESysFrameEnd();
+			frameTime = (std::chrono::system_clock::now() - frameStartTime).count();
 
 			// Check for Forced Exit
 			// if ((AESysDoesWindowExist() == false) || AEInputCheckTriggered(AEVK_ESCAPE))
-			// 	nxt = QUIT;
+			//  	nxt = "quit";
 
-			// frameTime = (f32)AEFrameRateControllerGetFrameTime();
-			// appTime += frameTime;
+			// Loop until frame time is over
+			while ((std::chrono::system_clock::now() - frameStartTime).count() < 1 / frameRate);
+
+			appTime += frameTime;
 		}
 
-		cur->free();
+		// Clear all loaded objects
+		objects.clear();
 
-		if (nxt != RESTART) cur->unload();
+		// Assets Manager Unload level (Persistent Assets)
+		if (nxt != "reset" /*Restart_GameState*/) nxt = cur; // Set up to load same file again
 
+		// Free all our systems for the current state
+		for (ISystem* system : systems) system->free();
+
+		// Setting up for next loop
 		pre = cur;
 		cur = nxt;
 	}
 
-	// Exits the system
+	// Destroys all systems
+	for (ISystem* system : systems) delete system;
+}
+
+// Replace with SceneManager->onSceneEnter(state);
+// Exposes certain GameState values for usage
+std::string LEDA::getPreviousGameStateFile()		{ return pre; }
+std::string LEDA::getCurrentGameStateFile()			{ return cur; }
+std::string LEDA::getNextGameStateFile()			{ return nxt; }
+void LEDA::setNextGameStateFile(std::string state)  { nxt = state; }
+
+// SceneManager Functions //
+std::map<std::string, GameObject*> objects;
+
+void LEDA::registerGameObject(std::string id, GameObject* obj) {
+	// Delete before replace
+	delete retrieveGameObject(id);
+
+	// Registers the object to each system
+	for (ISystem* system : systems) 
+		system->registerGameObject(obj);
+
+	objects.emplace(id, obj);
+}
+
+GameObject* LEDA::retrieveGameObject(std::string id) { 
+	return (objects.find(id) == objects.end()) ? nullptr : objects.find(id)->second; 
 }
