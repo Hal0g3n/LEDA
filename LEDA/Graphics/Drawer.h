@@ -27,7 +27,9 @@
 
 namespace LEDA {
 
-	void LEDA_API drawObject(GameObject& obj);
+	void LEDA_API drawObject(GameObject& object);
+
+	void LEDA_API drawObjects(std::vector<GameObject*> objects);
 
 }
 
