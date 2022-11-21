@@ -8,6 +8,7 @@
  * @copyright   Copyright (c) 2022
  */
 
+#pragma once
 
 #ifndef LEDA_TRANSFORM_H_
 #define LEDA_TRANSFORM_H_

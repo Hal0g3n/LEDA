@@ -23,7 +23,10 @@
 // should this be here?
 //#include "LogicSystem.h"
 
+#include "AssetsManager.h"
+
 namespace LEDA {
+
 	/**
 	 * @brief Entry Point into LEDA
 	 * @param showConsole  true to show console
@@ -46,6 +49,7 @@ namespace LEDA {
 	// GameObjectManager Functions //
 	void registerGameObject(std::string id, GameObject* obj);
 	GameObject* retrieveGameObject(std::string id);
+
 }
 
 #endif // LEDA_SYSTEM_H_

@@ -10,6 +10,9 @@
 
 #pragma once
 
+#ifndef LEDA_KINEMATICS_COMPONENT_H_
+#define LEDA_KINEMATICS_COMPONENT_H_
+
 #include "pch.h"
 
 #include "LEDA_Components.h"
@@ -22,3 +25,5 @@ namespace LEDA {
 	};
 
 }
+
+#endif // LEDA_KINEMATICS_COMPONENT_H_

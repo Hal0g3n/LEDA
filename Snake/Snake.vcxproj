@@ -124,7 +124,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\LEDA\Graphics;$(ProjectDir)..\LEDA\Physics;$(ProjectDir)..\LEDA\Tools\Shapes;$(ProjectDir)..\LEDA\Tools\Math;$(ProjectDir)..\LEDA\Core;$(ProjectDir)..\LEDA\Input;$(ProjectDir)..\LEDA\Components;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\LEDA\Graphics;$(ProjectDir)..\LEDA\Physics;$(ProjectDir)..\LEDA\Tools\Shapes;$(ProjectDir)..\LEDA\Tools\Math;$(ProjectDir)..\LEDA\Core;$(ProjectDir)..\LEDA\Input;$(ProjectDir)..\LEDA\Components;$(ProjectDir)..\LEDA\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

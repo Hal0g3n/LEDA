@@ -126,7 +126,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Core;$(ProjectDir)Graphics;$(ProjectDir)Physics;$(ProjectDir)Tools\Shapes;$(ProjectDir)Tools\Math;$(ProjectDir)Logic;$(ProjectDir)Input;$(ProjectDir)Components;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Core;$(ProjectDir)Graphics;$(ProjectDir)Physics;$(ProjectDir)Tools\Shapes;$(ProjectDir)Tools\Math;$(ProjectDir)Logic;$(ProjectDir)Input;$(ProjectDir)Components;$(ProjectDir)Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

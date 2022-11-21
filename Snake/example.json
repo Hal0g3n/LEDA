@@ -1,0 +1,11 @@
+{
+  "number": 1,
+  "boolean": true,
+  "string": "a",
+  "nullptr": null,
+  "object": {
+    "nest": "b",
+    "nested": 2
+  },
+  "list": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+}
