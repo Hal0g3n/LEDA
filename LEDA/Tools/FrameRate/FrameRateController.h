@@ -16,8 +16,9 @@ namespace LEDA {
 	class FrameRateController {
 		// things to track
 		int frameCount;
-		double frameStartTime;
+		std::chrono::time_point<std::chrono::system_clock> frameStartTime;
 		double lastFrameTime;
+		bool inFrame;
 
 	public:
 		// functions for frame rate controller
