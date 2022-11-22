@@ -25,9 +25,12 @@
 /*
 #include "LogicSystem.h"
 #include "GraphicsSystem.h"
+#include "PhysicsSystem.h"
 */
 
 namespace LEDA {
+	//make frame time, app time accessible for other systems
+	double frameTime, appTime;
 
 	/**
 	 * @brief Entry Point into LEDA
