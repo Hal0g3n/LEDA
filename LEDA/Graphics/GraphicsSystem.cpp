@@ -38,7 +38,7 @@ void GraphicsSystem::free(void) {
 void GraphicsSystem::onRegisterGameObject(GameObject* obj) {
 
 	// check if the object contains a graphics component
-	GraphicsComponent* graphics = getComponent<GraphicsComponent>(*obj);
+	GraphicsComponent* graphics = getComponent<GraphicsComponent>(obj);
 	if (graphics != nullptr) {
 		// if so, add to this system's object list
 		this->objects.push_back(obj);

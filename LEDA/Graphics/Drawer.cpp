@@ -74,7 +74,7 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 	std::unordered_map<std::string, std::vector<GameObject*>> shapes = {};
 
 	for (GameObject* object : objects) {
-		GraphicsComponent* graphicsComponent = getComponent<GraphicsComponent>(*object);
+		GraphicsComponent* graphicsComponent = getComponent<GraphicsComponent>(object);
 		if (graphicsComponent == nullptr) continue;
 		std::string shape = graphicsComponent->shape;
 		if (shapes.find(shape) == shapes.end()) {
@@ -114,11 +114,11 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 		for (GameObject* object : it.second) {
 
 			// get transform data
-			TransformComponent* transformComponent = getComponent<TransformComponent>(*object);
+			TransformComponent* transformComponent = getComponent<TransformComponent>(object);
 			glm::f32* mat = transformMatrix(*transformComponent);
 
 			// get shader too
-			GraphicsComponent* graphicsComponent = getComponent<GraphicsComponent>(*object);
+			GraphicsComponent* graphicsComponent = getComponent<GraphicsComponent>(object);
 			Shader shader{ graphicsComponent->material };
 			
 			shader.setMatrix4("projection", transformMatrix(Vector2D(0.0, 0.0), Vector2D(1.0 / WINDOW_WIDTH, 1.0 / WINDOW_HEIGHT), 0.0));

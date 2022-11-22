@@ -29,8 +29,9 @@ void SceneManager::load(std::string filename) {
 		throw std::runtime_error("Could not open file");
 	}
 
-	// Getting the data to record
-	json data = json::parse(stream);
+	// read and parse scene data
+	// also ignore comments because... yes
+	json data = json::parse(stream, nullptr, true, true);
 
 	if (!data["assets"].is_null()) { // If additional assets exist
 		for (auto &asset : data["assets"].items())
@@ -40,7 +41,7 @@ void SceneManager::load(std::string filename) {
 				for (auto &s : asset.value()) ; // TODO: Figure out loading the asset from file name
 	}
 
-	if (!data["objects"].is_null()) { // If the game objects actually exist
+	if (!data["objects"].is_null()) { // If the game object list actually exists
 
 		unsigned int objectCount = 0;
 
@@ -76,18 +77,24 @@ void SceneManager::load(std::string filename) {
 					if (!value["scalex"].is_null()) tc->scale.x = value["scalex"];
 					if (!value["scaley"].is_null()) tc->scale.y = value["scaley"];
 					if (!value["rotation"].is_null()) tc->rotation = value["rotation"];
-					addComponent(*cur, new TransformComponent());
+					addComponent(cur, tc);
 				}
 				else if (componentType == "graphics") {
 					GraphicsComponent* gc = new GraphicsComponent();
 					if (!value["material"].is_null()) gc->material = value["material"];
 					if (!value["shape"].is_null()) gc->shape = value["shape"];
-					addComponent(*cur, gc);
+					addComponent(cur, gc);
+				}
+				else if (componentType == "kinematics") {
+					// TODO: kinematics component
 				}
 			}
 
 			// Register the game object for retrieval later
 			registerGameObject(obj.key(), cur);
+
+			// print game object for debugging TODO: remove
+			std::cout << printGameObject(cur) << std::flush;
 		}
 
 	}

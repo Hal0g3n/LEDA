@@ -5,6 +5,7 @@
   },
   "objects": [
     {
+      "id": "central triangle",
       "transform": {
         "x": 0,
         "y": 0,
@@ -16,6 +17,7 @@
       }
     },
     {
+      "id": "sus", // oh no why does this comment exist in json oh no
       "transform": {
         "x": 1,
         "y": -1,

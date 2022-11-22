@@ -46,7 +46,7 @@ std::vector<ISystem*> systems{
 
 void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, std::string initialState) {
 
-	std::cout << "LEDA runs!\n";
+	std::cout << "LEDA runs!" << std::endl;
 
 	pre = cur = nxt = initialState;
 
@@ -63,6 +63,8 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 	}
 
 	while (cur != "quit") { // While the application is not quitted yet
+
+		std::cout << "Loading scene '" << cur << "'..." << std::endl;
 
 		// Scene Load/Initialize (Scene Manager Load level)
 		sm.load(cur + ".json");

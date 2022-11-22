@@ -20,8 +20,8 @@ namespace LEDA {
 	// registering new object
 	void PhysicsSystem::onRegisterGameObject(GameObject* obj) {
 		// find the kinematics component and transform component; physics system only governs movement for now
-		KinematicsComponent* kine = getComponent<KinematicsComponent>(*obj);
-		TransformComponent* trans = getComponent<TransformComponent>(*obj);
+		KinematicsComponent* kine = getComponent<KinematicsComponent>(obj);
+		TransformComponent* trans = getComponent<TransformComponent>(obj);
 
 		if (kine != nullptr && trans != nullptr) {
 			objects.push_back(obj);
@@ -39,8 +39,8 @@ namespace LEDA {
 	void PhysicsSystem::update() {
 		// updates physics by calculating movement of everything
 		for (GameObject* obj: objects) {
-			KinematicsComponent* kine = getComponent<KinematicsComponent>(*obj);
-			TransformComponent* trans = getComponent<TransformComponent>(*obj);
+			KinematicsComponent* kine = getComponent<KinematicsComponent>(obj);
+			TransformComponent* trans = getComponent<TransformComponent>(obj);
 
 			//update the velocity
 			kine->vel += kine->acc * frameTime;

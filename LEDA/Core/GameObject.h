@@ -16,44 +16,65 @@
 #include "pch.h"
 
 #include "IComponent.h"
+#include "LEDA_Components.h"
 
 #include <unordered_map>
+#include <sstream>
 
 namespace LEDA {
 
 	class LEDA_API GameObject {
 
 	private:
-		std::unordered_map<std::string, IComponent*> components{};
 		std::string id;
+		std::unordered_map<std::string, IComponent*> components{};
 
 	public:
 		// Initialize with id
 		GameObject(std::string id) : id{ id } {}
-		GameObject() = default; // Compatability for now
+		GameObject() = default; // compatibility for now
 
 		std::string getId() { return id; }
 
-		friend void LEDA_API addComponent(GameObject& obj, IComponent* component);
+		friend void LEDA_API addComponent(GameObject* obj, IComponent* component);
 
 		// Returns nullptr if component is not found
 		template <typename C>
-		friend C LEDA_API * getComponent(GameObject& obj);
+		friend C LEDA_API * getComponent(GameObject* obj);
+
+		friend std::string LEDA_API printGameObject(GameObject* obj);
 
 	};
 
-	void addComponent(GameObject& obj, IComponent* component) {
-		obj.components.emplace(typeid(component).name(), component);
+	void addComponent(GameObject* obj, IComponent* component) {
+		obj->components.emplace(typeid(component).name(), component);
 	}
 
 	template <typename C>
-	C * getComponent(GameObject& obj) {
-		std::unordered_map<std::string, IComponent*>::const_iterator value = obj.components.find(typeid(C).name());
-		if (value == obj.components.end()) {
-			return nullptr; // ok don't throw error just handle later (:
+	C * getComponent(GameObject* obj) {
+		std::unordered_map<std::string, IComponent*>::const_iterator value = obj->components.find(typeid(C).name());
+		if (value == obj->components.end()) {
+			return nullptr; // don't throw error just handle later (:
 		} else {
 			return dynamic_cast<C*>(value->second);
 		}
+	}
+
+	std::string printGameObject(GameObject* obj) {
+
+		std::stringstream ss;
+		ss << "{\n    ID: " << obj->id;
+		TransformComponent* tc = getComponent<TransformComponent>(obj);
+		if (tc != nullptr) {
+			ss << "\n    position: (" << tc->position.x << ", " << tc->position.y << ")\n    scale: (" << tc->scale.x << ", " << tc->scale.y << ")\n    rotation: " << tc->rotation;
+		}
+		GraphicsComponent* gc = getComponent<GraphicsComponent>(obj);
+		if (gc != nullptr) {
+			ss << "\n    material: " << gc->material << "\n    shape: " << gc->shape;
+		}
+		ss << "\n}\n";
+		return ss.str();
+		
 	}
 
 }

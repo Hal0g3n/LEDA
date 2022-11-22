@@ -17,7 +17,7 @@
 using namespace LEDA;
 
 void LogicSystem::onRegisterGameObject(GameObject* obj) {
-	LogicComponent* logic = getComponent<LogicComponent>(*obj);
+	LogicComponent* logic = getComponent<LogicComponent>(obj);
 
 	if (logic == nullptr) return;
 	
@@ -28,7 +28,7 @@ void LogicSystem::onRegisterGameObject(GameObject* obj) {
 }
 
 void LogicSystem::onRemoveGameObject(GameObject* obj) {
-	LogicComponent* logic = getComponent<LogicComponent>(*obj);
+	LogicComponent* logic = getComponent<LogicComponent>(obj);
 
 	if (logic == nullptr) return;
 
