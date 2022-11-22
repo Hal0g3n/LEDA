@@ -181,6 +181,7 @@
     <ClInclude Include="Input\LEDA_Input.h" />
     <ClInclude Include="Logic\LogicSystem.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="Physics\Collision.h" />
     <ClInclude Include="Physics\LEDA_Physics.h" />
     <ClInclude Include="Tools\FrameRate\FrameRateController.h" />
@@ -209,6 +210,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="Physics\Collision.cpp" />
     <ClCompile Include="Physics\Movement.cpp" />
     <ClCompile Include="Tools\FrameRate\FrameRateController.cpp" />
