@@ -20,8 +20,6 @@
 #include "ISystem.h"
 #include "IGameState.h"
 #include "SceneManager.h"
-
-// include all systems too
 /*
 #include "LogicSystem.h"
 #include "GraphicsSystem.h"

@@ -21,6 +21,8 @@
 #include "IGameState.h"
 #include "Asset.h"
 
+#include <map>
+
 
 namespace LEDA {
 

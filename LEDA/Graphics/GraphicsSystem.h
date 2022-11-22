@@ -28,9 +28,9 @@ namespace LEDA {
 		GraphicsSystem() {};
 		~GraphicsSystem() { for (GameObject* obj : objects) delete obj; };
 
-		void init() {};
-		void update() {};
-		void free() {};
+		void init();
+		void update();
+		void free();
 
 		void registerGameObject(GameObject*);
 

@@ -11,6 +11,8 @@
 #include "pch.h"
 
 #include "LEDA_System.h"
+
+// include all the systems too
 #include "LogicSystem.h"
 #include "GraphicsSystem.h"
 
