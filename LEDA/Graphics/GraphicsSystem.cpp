@@ -25,7 +25,7 @@ void GraphicsSystem::init(void) {
 
 void GraphicsSystem::update(void) {
 
-	drawObjects(this->objects);
+	updateDrawer(this->objects);
 
 }
 

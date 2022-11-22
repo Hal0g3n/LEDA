@@ -15,12 +15,17 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::cout << "Hello World!" << std::endl;
+    
     /*
     LEDA::AssetsManager testingmanager{};
     testingmanager.load("example.json");
     */
-    return LEDA::test();
+    
+    // return LEDA::test();
+
+    LEDA::LEDA_INIT(true, 60.0, "sneak", "snakey"); // initial state - change this to json filename
+    return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

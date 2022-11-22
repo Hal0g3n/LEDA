@@ -26,6 +26,7 @@
 namespace LEDA {
 
 	extern GLFWwindow* window;
+	extern std::string windowTitle = "A Default Window Title?";
 
 }
 

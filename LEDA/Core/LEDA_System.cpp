@@ -15,6 +15,10 @@
 // include all the systems too
 #include "LogicSystem.h"
 #include "GraphicsSystem.h"
+#include "PhysicsSystem.h"
+
+// to set window title
+#include "LEDA_Graphics.h"
 
 #include <string>
 
@@ -37,6 +41,7 @@ std::map<std::string, GameObject*> objects;
 std::vector<ISystem*> systems{
 	new LogicSystem(),
 	new GraphicsSystem(),
+	new PhysicsSystem(),
 };
 
 void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, std::string initialState) {
@@ -45,19 +50,22 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 
 	pre = cur = nxt = initialState;
 
+	// set window title
+	LEDA::windowTitle = windowTitle;
+
 	// Initialize important managers
 	SceneManager sm{};
 	// TODO: We need a window manager?
 	
-	//// Initializes all our systems for the current state
-	for (ISystem* system : systems) system->init();
+	// initializes all systems (for the current state)
+	for (ISystem* system : systems) {
+		system->init();
+	}
 
-	while (cur != "quit" /*Quit_GameState*/) { // While the application is not quitted yet
+	while (cur != "quit") { // While the application is not quitted yet
 
-
-		// Scene Load/Initialize (Assets Manager Load level)
-		sm.load(cur);
-
+		// Scene Load/Initialize (Scene Manager Load level)
+		sm.load(cur + ".json");
 
 		while (cur == nxt) { // While state is unchanged
 
@@ -65,17 +73,18 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 			frameStartTime = std::chrono::system_clock::now();
 
 			// System Game Loop Updates
-			for (ISystem* system : systems) system->update();
-
+			for (ISystem* system : systems) {
+				system->update();
+			}
 			
 			// End Frame Timer
 			frameTime = (std::chrono::system_clock::now() - frameStartTime).count();
 
-			// Check for Forced Exit
+			// check for forced exit (full of AE)
 			// if ((AESysDoesWindowExist() == false) || AEInputCheckTriggered(AEVK_ESCAPE))
 			//  	nxt = "quit";
 
-			// Loop until frame time is over
+			// loop until frame time is over
 			while ((std::chrono::system_clock::now() - frameStartTime).count() < 1 / frameRate);
 
 			appTime += frameTime;
@@ -85,7 +94,7 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 		objects.clear();
 
 		// Assets Manager Unload level (Persistent Assets)
-		if (nxt != "reset" /*Restart_GameState*/) nxt = cur; // Set up to load same file again
+		if (nxt != "reset") nxt = cur; // Set up to load same file again
 
 		// Free all our systems for the current state
 		for (ISystem* system : systems) system->free();
@@ -93,10 +102,14 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 		// Setting up for next loop
 		pre = cur;
 		cur = nxt;
+
 	}
 
 	// Destroys all systems
-	for (ISystem* system : systems) delete system;
+	for (ISystem* system : systems) {
+		delete system;
+	}
+
 }
 
 // Replace with SceneManager->onSceneEnter(state);

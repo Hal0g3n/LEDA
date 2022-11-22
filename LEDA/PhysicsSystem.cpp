@@ -13,9 +13,10 @@
 #include "LEDA_System.h"
 #include "PhysicsSystem.h"
 #include "KinematicsComponent.h"
-#include "TransformComponent.h";
+#include "TransformComponent.h"
 
 namespace LEDA {
+
 	// registering new object
 	void PhysicsSystem::registerGameObject(GameObject* obj) {
 		// find the kinematics component and transform component; physics system only governs movement for now
@@ -25,6 +26,10 @@ namespace LEDA {
 		if (kine != nullptr && trans != nullptr) {
 			objects.push_back(obj);
 		}
+	}
+
+	void PhysicsSystem::init() {
+		
 	}
 
 	void PhysicsSystem::update() {

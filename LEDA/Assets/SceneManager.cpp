@@ -20,9 +20,14 @@ using json = nlohmann::json;
 using namespace LEDA;
 
 void SceneManager::load(std::string filename) {
+
 	// Check for file existence and open stream
 	std::ifstream stream(filename);
-	if (!stream.good()) throw std::runtime_error("Could not open file");
+
+	if (!stream.good()) {
+		std::cout << "Could not open file: " << filename << std::endl;
+		throw std::runtime_error("Could not open file");
+	}
 
 	// Getting the data to record
 	json data = json::parse(stream);
@@ -37,7 +42,6 @@ void SceneManager::load(std::string filename) {
 
 	if (!data["objects"].is_null()) { // If the game objects actually exist
 		for (auto &obj : data["objects"].items()) {
-
 			GameObject* cur = new GameObject();
 
 			// For each obj component
@@ -49,6 +53,7 @@ void SceneManager::load(std::string filename) {
 			registerGameObject(obj.key(), cur);
 		}
 	}
+
 }
 
 Asset* SceneManager::getAsset(std::string assetName) {

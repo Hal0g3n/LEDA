@@ -22,12 +22,14 @@
 // WINDOW_STUFF
 const unsigned int WINDOW_WIDTH = 800;
 const unsigned int WINDOW_HEIGHT = 800;
-const char * WINDOW_NAME = "ok";
+const char * WINDOW_NAME = "ok"; // not used
 void WINDOW_RESIZE(GLFWwindow* window, int width, int height) {
 	glOrtho(0.0, width, 0.0, height, -1.0, 1.0);
 }
 
 void LEDA::initializeDrawer() {
+
+	std::cout << "initializing drawer..." << std::endl;
 
 	glfwInit();
 
@@ -40,7 +42,7 @@ void LEDA::initializeDrawer() {
 	#endif
 
 	// create GLFW window (global)
-	window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, NULL, NULL);
+	window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, LEDA::windowTitle.c_str(), NULL, NULL);
 	if (window == NULL) {
 		std::cout << "Error: failed to create GLFWindow\n";
 		glfwTerminate();
