@@ -51,6 +51,9 @@ namespace LEDA {
 	void LEDA_API registerGameObject(std::string id, GameObject* obj);
 	bool LEDA_API removeGameObject(GameObject*);
 	bool LEDA_API removeGameObject(std::string id) { GameObject* obj = retrieveGameObject(id); return obj ? removeGameObject(obj) : false; }
+
+	// Logger Functions//
+	void LEDA_API LOG_WARNING(std::string);
 }
 
 #endif // LEDA_SYSTEM_H_

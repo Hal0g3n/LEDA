@@ -128,8 +128,11 @@ void LEDA::setNextGameStateFile(std::string state)  { nxt = state; }
 
 // SceneManager Functions //
 void LEDA::registerGameObject(std::string id, GameObject* obj) {
-	// Delete before replace
-	delete retrieveGameObject(id);
+	
+	if (objects.find(id) != objects.end()) { // Something exists
+		LOG_WARNING("GameObject with id \"" + id + "\" exists, replacing with newer obj");
+		removeGameObject(id);
+	}
 
 	// Registers the object to each system
 	for (ISystem* system : systems) 
@@ -159,4 +162,8 @@ bool LEDA::removeGameObject(std::string id) {
 
 GameObject* LEDA::retrieveGameObject(std::string id) { 
 	return (objects.find(id) == objects.end()) ? nullptr : objects.find(id)->second; 
+}
+
+void LEDA::LOG_WARNING(std::string msg) {
+	std::cerr << "[LEDA WARNING]: " << msg << '\n';
 }
