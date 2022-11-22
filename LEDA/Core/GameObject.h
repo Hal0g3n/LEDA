@@ -47,7 +47,7 @@ namespace LEDA {
 	};
 
 	void addComponent(GameObject* obj, IComponent* component) {
-		obj->components.emplace(typeid(component).name(), component);
+		obj->components.emplace(typeid(*component).name(), component);
 	}
 
 	template <typename C>

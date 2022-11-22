@@ -56,6 +56,7 @@ void SceneManager::load(std::string filename) {
 			}
 
 			GameObject* cur = new GameObject(id);
+			std::cout << "test" << std::endl;
 
 			// for each object component
 			for (auto& comp : obj.value().items()) {
@@ -84,6 +85,10 @@ void SceneManager::load(std::string filename) {
 					if (!value["material"].is_null()) gc->material = value["material"];
 					if (!value["shape"].is_null()) gc->shape = value["shape"];
 					addComponent(cur, gc);
+					if (getComponent<GraphicsComponent>(cur) == nullptr) {
+						std::cout << "skill issue!!!" << std::endl;
+					}
+					std::cout << getComponent<GraphicsComponent>(cur)->material << std::endl;
 				}
 				else if (componentType == "kinematics") {
 					// TODO: kinematics component
