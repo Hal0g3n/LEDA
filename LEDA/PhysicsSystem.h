@@ -21,14 +21,14 @@ namespace LEDA {
 	public:
 		// constructor
 		PhysicsSystem() {};
-		//destructor 
+		// destructor 
 		~PhysicsSystem() { objects.clear(); }
 
 		void init();
 		void update();
 		void free();
-
-		//registering new objects
-		void registerGameObject(GameObject* obj);
+		
+		void onRegisterGameObject(GameObject* obj);
+		void onRemoveGameObject(GameObject* obj);
 	};
 }

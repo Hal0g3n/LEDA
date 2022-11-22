@@ -34,7 +34,7 @@ std::string pre, cur, nxt;
 std::chrono::time_point<std::chrono::system_clock> frameStartTime;
 
 // i moved this to the top to avoid error
-std::map<std::string, GameObject*> objects;
+std::unordered_map<std::string, GameObject*> objects;
 
 
 // List of Systems
@@ -119,9 +119,6 @@ std::string LEDA::getCurrentGameStateFile()			{ return cur; }
 std::string LEDA::getNextGameStateFile()			{ return nxt; }
 void LEDA::setNextGameStateFile(std::string state)  { nxt = state; }
 
-// SceneManager Functions //
-std::unordered_map<std::string, GameObject*> objects;
-
 void LEDA::registerGameObject(std::string id, GameObject* obj) {
 	// Delete before replace
 	delete retrieveGameObject(id);
@@ -141,7 +138,14 @@ bool LEDA::removeGameObject(GameObject* obj) {
 
 	// Delete the object
 	delete obj;
+
+	return true;
 }
+
+bool LEDA::removeGameObject(std::string id) {
+	GameObject* obj = retrieveGameObject(id);
+	return obj ? removeGameObject(obj) : false;
+};
 
 GameObject* LEDA::retrieveGameObject(std::string id) { 
 	return (objects.find(id) == objects.end()) ? nullptr : objects.find(id)->second; 

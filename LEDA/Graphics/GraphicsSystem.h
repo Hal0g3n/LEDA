@@ -26,13 +26,14 @@ namespace LEDA {
 	public:
 
 		GraphicsSystem() {};
-		~GraphicsSystem() { for (GameObject* obj : objects) delete obj; };
+		~GraphicsSystem() { objects.clear(); };
 
 		void init();
 		void update();
 		void free();
 
-		void registerGameObject(GameObject*);
+		void onRegisterGameObject(GameObject*);
+		void onRemoveGameObject(GameObject*);
 
 	};
 

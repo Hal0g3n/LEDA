@@ -41,15 +41,28 @@ void SceneManager::load(std::string filename) {
 	}
 
 	if (!data["objects"].is_null()) { // If the game objects actually exist
+
+		unsigned int objectCount = 0;
+
 		for (auto &obj : data["objects"].items()) {
-			GameObject* cur = new GameObject();
+			objectCount++;
+			std::string id = "";
+			if (obj.value()["id"].is_null()) {
+				id = "entity #" + objectCount;
+			}
+			else {
+				id = obj.value()["id"];
+			}
+
+			GameObject* cur = new GameObject(id);
 
 			// for each object component
 			for (auto& comp : obj.value().items()) {
 				std::string componentType = comp.key();
 				auto& value = comp.value();
 				if (componentType == "id") {
-					// set id (will pull...)
+					// already used above
+					continue;
 				}
 				else if (componentType == "transform") {
 					TransformComponent* tc = new TransformComponent();
@@ -76,6 +89,7 @@ void SceneManager::load(std::string filename) {
 			// Register the game object for retrieval later
 			registerGameObject(obj.key(), cur);
 		}
+
 	}
 
 }

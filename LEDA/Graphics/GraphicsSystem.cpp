@@ -35,7 +35,7 @@ void GraphicsSystem::free(void) {
 
 }
 
-void GraphicsSystem::registerGameObject(GameObject* obj) {
+void GraphicsSystem::onRegisterGameObject(GameObject* obj) {
 
 	// check if the object contains a graphics component
 	GraphicsComponent* graphics = getComponent<GraphicsComponent>(*obj);
@@ -44,4 +44,8 @@ void GraphicsSystem::registerGameObject(GameObject* obj) {
 		this->objects.push_back(obj);
 	}
 
+}
+
+void GraphicsSystem::onRemoveGameObject(GameObject* obj) {
+	objects.erase(std::find(objects.begin(), objects.end(), obj));
 }
