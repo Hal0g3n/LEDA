@@ -44,9 +44,33 @@ void SceneManager::load(std::string filename) {
 		for (auto &obj : data["objects"].items()) {
 			GameObject* cur = new GameObject();
 
-			// For each obj component
-			for (auto& comp : data["objects"].items()) {
-				if ("position" == comp.key()) addComponent(*cur, new LogicComponent()); // Add component
+			// for each object component
+			for (auto& comp : obj.value().items()) {
+				std::string componentType = comp.key();
+				auto& value = comp.value();
+				if (componentType == "id") {
+					// set id (will pull...)
+				}
+				else if (componentType == "transform") {
+					TransformComponent* tc = new TransformComponent();
+					// temporary attribute names (scalex and scaley are a bit weird (and scaly))
+					if (!value["x"].is_null()) tc->position.x = value["x"];
+					if (!value["y"].is_null()) tc->position.y = value["y"];
+					if (!value["scale"].is_null()) {
+						tc->scale.x = value["scale"];
+						tc->scale.y = value["scale"];
+					}
+					if (!value["scalex"].is_null()) tc->scale.x = value["scalex"];
+					if (!value["scaley"].is_null()) tc->scale.y = value["scaley"];
+					if (!value["rotation"].is_null()) tc->rotation = value["rotation"];
+					addComponent(*cur, new TransformComponent());
+				}
+				else if (componentType == "graphics") {
+					GraphicsComponent* gc = new GraphicsComponent();
+					if (!value["material"].is_null()) gc->material = value["material"];
+					if (!value["shape"].is_null()) gc->shape = value["shape"];
+					addComponent(*cur, gc);
+				}
 			}
 
 			// Register the game object for retrieval later

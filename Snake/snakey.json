@@ -1,20 +1,30 @@
 {
-    "assets": {
-        "fonts": [ ],
-        "images": [ ]
+  "assets": {
+    "fonts": [],
+    "images": []
+  },
+  "objects": [
+    {
+      "transform": {
+        "x": 0,
+        "y": 0,
+        "rotation": 0
+      },
+      "graphics": {
+        "shape": "triangle",
+        "material": "solid"
+      }
     },
-    "objects": [
-        {
-            "position": {
-                "x": 1,
-                "y": 1
-            }
-        },
-        {
-            "position": {
-                "x": 2,
-                "y": 3
-            }
-        }
-    ]
+    {
+      "transform": {
+        "x": 1,
+        "y": -1,
+        "rotation": 1
+      },
+      "graphics": {
+        "shape": "triangle",
+        "material": "solid"
+      }
+    }
+  ]
 }

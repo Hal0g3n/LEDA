@@ -75,6 +75,7 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 
 	for (GameObject* object : objects) {
 		GraphicsComponent* graphicsComponent = getComponent<GraphicsComponent>(*object);
+		if (graphicsComponent == nullptr) continue;
 		std::string shape = graphicsComponent->shape;
 		if (shapes.find(shape) == shapes.end()) {
 			shapes.emplace(shape, std::initializer_list<GameObject*>{ object });
@@ -131,6 +132,10 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 			glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		}
+
+		glDeleteVertexArrays(1, &VAO);
+		glDeleteBuffers(1, &VBO);
+
 	}
 
 }
@@ -149,6 +154,8 @@ void LEDA::updateDrawer(std::vector<GameObject*> objects) {
 
 void LEDA::freeDrawer() {
 
-	
+	std::cout << "killing drawer..." << std::endl;
+
+	glfwTerminate();
 
 }
