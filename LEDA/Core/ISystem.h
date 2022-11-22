@@ -28,7 +28,8 @@ namespace LEDA {
 		virtual void update() = 0; // Called on Update (in Game Loop)
 		virtual void free()   = 0; // Called on Game State Exit
 
-		virtual void registerGameObject(GameObject* obj) = 0;
+		virtual void onRegisterGameObject(GameObject* obj) = 0;
+		virtual void onRemoveGameObject(GameObject* obj) = 0;
 	};
 
 }

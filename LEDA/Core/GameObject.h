@@ -25,8 +25,15 @@ namespace LEDA {
 
 	private:
 		std::unordered_map<std::string, IComponent*> components{};
+		std::string id;
 
 	public:
+		// Initialize with id
+		GameObject(std::string id) : id{ id } {}
+		GameObject() = default; // Compatability for now
+
+		std::string getId() { return id; }
+
 		friend void LEDA_API addComponent(GameObject& obj, IComponent* component);
 
 		// Returns nullptr if component is not found

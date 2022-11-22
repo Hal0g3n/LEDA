@@ -91,7 +91,7 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 		}
 
 		// Clear all loaded objects
-		objects.clear();
+		for (std::pair<std::string, GameObject*> pairs : objects) removeGameObject(pairs.second);
 
 		// Assets Manager Unload level (Persistent Assets)
 		if (nxt != "reset") nxt = cur; // Set up to load same file again
@@ -120,6 +120,7 @@ std::string LEDA::getNextGameStateFile()			{ return nxt; }
 void LEDA::setNextGameStateFile(std::string state)  { nxt = state; }
 
 // SceneManager Functions //
+std::unordered_map<std::string, GameObject*> objects;
 
 void LEDA::registerGameObject(std::string id, GameObject* obj) {
 	// Delete before replace
@@ -127,9 +128,19 @@ void LEDA::registerGameObject(std::string id, GameObject* obj) {
 
 	// Registers the object to each system
 	for (ISystem* system : systems) 
-		system->registerGameObject(obj);
+		system->onRegisterGameObject(obj);
 
 	objects.emplace(id, obj);
+}
+
+bool LEDA::removeGameObject(GameObject* obj) {
+	for (ISystem* sys : systems) sys->onRemoveGameObject(obj);
+
+	// Erase from mapping
+	objects.erase(obj->getId());
+
+	// Delete the object
+	delete obj;
 }
 
 GameObject* LEDA::retrieveGameObject(std::string id) { 

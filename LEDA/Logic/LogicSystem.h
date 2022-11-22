@@ -28,7 +28,7 @@ namespace LEDA {
 		LogicSystem() {};
 
 		// Called on Destroy
-		~LogicSystem() { for (GameObject* obj : objects) delete obj; };
+		~LogicSystem() {};
 
 		/*
 		void init() { for (GameObject* obj : objects) obj->init(); };
@@ -41,8 +41,8 @@ namespace LEDA {
 		void free() {};
 		
 		// Called on new Game Object
-		void registerGameObject(GameObject*);
-
+		void onRegisterGameObject(GameObject*);
+		void onRemoveGameObject(GameObject*);
 	};
 
 }
