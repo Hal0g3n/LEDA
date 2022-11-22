@@ -41,18 +41,16 @@ namespace LEDA {
 
 
 	// GameStateManager Functions //
-	bool registerGameState(std::string id, std::string state);
-	std::string retrieveGameState(std::string id);
-
-	std::string getPreviousGameStateFile();
-	std::string getCurrentGameStateFile();
-	std::string getNextGameStateFile();
-	void setNextGameStateFile(std::string stateFile);
+	std::string LEDA_API getPreviousGameStateFile();
+	std::string LEDA_API getCurrentGameStateFile();
+	std::string LEDA_API getNextGameStateFile();
+	void LEDA_API setNextGameStateFile(std::string stateFile);
 
 	// GameObjectManager Functions //
-	void registerGameObject(std::string id, GameObject* obj);
-	GameObject* retrieveGameObject(std::string id);
-
+	GameObject* LEDA_API retrieveGameObject(std::string id);
+	void LEDA_API registerGameObject(std::string id, GameObject* obj);
+	bool LEDA_API removeGameObject(std::string id) { GameObject* obj = retrieveGameObject(id); return obj ? removeGameObject(obj) : false };
+	bool LEDA_API removeGameObject(GameObject*);
 }
 
 #endif // LEDA_SYSTEM_H_

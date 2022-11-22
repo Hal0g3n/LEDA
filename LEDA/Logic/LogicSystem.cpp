@@ -16,13 +16,24 @@
 
 using namespace LEDA;
 
-void LogicSystem::registerGameObject(GameObject* obj) {
-
-	// check if the object contains a logic component
+void LogicSystem::onRegisterGameObject(GameObject* obj) {
 	LogicComponent* logic = getComponent<LogicComponent>(*obj);
-	if (logic != nullptr) {
-		// if so, add to this system's object list
-		this->objects.push_back(obj);
-	}
 
+	if (logic == nullptr) return;
+	
+	// logic->init();
+
+	// Add Object to logic system list
+	objects.push_back(obj);
+}
+
+void LogicSystem::onRemoveGameObject(GameObject* obj) {
+	LogicComponent* logic = getComponent<LogicComponent>(*obj);
+
+	if (logic == nullptr) return;
+
+	// logic->init();
+
+	// Find and Erase Object from the logic system list
+	objects.erase(std::find(objects.begin(), objects.end(), obj));
 }
