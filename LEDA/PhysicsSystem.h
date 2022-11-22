@@ -27,8 +27,9 @@ namespace LEDA {
 		void init();
 		void update();
 		void free();
-		
+
+		//registering new objects
 		void onRegisterGameObject(GameObject* obj);
-		void onRemoveGameObject(GameObject* obj);
+		void onRemoveGameObject(GameObject* obj) {}
 	};
 }

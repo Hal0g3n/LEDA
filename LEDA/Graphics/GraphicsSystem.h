@@ -33,8 +33,7 @@ namespace LEDA {
 		void free();
 
 		void onRegisterGameObject(GameObject*);
-		void onRemoveGameObject(GameObject*);
-
+		void onRemoveGameObject(GameObject* obj) {}
 	};
 
 }

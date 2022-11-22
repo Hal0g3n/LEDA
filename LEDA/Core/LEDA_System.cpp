@@ -24,8 +24,12 @@
 
 using namespace LEDA;
 
+/****************************
+*   File Scope Variables    *
+****************************/
+
 // doubles keeping track of frame and app time
-double frameTime = 0.0, appTime = 0.0;
+extern double frameTime = 0.0, appTime = 0.0;
 
 // Tracking Previous, Current and Next GameStates
 std::string pre, cur, nxt;
@@ -33,9 +37,12 @@ std::string pre, cur, nxt;
 // Frame rate variables
 std::chrono::time_point<std::chrono::system_clock> frameStartTime;
 
-// i moved this to the top to avoid error
+// Game Objects List
 std::unordered_map<std::string, GameObject*> objects;
 
+/****************************
+*   Main System Functions   *
+****************************/
 
 // List of Systems
 std::vector<ISystem*> systems{
@@ -121,9 +128,13 @@ std::string LEDA::getCurrentGameStateFile()			{ return cur; }
 std::string LEDA::getNextGameStateFile()			{ return nxt; }
 void LEDA::setNextGameStateFile(std::string state)  { nxt = state; }
 
+// SceneManager Functions //
 void LEDA::registerGameObject(std::string id, GameObject* obj) {
-	// Delete before replace
-	delete retrieveGameObject(id);
+	
+	if (objects.find(id) != objects.end()) { // Something exists
+		LOG_WARNING("GameObject with id \"" + id + "\" exists, replacing with newer obj");
+		removeGameObject(id);
+	}
 
 	// Registers the object to each system
 	for (ISystem* system : systems) 
@@ -133,6 +144,8 @@ void LEDA::registerGameObject(std::string id, GameObject* obj) {
 }
 
 bool LEDA::removeGameObject(GameObject* obj) {
+	if (obj == nullptr) return false;
+
 	for (ISystem* sys : systems) sys->onRemoveGameObject(obj);
 
 	// Erase from mapping
@@ -151,4 +164,8 @@ bool LEDA::removeGameObject(std::string id) {
 
 GameObject* LEDA::retrieveGameObject(std::string id) { 
 	return (objects.find(id) == objects.end()) ? nullptr : objects.find(id)->second; 
+}
+
+void LEDA::LOG_WARNING(std::string msg) {
+	std::cerr << "[LEDA WARNING]: " << msg << '\n';
 }
