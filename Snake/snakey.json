@@ -15,7 +15,8 @@
         "shape": "triangle",
         "material": "solid"
       }
-    },
+    }
+    /*
     {
       "id": "sus", // oh no why does this comment exist in json oh no
       "transform": {
@@ -25,8 +26,9 @@
       },
       "graphics": {
         "shape": "triangle",
-        "material": "solid"
+        "material": "transparent"
       }
     }
+    */
   ]
 }

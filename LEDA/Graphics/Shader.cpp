@@ -70,7 +70,7 @@ namespace LEDA {
                 out vec4 FragColor;
                 in vec4 vertexColor;
                 void main() {
-                    FragColor = vec4(0.0, 0.0, 0.0, 0.0);
+                    FragColor = vertexColor;
                 }
 
             )SHADER";
@@ -79,6 +79,29 @@ namespace LEDA {
 
         }
         else if (shaderType == "transparent") {
+
+            vertexShaderCode = R"SHADER(
+
+                #version 330 core
+                layout (location = 0) in vec3 aPos;
+                uniform mat4 projection;
+                uniform mat4 transform;
+                uniform vec4 color;
+                void main() {
+                    gl_Position = vec4(0.0, 0.0, 0.0, 0.0);
+                }
+
+            )SHADER";
+
+            fragmentShaderCode = R"SHADER(
+
+                #version 330 core
+                out vec4 FragColor;
+                void main() {
+                    FragColor = vec4(0.0, 0.0, 0.0, 0.0);
+                }
+
+            )SHADER";
 
         }
         else if (shaderType == "rainbow") {

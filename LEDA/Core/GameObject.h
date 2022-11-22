@@ -42,6 +42,8 @@ namespace LEDA {
 		template <typename C>
 		friend C LEDA_API * getComponent(GameObject* obj);
 
+		friend void LEDA_API deleteAllComponents(GameObject* obj);
+
 		friend std::string LEDA_API printGameObject(GameObject* obj);
 
 	};
@@ -58,6 +60,14 @@ namespace LEDA {
 		} else {
 			return dynamic_cast<C*>(value->second);
 		}
+	}
+
+	void deleteAllComponents(GameObject* obj) {
+		for (std::pair<const std::string, IComponent*>& pair : obj->components) {
+			IComponent* component = pair.second;
+			delete component;
+		}
+		obj->components.clear();
 	}
 
 	std::string printGameObject(GameObject* obj) {

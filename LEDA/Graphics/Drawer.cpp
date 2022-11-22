@@ -85,6 +85,10 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 		}
 	}
 
+	// camera somethings
+	glm::f32* projectionMatrix = transformMatrix(Vector2D(0.0, 0.0), Vector2D(1.0 / WINDOW_WIDTH, 1.0 / WINDOW_HEIGHT), 0.0);
+
+	// actually draw the objects in this loop
 	for (std::pair<const std::string, std::vector<GameObject*>> &it : shapes) {
 
 		const std::string shape = it.first;
@@ -102,27 +106,28 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 			glBufferData(GL_ARRAY_BUFFER, sizeof(triangle), triangle, GL_STATIC_DRAW);
 
 			// positions (location 0)
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 			glEnableVertexAttribArray(0);
 
 			glBindVertexArray(0);
 		}
 		else if (shape == "sus") {
-			// todo: draw an amogus (not so soon)
+			// TODO: draw an amogus (not so soon)
 		}
 
 		for (GameObject* object : it.second) {
 
 			// get transform data
 			TransformComponent* transformComponent = getComponent<TransformComponent>(object);
-			glm::f32* mat = transformMatrix(*transformComponent);
+			glm::f32* objectMatrix = transformMatrix(*transformComponent);
 
 			// get shader too
 			GraphicsComponent* graphicsComponent = getComponent<GraphicsComponent>(object);
 			Shader shader{ graphicsComponent->material };
-			
-			shader.setMatrix4("projection", transformMatrix(Vector2D(0.0, 0.0), Vector2D(1.0 / WINDOW_WIDTH, 1.0 / WINDOW_HEIGHT), 0.0));
-			shader.setMatrix4("transform", mat);
+
+			// set shader uniforms
+			shader.setMatrix4("projection", projectionMatrix);
+			shader.setMatrix4("transform", objectMatrix);
 			// TODO: replace with object color
 			shader.setFloat4("color", 0.0, 0.0, 0.0, 0.0);
 

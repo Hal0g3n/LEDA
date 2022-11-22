@@ -17,7 +17,6 @@
 
 using namespace LEDA;
 
-// todo make transform component
 glm::f32* LEDA::transformMatrix(TransformComponent tc) {
     return transformMatrix(tc.position, tc.scale, tc.rotation);
 }
@@ -41,10 +40,10 @@ glm::f32* LEDA::transformMatrix(double x, double y, double sx, double sy, double
     // translate by [position]
     transform = glm::translate(transform, glm::vec3(x, y, 0.0f));
     // rotate by [rotation]
-    transform = glm::rotate(transform, (float)rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+    transform = glm::rotate(transform, (float)rotation, glm::vec3(0.0, 0.0, 1.0f));
     // scale by [scale]
     transform = glm::scale(transform, glm::vec3(sx, sy, 1.0f));
-    // return a pointer, can be put into the glUniformMatrix4fv function (in this case)
+    // return a pointer that can be passed in the glUniformMatrix4fv function
     return glm::value_ptr(transform);
 
 }
