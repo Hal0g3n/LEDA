@@ -26,7 +26,7 @@ namespace LEDA {
 
 	public:
 		// Called on Initialize
-		LogicSystem();
+		LogicSystem() {};
 
 		// Called on Destroy
 		~LogicSystem() {};

@@ -13,7 +13,7 @@
         "rotation": 0
       },
       "graphics": {
-        "shape": "triangle",
+        "shape": "rectangle",
         "material": "solid",
         "color": "#c0ffee"
       },

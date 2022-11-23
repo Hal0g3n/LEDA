@@ -8,12 +8,16 @@
  * @copyright   Copyright (c) 2022
  */
 
+#pragma once
+
 #ifndef LOGIC_COMPONENTS_H_
 #define LOGIC_COMPONENTS_H_
 
 #include "pch.h"
 
 #include "IComponent.h"
+
+#include <functional>
 
 namespace LEDA {
 

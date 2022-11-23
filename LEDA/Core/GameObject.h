@@ -90,6 +90,10 @@ namespace LEDA {
 		if (kc != nullptr) {
 			ss << "\n    velocity: "; // TODO vector std::string operator thing
 		}
+		LogicComponent* lc = getComponent<LogicComponent>(obj);
+		if (lc != nullptr) {
+			ss << "\n    logic: <exists>";
+		}
 		ss << "\n}\n";
 		return ss.str();
 		

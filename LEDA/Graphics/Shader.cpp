@@ -34,6 +34,7 @@ namespace LEDA {
 	Shader::Shader() {
 
         // hmmm blank shaders? not a thing
+        id = 123456789;
         
 	}
 
@@ -134,7 +135,7 @@ namespace LEDA {
         glShaderSource(vertex, 1, &vertexCharArray, NULL);
         glCompileShader(vertex);
         checkForErrors(vertex, "Vertex");
-        // fragment Shader
+        // fragment shader
         fragment = glCreateShader(GL_FRAGMENT_SHADER);
         glShaderSource(fragment, 1, &fragmentCharArray, NULL);
         glCompileShader(fragment);
@@ -146,8 +147,8 @@ namespace LEDA {
         glLinkProgram(id);
         checkForErrors(id, "Program");
         // delete the shaders
-        // glDeleteShader(vertex);
-        // glDeleteShader(fragment);
+        glDeleteShader(vertex);
+        glDeleteShader(fragment);
 
     }
 
@@ -163,7 +164,7 @@ namespace LEDA {
         glShaderSource(vertex, 1, &vertexCharArray, NULL);
         glCompileShader(vertex);
         checkForErrors(vertex, "Vertex");
-        // fragment Shader
+        // fragment shader
         fragment = glCreateShader(GL_FRAGMENT_SHADER);
         glShaderSource(fragment, 1, &fragmentCharArray, NULL);
         glCompileShader(fragment);

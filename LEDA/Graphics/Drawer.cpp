@@ -32,8 +32,9 @@ void WINDOW_RESIZE(GLFWwindow* window, int width, int height) {
 }
 
 std::unordered_map<std::string, LEDA::Shader> shaders;
+std::unordered_map<std::string, std::tuple<unsigned int, unsigned int, unsigned int, unsigned int>> meshes;
 
-unsigned int VAO = 0, VBO = 0, EBO = 0;
+// shapes
 float triangle[] = {
 	0.5f, -0.5f, 0.0f,
 	-0.5f, -0.5f, 0.0f,
@@ -41,6 +42,20 @@ float triangle[] = {
 };
 unsigned int triangle_[] = {
 	0, 1, 2,
+};
+float rectangle[] = {
+	0.5f, 0.5f, 0.0f,
+	0.5f, -0.5f, 0.0f,
+	-0.5f, -0.5f, 0.0f,
+	-0.5f, 0.5f, 0.0f,
+};
+unsigned int rectangle_[] = {
+	0, 1, 3,
+	1, 2, 3,
+};
+float amogus[] = {
+	// TODO: amogus vertices
+	0.0f, 0.0f, 0.0f,
 };
 
 void LEDA::initializeDrawer() {
@@ -85,48 +100,61 @@ void LEDA::initializeDrawer() {
 	});
 
 	// load default shaders here
-	for (std::string shaderType : {"solid", "transparent"}) {
+	for (std::string shaderType : { "solid", "transparent" }) {
 		Shader shader{ shaderType };
 		shaders.emplace(shaderType, shader);
 	}
 
+	// load default meshes here
+	unsigned int VAO = 0, VBO = 0, EBO = 0;
+	unsigned int numberOfVertices = 0;
 
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
+	for (std::string meshType : { "triangle", "rectangle" }) {
 
-	glBindVertexArray(VAO);
+		float* vertices = nullptr;
+		unsigned int* indices = nullptr;
+		size_t sizeof_vertices = 0;
+		size_t sizeof_indices = 0;
+		if (meshType == "triangle") {
+			vertices = triangle;
+			indices = triangle_;
+			sizeof_vertices = sizeof(triangle);
+			sizeof_indices = sizeof(triangle_);
+			numberOfVertices = std::size(triangle_);
+		}
+		else if (meshType == "rectangle") {
+			vertices = rectangle;
+			indices = rectangle_;
+			sizeof_vertices = sizeof(rectangle);
+			sizeof_indices = sizeof(rectangle_);
+			numberOfVertices = std::size(rectangle_);
+		}
+		else {
+			LOG_WARNING(std::string("skill issue! unknown mesh type: '") + meshType + "'");
+		}
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle), triangle, GL_STATIC_DRAW);
+		glGenVertexArrays(1, &VAO);
+		glGenBuffers(1, &VBO);
+		glGenBuffers(1, &EBO);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(triangle_), triangle_, GL_STATIC_DRAW);
+		glBindVertexArray(VAO);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof_vertices, vertices, GL_STATIC_DRAW);
 
-	glBindVertexArray(0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof_indices, indices, GL_STATIC_DRAW);
 
-	// numberOfVertices = std::size(triangle_);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(0);
+
+		glBindVertexArray(0);
+
+		meshes.emplace(meshType, std::make_tuple(VAO, VBO, EBO, numberOfVertices));
+
+	}
 
 }
-
-// shapes
-float rectangle[] = {
-	0.5f, 0.5f, 0.0f,
-	0.5f, -0.5f, 0.0f,
-	-0.5f, -0.5f, 0.0f,
-	-0.5f, 0.5f, 0.0f,
-};
-unsigned int rectangle_[] = {
-	0, 1, 3,
-	1, 2, 3,
-};
-float amogus[] = {
-	// TODO: amogus vertices
-	0.0f, 0.0f, 0.0f,
-};
 
 void LEDA::drawObjects(std::vector<GameObject*> objects) {
 
@@ -185,6 +213,13 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 		}
 		*/
 
+		const std::string shape = it.first;
+
+		unsigned int VAO = std::get<0>(meshes.at(shape));
+		unsigned int VBO = std::get<1>(meshes.at(shape));
+		unsigned int EBO = std::get<2>(meshes.at(shape));
+		unsigned int numberOfVertices = std::get<3>(meshes.at(shape));
+
 		for (GameObject* object : it.second) {
 
 			// get transform data
@@ -194,28 +229,28 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 			// get graphics data
 			GraphicsComponent* graphicsComponent = getComponent<GraphicsComponent>(object);
 			// get shader too, initialize it with shader type (material)
-			Shader theShader = shaders.at(graphicsComponent->material);
+			Shader shader = shaders.at(graphicsComponent->material);
 
 			// set shader uniforms
-			//shader.setMatrix4("projection", projectionMatrix);
-			unsigned int a = glGetUniformLocation(theShader.id, "projection");
+
 			glm::f32* projectionMatrix = transformMatrix(Vector2D(0.0, 0.0), Vector2D(2.0 / WINDOW_WIDTH, 2.0 / WINDOW_HEIGHT), 0.0);
+			//shader.setMatrix4("projection", projectionMatrix);
+			unsigned int a = glGetUniformLocation(shader.id, "projection");
 			glUniformMatrix4fv(a, 1, GL_FALSE, projectionMatrix);
-			//shader.setMatrix4("transform", objectMatrix);
-			unsigned int b = glGetUniformLocation(theShader.id, "transform");
+
 			glm::f32* objectMatrix = transformMatrix(*transformComponent);
+			//shader.setMatrix4("transform", objectMatrix);
+			unsigned int b = glGetUniformLocation(shader.id, "transform");
 			glUniformMatrix4fv(b, 1, GL_FALSE, objectMatrix);
+
 			//shader.setFloat4("color", graphicsComponent->color);
 
-			theShader.use();
+			shader.use();
 
 			glBindVertexArray(VAO);
-			glDrawArrays(GL_TRIANGLES, 0, 3);
-			/*
+			// glDrawArrays(GL_TRIANGLES, 0, 3);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 			glDrawElements(GL_TRIANGLES, numberOfVertices, GL_UNSIGNED_INT, 0);
-			glUseProgram(0);
-			*/
 			glBindVertexArray(0);
 
 		}
