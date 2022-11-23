@@ -15,6 +15,7 @@
 
 #include "pch.h"
 
+#include <functional>
 #include "ISystem.h"
 #include "LEDA_System.h"
 
@@ -25,20 +26,14 @@ namespace LEDA {
 
 	public:
 		// Called on Initialize
-		LogicSystem() {};
+		LogicSystem();
 
 		// Called on Destroy
 		~LogicSystem() {};
 
-		/*
-		void init() { for (GameObject* obj : objects) obj->init(); };
-		void update() { for (GameObject* obj : objects) obj->update(); };
-		void free() { for (GameObject* obj : objects) obj->destroy(); objects.clear(); };
-		*/
-		// ?
-		void init() {};
-		void update() {};
-		void free() {};
+		void init() { for (GameObject* obj : objects) getComponent<LogicComponent>(obj)->init(); };
+		void update() { for (GameObject* obj : objects) getComponent<LogicComponent>(obj)->update(); };
+		void free() { objects.clear(); };
 		
 		// Called on new Game Object
 		void onRegisterGameObject(GameObject*);

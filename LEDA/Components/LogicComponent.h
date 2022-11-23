@@ -17,10 +17,17 @@
 
 namespace LEDA {
 
+	// Example Creation (With lambdas)
+	// new LogicComponent([] {}, [] {}, [] {});
+	//
+	// Example Creation (Without lambdas)
+	// new LogicComponent(fname, fname, fname);
+
 	struct LEDA_API LogicComponent : IComponent {
-		// virtual void init()	  const;
-		// virtual void update()  const;
-		// virtual void free()	  const;
+		std::function<void(void)> init, update, free;
+		
+		LogicComponent(std::function<void(void)> i, std::function<void(void)> u, std::function<void(void)> f):
+			init{ i }, update{ u }, free{ f } {}
 	};
 
 }
