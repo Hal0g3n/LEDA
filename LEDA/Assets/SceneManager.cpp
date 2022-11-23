@@ -79,7 +79,7 @@ void SceneManager::load(std::string filename) {
 
 			// Get the id and init game object
 			// Naming it as "unnamed entity #0" if it is unnamed
-			GameObject* cur = new GameObject(
+			GameObject* obj = new GameObject(
 				objectData["id"].is_null() ?
 				"unnamed entity #" + ++objectCount :
 				objectData["id"]
@@ -141,7 +141,7 @@ void SceneManager::load(std::string filename) {
 								}
 							}
 							else {
-								LOG_WARNING(std::string("color array empty! object id: ") + id);
+								LOG_WARNING(std::string("color array empty! object id: ") + obj->getId());
 							}
 						}
 						else if (objectColor.is_string()) {
@@ -169,7 +169,7 @@ void SceneManager::load(std::string filename) {
 					};
 
 					// Add the component to the game object
-					addComponent(cur, kc);
+					addComponent(obj, kc);
 				}
 			}
 
