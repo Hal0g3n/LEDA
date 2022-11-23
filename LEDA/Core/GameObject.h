@@ -86,6 +86,10 @@ namespace LEDA {
 			}
 			ss << "\b\b]"; // WOW using backspace works!
 		}
+		KinematicsComponent* kc = getComponent<KinematicsComponent>(obj);
+		if (kc != nullptr) {
+			ss << "\n    velocity: "; // TODO vector std::string operator thing
+		}
 		ss << "\n}\n";
 		return ss.str();
 		

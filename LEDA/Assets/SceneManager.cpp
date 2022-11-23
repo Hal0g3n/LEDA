@@ -60,7 +60,7 @@ void SceneManager::load(std::string filename) {
 
 	// read and parse scene data
 	// also ignore comments because... yes
-	json data = json::parse(stream, nullptr, true, true);
+	json data = json::parse(stream, nullptr, false, true);
 
 	if (!data["assets"].is_null()) { // If additional assets exist
 		for (auto &asset : data["assets"].items())

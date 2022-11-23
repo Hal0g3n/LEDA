@@ -92,7 +92,11 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 			//  	nxt = "quit";
 
 			// loop until frame time is over
-			while ((std::chrono::system_clock::now() - frameStartTime).count() < 1 / frameRate);
+			while (frameTime < 1e9 / frameRate) {
+				frameTime = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now() - frameStartTime).count();
+			}
+
+			// std::cout << frameTime << "\n";
 
 			appTime += frameTime;
 		}

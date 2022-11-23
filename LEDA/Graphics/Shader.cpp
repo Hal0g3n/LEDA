@@ -34,14 +34,13 @@ namespace LEDA {
 	Shader::Shader() {
 
         // hmmm blank shaders? not a thing
-        Shader("", "");
         
 	}
 
     Shader::Shader(std::string shaderType) {
         
         // set id here to prevent warning...
-        id = 0;
+        id = 123456789;
 
         std::string vertexShaderCode, fragmentShaderCode;
 
@@ -52,13 +51,13 @@ namespace LEDA {
             vertexShaderCode = R"SHADER(
 
                 #version 330 core
-                layout (location = 0) in vec3 aPos;
+                layout (location = 0) in vec3 position;
                 out vec4 vertexColor;
                 uniform mat4 projection;
                 uniform mat4 transform;
                 uniform vec4 color;
                 void main() {
-                    gl_Position = projection * transform * vec4(aPos, 1.0);
+                    gl_Position = projection * transform * vec4(position, 1.0);
                     vertexColor = color;
                 }
 
@@ -67,15 +66,13 @@ namespace LEDA {
             fragmentShaderCode = R"SHADER(
 
                 #version 330 core
-                out vec4 FragColor;
+                layout (location = 0) out vec4 FragColor;
                 in vec4 vertexColor;
                 void main() {
-                    FragColor = vertexColor;
+                    FragColor = vec4(1.0, 1.0, 1.0, 1.0);
                 }
 
             )SHADER";
-
-            Shader(vertexShaderCode, fragmentShaderCode);
 
         }
         else if (shaderType == "transparent") {
@@ -96,7 +93,7 @@ namespace LEDA {
             fragmentShaderCode = R"SHADER(
 
                 #version 330 core
-                out vec4 FragColor;
+                layout (location = 0) out vec4 FragColor;
                 void main() {
                     FragColor = vec4(0.0, 0.0, 0.0, 0.0);
                 }
@@ -122,11 +119,35 @@ namespace LEDA {
                 "void main() {\n"
                 "   FragColor = vec4(color, 1.0f);\n"
                 "}\n\0";
-            Shader(vertexShaderCode, fragmentShaderCode);
         }
         else {
-            Shader();
+
         }
+
+        const char* vertexCharArray = vertexShaderCode.c_str();
+        const char* fragmentCharArray = fragmentShaderCode.c_str();
+
+        // compile the shaders
+        unsigned int vertex, fragment;
+        // vertex shader
+        vertex = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vertex, 1, &vertexCharArray, NULL);
+        glCompileShader(vertex);
+        checkForErrors(vertex, "Vertex");
+        // fragment Shader
+        fragment = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(fragment, 1, &fragmentCharArray, NULL);
+        glCompileShader(fragment);
+        checkForErrors(fragment, "Fragment");
+        // shader program
+        id = glCreateProgram();
+        glAttachShader(id, vertex);
+        glAttachShader(id, fragment);
+        glLinkProgram(id);
+        checkForErrors(id, "Program");
+        // delete the shaders
+        // glDeleteShader(vertex);
+        // glDeleteShader(fragment);
 
     }
 
@@ -257,7 +278,7 @@ namespace LEDA {
 
     unsigned int Shader::getUniformLocation(const std::string& name) const
     {
-        return glGetUniformLocation(this->id, name.c_str());
+        return glGetUniformLocation(id, name.c_str());
     }
 
     void Shader::checkForErrors(unsigned int shader, std::string type)

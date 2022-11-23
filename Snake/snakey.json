@@ -8,28 +8,34 @@
       "id": "central square",
       "transform": {
         "x": 0,
-        "y": 0,
-        "scale": 1,
+        "y": 200,
+        "scale": 200.0,
         "rotation": 0
       },
       "graphics": {
-        "shape": "square",
+        "shape": "triangle",
         "material": "solid",
         "color": "#c0ffee"
+      },
+      "kinematics": {
+        "vel": {
+          "x": 0,
+          "y": -0.00000001
+        }
       }
-    },
+    }/*,
     {
       "id": "sus", // oh no why does this comment exist in json oh no
       "transform": {
-        "x": 1,
-        "y": 1,
+        "x": 100,
+        "y": 100,
         "scale": 1,
         "rotation": 0
       },
       "graphics": {
-        "shape": "square",
+        "shape": "triangle",
         "material": "solid"
       }
-    }
+    }*/
   ]
 }

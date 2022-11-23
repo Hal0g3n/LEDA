@@ -93,14 +93,14 @@ int LEDA::test() {
     // glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glfwSetFramebufferSizeCallback(window, resize);
 
-    Shader theShader { vertexShaderCode, fragmentShaderCode };
+    Shader theShader { "solid" };
 
     // draw the triangle!
     float vertices[] = {
     //   positions           colours
-         0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
-         0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top middle
+         0.5f, -0.5f, 0.0f,
+        -0.5f, -0.5f, 0.0f,
+         0.0f,  0.5f, 0.0f,
     };
     unsigned int indices[] = { // 0-indexed
         0, 1, 3,  // first triangle
@@ -111,17 +111,20 @@ int LEDA::test() {
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
+
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     // positions
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+    /*
     // colours
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+    */
 
     glBindVertexArray(0);
 
@@ -150,18 +153,25 @@ int LEDA::test() {
         
         // draw third triangle (wow!)
 
+        // glm::ortho(0.0f, WINDOW_WIDTH, 0.0f, WINDOW_HEIGHT, )
+
+        //theShader.setMatrix4("projection", transformMatrix(Vector2D(0.0, 0.0), Vector2D(2.0 / WINDOW_WIDTH, 2.0 / WINDOW_HEIGHT), 0.0));
+        //theShader.setMatrix4("transform", transformMatrix(Vector2D(x, y), Vector2D(100, 100), rotation));
         unsigned int projectionLocation = glGetUniformLocation(theShader.id, "projection");
-        glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, transformMatrix(Vector2D(0.0, 0.0), Vector2D(1.0 / WINDOW_WIDTH, 1.0 / WINDOW_HEIGHT), 0.0));
+        glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, transformMatrix(Vector2D(0.0, 0.0), Vector2D(2.0 / WINDOW_WIDTH, 2.0 / WINDOW_HEIGHT), 0.0));
 
         unsigned int transformLocation = glGetUniformLocation(theShader.id, "transform");
         glUniformMatrix4fv(transformLocation, 1, GL_FALSE, transformMatrix(Vector2D(x, y), Vector2D(100, 100), rotation));
 
         theShader.use();
+
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         // glDrawArrays(GL_TRIANGLES, 0, 6);
         // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        // glUseProgram(0);
 
+        /*
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
 
@@ -173,6 +183,7 @@ int LEDA::test() {
 
             }
         }
+        */
 
         glfwSwapBuffers(window);
 
