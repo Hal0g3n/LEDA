@@ -12,6 +12,8 @@
 // credit to https://learnopengl.com/ for the main idea and base code
 // but i changed quite a lot?
 
+#pragma once
+
 #ifndef LEDA_SHADER_H_
 #define LEDA_SHADER_H_
 
