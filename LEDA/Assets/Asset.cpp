@@ -4,6 +4,7 @@
 
 using namespace LEDA;
 
+
 Image::Image(std::string filename) {
 
 }
@@ -17,6 +18,24 @@ Font::Font(std::string filename) {
 
 }
 
+
 Font::~Font() {
+
+}
+
+Shader::Shader(std::string vecFile, std::string fragFile) {
+
+}
+
+Shader::~Shader() {
+
+}
+
+
+Audio::Audio(std::string filename) {
+
+}
+
+Audio::~Audio() {
 
 }

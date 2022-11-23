@@ -21,4 +21,13 @@ namespace LEDA {
 		~Font();
 	};
 
+	struct LEDA_API Shader : Asset {
+		Shader(std::string vecFile, std::string fragFile);
+		~Shader();
+	};
+
+	struct LEDA_API Audio : Asset {
+		Audio(std::string filename);
+		~Audio();
+	};
 }

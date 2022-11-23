@@ -63,11 +63,16 @@ void SceneManager::load(std::string filename) {
 	json data = json::parse(stream, nullptr, false, true);
 
 	if (!data["assets"].is_null()) { // If additional assets exist
+
+		// TODO: Find assets set difference
+		// Load/Unload the diff
 		for (auto &asset : data["assets"].items())
 			if ("fonts" == asset.key())
-				for (auto &s : asset.value()) ; // TODO: Figure out loading the asset from file name
+				for (auto &s : asset.value().items()) ; // TODO: Figure out loading the asset from file name
 			else if ("images" == asset.key())
-				for (auto &s : asset.value()) ; // TODO: Figure out loading the asset from file name
+				for (auto &s : asset.value().items()) ; // TODO: Figure out loading the asset from file name
+
+
 	}
 
 	if (!data["objects"].is_null()) { // If the game object list actually exists
