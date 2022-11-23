@@ -46,44 +46,54 @@ void SceneManager::load(std::string filename) {
 		unsigned int objectCount = 0;
 
 		for (auto &obj : data["objects"].items()) {
-			objectCount++;
-			std::string id = "";
-			if (obj.value()["id"].is_null()) {
-				id = "entity #" + objectCount;
-			}
-			else {
-				id = obj.value()["id"];
-			}
 
-			GameObject* cur = new GameObject(id);
-			std::cout << "test" << std::endl;
+			// Get the id and init game object
+			// Naming it as "unnamed entity #0" if it is unnamed
+			GameObject* cur = new GameObject(
+				obj.value()["id"].is_null() ?
+				"unnamed entity #" + ++objectCount :
+				obj.value()["id"]
+			);
 
 			// for each object component
 			for (auto& comp : obj.value().items()) {
+
+				// Get the component type and values
 				std::string componentType = comp.key();
 				auto& value = comp.value();
-				if (componentType == "id") {
-					// already used above
-					continue;
-				}
+
+				// Ignore the ID component
+				if (componentType == "id") continue;
+
 				else if (componentType == "transform") {
 					TransformComponent* tc = new TransformComponent();
 					// temporary attribute names (scalex and scaley are a bit weird (and scaly))
+					// Set values if they exist
 					if (!value["x"].is_null()) tc->position.x = value["x"];
 					if (!value["y"].is_null()) tc->position.y = value["y"];
+
 					if (!value["scale"].is_null()) {
 						tc->scale.x = value["scale"];
 						tc->scale.y = value["scale"];
 					}
+
 					if (!value["scalex"].is_null()) tc->scale.x = value["scalex"];
 					if (!value["scaley"].is_null()) tc->scale.y = value["scaley"];
+					
 					if (!value["rotation"].is_null()) tc->rotation = value["rotation"];
-					addComponent(cur, tc);
+					
+					// Add the component to the game object
+					addComponent(*cur, tc);
 				}
+
 				else if (componentType == "graphics") {
 					GraphicsComponent* gc = new GraphicsComponent();
+
+					// Set values if they exist
 					if (!value["material"].is_null()) gc->material = value["material"];
 					if (!value["shape"].is_null()) gc->shape = value["shape"];
+
+					// Add the component to the game object
 					addComponent(cur, gc);
 					if (getComponent<GraphicsComponent>(cur) == nullptr) {
 						LOG_WARNING("skill issue: graphics component not existing despite being so a nanosecond ago");
@@ -94,7 +104,7 @@ void SceneManager::load(std::string filename) {
 				}
 			}
 
-			// Register the game object for retrieval later
+			// Register the game object to the system
 			registerGameObject(obj.key(), cur);
 
 			// print game object for debugging TODO: remove
