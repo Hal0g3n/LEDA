@@ -75,43 +75,50 @@ void SceneManager::load(std::string filename) {
 		unsigned int objectCount = 0;
 
 		for (auto &entry : data["objects"].items()) {
-			objectCount++;
-			std::string id = "";
 			auto& objectData = entry.value();
-			if (objectData["id"].is_null()) {
-				id = "entity #" + objectCount;
-			}
-			else {
-				id = objectData["id"];
-			}
 
-			GameObject* obj = new GameObject(id);
-			std::cout << "test" << std::endl;
+			// Get the id and init game object
+			// Naming it as "unnamed entity #0" if it is unnamed
+			GameObject* cur = new GameObject(
+				objectData["id"].is_null() ?
+				"unnamed entity #" + ++objectCount :
+				objectData["id"]
+			);
 
 			// for each object component
 			for (auto& comp : objectData.items()) {
+
+				// Get the component type and values
 				std::string componentType = comp.key();
 				auto& value = comp.value();
-				if (componentType == "id") {
-					// already used above
-					continue;
-				}
+
+				// Ignore the ID component
+				if (componentType == "id") continue;
+
 				else if (componentType == "transform") {
 					TransformComponent* tc = new TransformComponent();
 					// temporary attribute names (scalex and scaley are a bit weird (and scaly))
+					// set values if they exist
 					if (!value["x"].is_null()) tc->position.x = value["x"];
 					if (!value["y"].is_null()) tc->position.y = value["y"];
+
 					if (!value["scale"].is_null()) {
 						tc->scale.x = value["scale"];
 						tc->scale.y = value["scale"];
 					}
+
 					if (!value["scalex"].is_null()) tc->scale.x = value["scalex"];
 					if (!value["scaley"].is_null()) tc->scale.y = value["scaley"];
+					
 					if (!value["rotation"].is_null()) tc->rotation = value["rotation"];
+
 					addComponent(obj, tc);
 				}
+
 				else if (componentType == "graphics") {
 					GraphicsComponent* gc = new GraphicsComponent();
+
+					// set values if they exist
 					if (!value["material"].is_null()) gc->material = value["material"];
 					if (!value["shape"].is_null()) gc->shape = value["shape"];
 					if (!value["color"].is_null()) {
@@ -147,12 +154,26 @@ void SceneManager::load(std::string filename) {
 						LOG_WARNING("skill issue: graphics component not existing despite being so a nanosecond ago");
 					}
 				}
+
 				else if (componentType == "kinematics") {
-					// TODO: kinematics component
+					KinematicsComponent* kc = new KinematicsComponent();
+
+					// set values if they exist
+					if (!value["vel"].is_null()) {
+						if (!value["vel"]["x"].is_null()) kc->vel.x = value["vel"]["x"];
+						if (!value["vel"]["y"].is_null()) kc->vel.y = value["vel"]["y"];
+					}
+					if (!value["acc"].is_null()) {
+						if (!value["acc"]["x"].is_null()) kc->acc.x = value["acc"]["x"];
+						if (!value["acc"]["y"].is_null()) kc->acc.y = value["acc"]["y"];
+					};
+
+					// Add the component to the game object
+					addComponent(cur, kc);
 				}
 			}
 
-			// Register the game object for retrieval later
+			// Register the game object to the system
 			registerGameObject(obj->getId(), obj);
 
 			// print game object for debugging TODO: remove
