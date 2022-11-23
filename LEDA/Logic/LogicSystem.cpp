@@ -21,7 +21,8 @@ void LogicSystem::onRegisterGameObject(GameObject* obj) {
 
 	if (logic == nullptr) return;
 	
-	// logic->init();
+	// A new object is born
+	logic->init();
 
 	// Add Object to logic system list
 	objects.push_back(obj);
@@ -30,9 +31,11 @@ void LogicSystem::onRegisterGameObject(GameObject* obj) {
 void LogicSystem::onRemoveGameObject(GameObject* obj) {
 	LogicComponent* logic = getComponent<LogicComponent>(obj);
 
+	// Check if it is relevant
 	if (logic == nullptr) return;
 
-	// logic->init();
+	// Last words
+	logic->free();
 
 	// Find and Erase Object from the logic system list
 	objects.erase(std::find(objects.begin(), objects.end(), obj));

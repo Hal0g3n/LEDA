@@ -1,8 +1,15 @@
 {
     "assets": {
-        "fonts": [ "font_file1.ttf", "font_file2.otf" ],
-        "images": [ "image1.png", "image1.jpg", "image1.jpeg" ]
-    },
+        "fonts": {
+            "player": "font_file1.ttf",
+            "font1": "font_file2.otf"
+        },
+        "images": {
+            "player": "image1.png",
+            "font2": "image1.jpg",
+            "font2": "image1.jpeg"
+        }
+        },
     "objects": [
         {
             "position": {
@@ -14,6 +21,7 @@
             "position": {
                 "x": 2,
                 "y": 3
+                "drawing":  "font2"
             }
         }
     ]

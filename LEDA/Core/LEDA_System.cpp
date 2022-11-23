@@ -49,6 +49,8 @@ std::vector<ISystem*> systems{
 	new PhysicsSystem(),
 };
 
+void china() {}
+
 void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, std::string initialState) {
 
 	std::cout << "LEDA runs!" << std::endl;
@@ -113,7 +115,6 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 		// Setting up for next loop
 		pre = cur;
 		cur = nxt;
-
 	}
 
 	// Destroys all systems
