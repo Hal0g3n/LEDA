@@ -83,7 +83,7 @@ void SceneManager::load(std::string filename) {
 					if (!value["rotation"].is_null()) tc->rotation = value["rotation"];
 					
 					// Add the component to the game object
-					addComponent(*cur, tc);
+					addComponent(cur, tc);
 				}
 
 				else if (componentType == "graphics") {
@@ -99,8 +99,22 @@ void SceneManager::load(std::string filename) {
 						LOG_WARNING("skill issue: graphics component not existing despite being so a nanosecond ago");
 					}
 				}
+
 				else if (componentType == "kinematics") {
-					// TODO: kinematics component
+					KinematicsComponent* kc = new KinematicsComponent();
+
+					// Set values if they exist
+					if (!value["vel"].is_null()) {
+						if (!value["vel"]["x"].is_null()) kc->vel.x = value["vel"]["x"];
+						if (!value["vel"]["y"].is_null()) kc->vel.y = value["vel"]["y"];
+					}
+					if (!value["acc"].is_null()) {
+						if (!value["acc"]["x"].is_null()) kc->acc.x = value["acc"]["x"];
+						if (!value["acc"]["y"].is_null()) kc->acc.y = value["acc"]["y"];
+					};
+
+					// Add the component to the game object
+					addComponent(cur, kc);
 				}
 			}
 
