@@ -5,10 +5,24 @@
   },
   "objects": [
     {
-      "id": "central triangle",
+      "id": "central square",
       "transform": {
         "x": 0,
         "y": 0,
+        "scale": 1,
+        "rotation": 0
+      },
+      "graphics": {
+        "shape": "square",
+        "material": "solid"
+      }
+    },
+    {
+      "id": "sus", // oh no why does this comment exist in json oh no
+      "transform": {
+        "x": 0.5,
+        "y": 0.5,
+        "scale": 1,
         "rotation": 0
       },
       "graphics": {
@@ -16,19 +30,5 @@
         "material": "solid"
       }
     }
-    /*
-    {
-      "id": "sus", // oh no why does this comment exist in json oh no
-      "transform": {
-        "x": 1,
-        "y": -1,
-        "rotation": 1
-      },
-      "graphics": {
-        "shape": "triangle",
-        "material": "transparent"
-      }
-    }
-    */
   ]
 }

@@ -18,6 +18,8 @@
 
 #include <GLFW/glfw3.h>
 
+#include <iterator>
+
 
 // WINDOW_STUFF
 const unsigned int WINDOW_WIDTH = 800;
@@ -67,10 +69,23 @@ float triangle[] = {
 	-0.5f, -0.5f, 0.0f,
 	0.0f,  0.5f, 0.0f,
 };
+unsigned int triangle_[] = {
+	0, 1, 2,
+};
+float rectangle[] = {
+	0.5f, 0.5f, 0.0f,
+	0.5f, -0.5f, 0.0f,
+	-0.5f, -0.5f, 0.0f,
+	-0.5f, 0.5f, 0.0f,
+};
+unsigned int rectangle_[] = {
+	0, 1, 3,
+	1, 2, 3,
+};
 
 void LEDA::drawObjects(std::vector<GameObject*> objects) {
 
-	// get a nice map of objects categorised by materials
+	// get a nice map of objects categorised by shapes
 	std::unordered_map<std::string, std::vector<GameObject*>> shapes = {};
 
 	for (GameObject* object : objects) {
@@ -85,7 +100,7 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 		}
 	}
 
-	// camera somethings
+	// camera projection somethings
 	glm::f32* projectionMatrix = transformMatrix(Vector2D(0.0, 0.0), Vector2D(1.0 / WINDOW_WIDTH, 1.0 / WINDOW_HEIGHT), 0.0);
 
 	// actually draw the objects in this loop
@@ -93,23 +108,51 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 
 		const std::string shape = it.first;
 		
-		// bind the material before drawing all objects with the material
+		// bind the shape before drawing all objects with the same shape
 
-		unsigned int VAO = 0, VBO = 0;
+		unsigned int VAO = 0, VBO = 0, EBO = 0;
+
+		unsigned int numberOfVertices = 0;
 
 		if (shape == "triangle") {
 			glGenVertexArrays(1, &VAO);
 			glGenBuffers(1, &VBO);
+			glGenBuffers(1, &EBO);
+
 			glBindVertexArray(VAO);
 
 			glBindBuffer(GL_ARRAY_BUFFER, VBO);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(triangle), triangle, GL_STATIC_DRAW);
 
-			// positions (location 0)
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(triangle_), triangle_, GL_STATIC_DRAW);
+
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 			glEnableVertexAttribArray(0);
 
 			glBindVertexArray(0);
+
+			numberOfVertices = std::size(triangle_);
+		}
+		else if (shape == "rectangle" || shape == "square") {
+			glGenVertexArrays(1, &VAO);
+			glGenBuffers(1, &VBO);
+			glGenBuffers(1, &EBO);
+
+			glBindVertexArray(VAO);
+
+			glBindBuffer(GL_ARRAY_BUFFER, VBO);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(rectangle), rectangle, GL_STATIC_DRAW);
+
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(rectangle_), rectangle_, GL_STATIC_DRAW);
+
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+			glEnableVertexAttribArray(0);
+
+			glBindVertexArray(0);
+
+			numberOfVertices = std::size(rectangle_);
 		}
 		else if (shape == "sus") {
 			// TODO: draw an amogus (not so soon)
@@ -134,7 +177,10 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 			shader.use();
 
 			glBindVertexArray(VAO);
-			glDrawArrays(GL_TRIANGLES, 0, 3);
+			if (EBO != 0) {
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+			}
+			glDrawElements(GL_TRIANGLES, numberOfVertices, GL_UNSIGNED_INT, 0);
 
 		}
 

@@ -20,8 +20,6 @@
 // to set window title
 #include "LEDA_Graphics.h"
 
-#include <string>
-
 using namespace LEDA;
 
 /****************************
