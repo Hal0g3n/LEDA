@@ -219,7 +219,12 @@ namespace LEDA {
 
     void Shader::setFloat4(const std::string& name, float* value) const
     {
-        glUniform4f(getUniformLocation(name), value[0], value[1], value[2], value[3]);
+        glUniform4fv(getUniformLocation(name), 4, value);
+    }
+
+    void Shader::setFloat4(const std::string& name, double* value) const
+    {
+        this->setFloat4(name, value[0], value[1], value[2], value[3]);
     }
 
     void Shader::setFloat4(const std::string& name, float f1, float f2, float f3, float f4) const
@@ -230,6 +235,16 @@ namespace LEDA {
     void Shader::setFloat4(const std::string& name, double d1, double d2, double d3, double d4) const
     {
         this->setFloat4(name, (float)d1, (float)d2, (float)d3, (float)d4);
+    }
+
+    void Shader::setFloat4(const std::string& name, std::vector<float> floats) const
+    {
+        this->setFloat4(name, floats[0], floats[1], floats[2], floats[3]);
+    }
+
+    void Shader::setFloat4(const std::string& name, std::vector<double> doubles) const
+    {
+        this->setFloat4(name, doubles[0], doubles[1], doubles[2], doubles[3]);
     }
 
     void Shader::setMatrix4(const std::string& name, glm::f32 * value) const

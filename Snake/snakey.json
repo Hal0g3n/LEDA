@@ -14,19 +14,20 @@
       },
       "graphics": {
         "shape": "square",
-        "material": "solid"
+        "material": "solid",
+        "color": "#c0ffee"
       }
     },
     {
       "id": "sus", // oh no why does this comment exist in json oh no
       "transform": {
-        "x": 0.5,
-        "y": 0.5,
+        "x": 1,
+        "y": 1,
         "scale": 1,
         "rotation": 0
       },
       "graphics": {
-        "shape": "triangle",
+        "shape": "square",
         "material": "solid"
       }
     }

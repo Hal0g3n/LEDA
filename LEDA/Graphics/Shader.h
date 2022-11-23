@@ -17,6 +17,8 @@
 
 #include "pch.h"
 
+#include <vector>
+
 #include <glad/glad.h>
 
 #include <glm/glm.hpp>
@@ -50,8 +52,11 @@ namespace LEDA {
         void setInt(const std::string& name, int value) const;
         void setFloat(const std::string& name, float value) const;
         void setFloat4(const std::string& name, float* value) const;
+        void setFloat4(const std::string& name, double* value) const;
         void setFloat4(const std::string& name, float f1, float f2, float f3, float f4) const;
         void setFloat4(const std::string& name, double d1, double d2, double d3, double d4) const;
+        void setFloat4(const std::string& name, std::vector<float> floats) const;
+        void setFloat4(const std::string& name, std::vector<double> doubles) const;
         void setMatrix4(const std::string& name, glm::f32 * value) const;
 
     private:

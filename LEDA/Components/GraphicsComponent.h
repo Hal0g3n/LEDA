@@ -23,6 +23,7 @@ namespace LEDA {
 	struct LEDA_API GraphicsComponent : public IComponent {
 		std::string shape { "triangle" };
 		std::string material { "solid" };
+		std::vector<double> color { 0.0, 0.0, 0.0, 1.0 };
 	};
 
 }

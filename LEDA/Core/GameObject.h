@@ -80,7 +80,11 @@ namespace LEDA {
 		}
 		GraphicsComponent* gc = getComponent<GraphicsComponent>(obj);
 		if (gc != nullptr) {
-			ss << "\n    material: " << gc->material << "\n    shape: " << gc->shape;
+			ss << "\n    material: " << gc->material << "\n    shape: " << gc->shape << "\n    color: [";
+			for (double& i : gc->color) {
+				ss << i << ", ";
+			}
+			ss << "\b\b]"; // WOW using backspace works!
 		}
 		ss << "\n}\n";
 		return ss.str();

@@ -10,6 +10,7 @@
 
 #include "pch.h"
 
+#include <cstdio>
 #include <fstream>
 #include "json.hpp"
 
@@ -18,6 +19,34 @@
 
 using json = nlohmann::json;
 using namespace LEDA;
+
+// some funny util function... move somewhere else?
+std::vector<double> string2rgba(std::string hex) {
+	int r, g, b, a;
+	double w;
+	if (hex.length() == 4) {
+		sscanf_s(hex.c_str(), "#%01x%01x%01x", &r, &g, &b);
+		a = 15;
+		w = 15.0;
+	}
+	else if (hex.length() == 5) {
+		sscanf_s(hex.c_str(), "#%01x%01x%01x%01x", &r, &g, &b, &a);
+		w = 15.0;
+	}
+	else if (hex.length() == 7) {
+		sscanf_s(hex.c_str(), "#%02x%02x%02x", &r, &g, &b);
+		a = 255;
+		w = 255.0;
+	}
+	else if (hex.length() == 9) {
+		sscanf_s(hex.c_str(), "#%02x%02x%02x%02x", &r, &g, &b, &a);
+		w = 255.0;
+	}
+	else {
+		LOG_WARNING(std::string("hex string ") + hex + " is not properly formatted!");
+	}
+	return { r / w, g / w, b / w, a / w };
+}
 
 void SceneManager::load(std::string filename) {
 
@@ -45,21 +74,22 @@ void SceneManager::load(std::string filename) {
 
 		unsigned int objectCount = 0;
 
-		for (auto &obj : data["objects"].items()) {
+		for (auto &entry : data["objects"].items()) {
 			objectCount++;
 			std::string id = "";
-			if (obj.value()["id"].is_null()) {
+			auto& objectData = entry.value();
+			if (objectData["id"].is_null()) {
 				id = "entity #" + objectCount;
 			}
 			else {
-				id = obj.value()["id"];
+				id = objectData["id"];
 			}
 
-			GameObject* cur = new GameObject(id);
+			GameObject* obj = new GameObject(id);
 			std::cout << "test" << std::endl;
 
 			// for each object component
-			for (auto& comp : obj.value().items()) {
+			for (auto& comp : objectData.items()) {
 				std::string componentType = comp.key();
 				auto& value = comp.value();
 				if (componentType == "id") {
@@ -78,14 +108,42 @@ void SceneManager::load(std::string filename) {
 					if (!value["scalex"].is_null()) tc->scale.x = value["scalex"];
 					if (!value["scaley"].is_null()) tc->scale.y = value["scaley"];
 					if (!value["rotation"].is_null()) tc->rotation = value["rotation"];
-					addComponent(cur, tc);
+					addComponent(obj, tc);
 				}
 				else if (componentType == "graphics") {
 					GraphicsComponent* gc = new GraphicsComponent();
 					if (!value["material"].is_null()) gc->material = value["material"];
 					if (!value["shape"].is_null()) gc->shape = value["shape"];
-					addComponent(cur, gc);
-					if (getComponent<GraphicsComponent>(cur) == nullptr) {
+					if (!value["color"].is_null()) {
+						auto & objectColor = value["color"];
+						if (objectColor.is_array()) {
+							if (objectColor.size() > 0) {
+								if (objectColor[0].is_number()) {
+									gc->color.clear();
+									for (auto& i : objectColor) {
+										gc->color.push_back((double)i);
+									}
+								}
+								else if (objectColor[0].is_string()) {
+									gc->color.clear();
+									for (auto& color : objectColor.items()) {
+										for (double& i : string2rgba(color.value())) {
+											gc->color.push_back(i);
+										}
+									}
+								}
+							}
+							else {
+								LOG_WARNING(std::string("color array empty! object id: ") + id);
+							}
+						}
+						else if (objectColor.is_string()) {
+							gc->color = string2rgba(objectColor);
+						}
+						gc->shape = value["shape"];
+					}
+					addComponent(obj, gc);
+					if (getComponent<GraphicsComponent>(obj) == nullptr) {
 						LOG_WARNING("skill issue: graphics component not existing despite being so a nanosecond ago");
 					}
 				}
@@ -95,10 +153,10 @@ void SceneManager::load(std::string filename) {
 			}
 
 			// Register the game object for retrieval later
-			registerGameObject(obj.key(), cur);
+			registerGameObject(obj->getId(), obj);
 
 			// print game object for debugging TODO: remove
-			std::cout << printGameObject(cur) << std::flush;
+			std::cout << printGameObject(obj) << std::flush;
 		}
 
 	}

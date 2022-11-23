@@ -82,6 +82,10 @@ unsigned int rectangle_[] = {
 	0, 1, 3,
 	1, 2, 3,
 };
+float amogus[] = {
+	// TODO: amogus vertices
+	0.0f, 0.0f, 0.0f,
+};
 
 void LEDA::drawObjects(std::vector<GameObject*> objects) {
 
@@ -155,24 +159,28 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 			numberOfVertices = std::size(rectangle_);
 		}
 		else if (shape == "sus") {
-			// TODO: draw an amogus (not so soon)
+			// TODO: draw an amogus (coming soon)
 		}
 
+		int asdf = 0; // testing
+
 		for (GameObject* object : it.second) {
+
+			asdf++;
 
 			// get transform data
 			TransformComponent* transformComponent = getComponent<TransformComponent>(object);
 			glm::f32* objectMatrix = transformMatrix(*transformComponent);
 
-			// get shader too
+			// get graphics data
 			GraphicsComponent* graphicsComponent = getComponent<GraphicsComponent>(object);
+			// get shader too, initialize it with type
 			Shader shader{ graphicsComponent->material };
 
 			// set shader uniforms
 			shader.setMatrix4("projection", projectionMatrix);
 			shader.setMatrix4("transform", objectMatrix);
-			// TODO: replace with object color
-			shader.setFloat4("color", 0.0, 0.0, 0.0, 0.0);
+			shader.setFloat4("color", graphicsComponent->color);
 
 			shader.use();
 
