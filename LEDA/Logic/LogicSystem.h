@@ -31,9 +31,16 @@ namespace LEDA {
 		// Called on Destroy
 		~LogicSystem() {};
 
-		void init() { for (GameObject* obj : objects) getComponent<LogicComponent>(obj)->init(); };
-		void update() { for (GameObject* obj : objects) getComponent<LogicComponent>(obj)->update(); };
-		void free() { objects.clear(); };
+		void init() {
+			for (GameObject* obj : objects) getComponent<LogicComponent>(obj)->init();
+		};
+		void update() {
+			for (GameObject* obj : objects) getComponent<LogicComponent>(obj)->update();
+		};
+		void free() {
+			for (GameObject* obj : objects) getComponent<LogicComponent>(obj)->free();
+			objects.clear();
+		};
 		
 		// Called on new Game Object
 		void onRegisterGameObject(GameObject*);

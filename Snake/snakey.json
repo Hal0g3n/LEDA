@@ -23,19 +23,20 @@
           "y": -0.00000005
         }
       }
-    }/*,
+    },
     {
       "id": "sus", // oh no why does this comment exist in json oh no
       "transform": {
-        "x": 100,
-        "y": 100,
-        "scale": 1,
+        "x": 0,
+        "y": -300,
+        "scale": 100,
         "rotation": 0
       },
       "graphics": {
         "shape": "triangle",
-        "material": "solid"
+        "material": "solid",
+        "color": "#c0ffee"
       }
-    }*/
+    }
   ]
 }

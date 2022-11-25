@@ -67,7 +67,7 @@ namespace LEDA {
         unsigned int getUniformLocation(const std::string& name) const;
 
         // checks for errors (used in the second most basic constructor (which one is that again))
-        void checkForErrors(unsigned int shader, std::string type);
+        void checkForErrors(unsigned int shader, std::string type) const;
 
     };
 

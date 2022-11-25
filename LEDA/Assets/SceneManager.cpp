@@ -22,8 +22,8 @@ using namespace LEDA;
 
 // some funny util function... move somewhere else?
 std::vector<double> string2rgba(std::string hex) {
-	int r, g, b, a;
-	double w;
+	int r = 0, g = 0, b = 0, a = 0;
+	double w = 255.0;
 	if (hex.length() == 4) {
 		sscanf_s(hex.c_str(), "#%01x%01x%01x", &r, &g, &b);
 		a = 15;
@@ -36,14 +36,13 @@ std::vector<double> string2rgba(std::string hex) {
 	else if (hex.length() == 7) {
 		sscanf_s(hex.c_str(), "#%02x%02x%02x", &r, &g, &b);
 		a = 255;
-		w = 255.0;
 	}
 	else if (hex.length() == 9) {
 		sscanf_s(hex.c_str(), "#%02x%02x%02x%02x", &r, &g, &b, &a);
-		w = 255.0;
 	}
 	else {
 		LOG_WARNING(std::string("hex string ") + hex + " is not properly formatted!");
+		return {};
 	}
 	return { r / w, g / w, b / w, a / w };
 }
@@ -82,8 +81,8 @@ void SceneManager::load(std::string filename) {
 		for (auto &entry : data["objects"].items()) {
 			auto& objectData = entry.value();
 
-			// Get the id and init game object
-			// Naming it as "unnamed entity #0" if it is unnamed
+			// get the id and init game object
+			// the id will be "unnamed entity #0" if an id is not provided
 			GameObject* obj = new GameObject(
 				objectData["id"].is_null() ?
 				"unnamed entity #" + ++objectCount :
@@ -102,7 +101,7 @@ void SceneManager::load(std::string filename) {
 
 				else if (componentType == "transform") {
 					TransformComponent* tc = new TransformComponent();
-					// temporary attribute names (scalex and scaley are a bit weird (and scaly))
+
 					// set values if they exist
 					if (!value["x"].is_null()) tc->position.x = value["x"];
 					if (!value["y"].is_null()) tc->position.y = value["y"];
@@ -112,6 +111,7 @@ void SceneManager::load(std::string filename) {
 						tc->scale.y = value["scale"];
 					}
 
+					// scalex and scaley are a bit weird (and scaly)
 					if (!value["scalex"].is_null()) tc->scale.x = value["scalex"];
 					if (!value["scaley"].is_null()) tc->scale.y = value["scaley"];
 					
@@ -168,10 +168,18 @@ void SceneManager::load(std::string filename) {
 						if (!value["vel"]["x"].is_null()) kc->vel.x = value["vel"]["x"];
 						if (!value["vel"]["y"].is_null()) kc->vel.y = value["vel"]["y"];
 					}
+					if (!value["velocity"].is_null()) {
+						if (!value["velocity"]["x"].is_null()) kc->vel.x = value["velocity"]["x"];
+						if (!value["velocity"]["y"].is_null()) kc->vel.y = value["velocity"]["y"];
+					}
 					if (!value["acc"].is_null()) {
 						if (!value["acc"]["x"].is_null()) kc->acc.x = value["acc"]["x"];
 						if (!value["acc"]["y"].is_null()) kc->acc.y = value["acc"]["y"];
-					};
+					}
+					if (!value["acceleration"].is_null()) {
+						if (!value["acceleration"]["x"].is_null()) kc->acc.x = value["acceleration"]["x"];
+						if (!value["acceleration"]["y"].is_null()) kc->acc.y = value["acceleration"]["y"];
+					}
 
 					// Add the component to the game object
 					addComponent(obj, kc);
@@ -185,6 +193,9 @@ void SceneManager::load(std::string filename) {
 			std::cout << printGameObject(obj) << std::flush;
 		}
 
+	}
+	else {
+		LOG_WARNING(std::string("no game objects found in ") + filename);
 	}
 
 }

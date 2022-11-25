@@ -70,7 +70,7 @@ namespace LEDA {
                 layout (location = 0) out vec4 FragColor;
                 in vec4 vertexColor;
                 void main() {
-                    FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+                    FragColor = vertexColor;
                 }
 
             )SHADER";
@@ -271,7 +271,7 @@ namespace LEDA {
 
     void Shader::setMatrix4(const std::string& name, glm::f32 * value) const
     {
-        glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, value);
+        glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, value);
     }
 
 
@@ -282,7 +282,7 @@ namespace LEDA {
         return glGetUniformLocation(id, name.c_str());
     }
 
-    void Shader::checkForErrors(unsigned int shader, std::string type)
+    void Shader::checkForErrors(unsigned int shader, std::string type) const
     {
         int success;
         char errorLog[1024];

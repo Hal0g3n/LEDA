@@ -235,15 +235,18 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 
 			glm::f32* projectionMatrix = transformMatrix(Vector2D(0.0, 0.0), Vector2D(2.0 / WINDOW_WIDTH, 2.0 / WINDOW_HEIGHT), 0.0);
 			//shader.setMatrix4("projection", projectionMatrix);
-			unsigned int a = glGetUniformLocation(shader.id, "projection");
-			glUniformMatrix4fv(a, 1, GL_FALSE, projectionMatrix);
+			unsigned int a_temp = glGetUniformLocation(shader.id, "projection");
+			glUniformMatrix4fv(a_temp, 1, GL_FALSE, projectionMatrix);
 
 			glm::f32* objectMatrix = transformMatrix(*transformComponent);
 			//shader.setMatrix4("transform", objectMatrix);
-			unsigned int b = glGetUniformLocation(shader.id, "transform");
-			glUniformMatrix4fv(b, 1, GL_FALSE, objectMatrix);
+			unsigned int b_temp = glGetUniformLocation(shader.id, "transform");
+			glUniformMatrix4fv(b_temp, 1, GL_FALSE, objectMatrix);
 
 			//shader.setFloat4("color", graphicsComponent->color);
+			unsigned int c_temp = glGetUniformLocation(shader.id, "color");
+			std::vector<double> cv_temp = graphicsComponent->color;
+			glUniform4f(c_temp, (float)cv_temp[0], (float)cv_temp[1], (float)cv_temp[2], (float)cv_temp[3]);
 
 			shader.use();
 
