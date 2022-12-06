@@ -5,6 +5,23 @@
   },
   "objects": [
     {
+      "id": "background",
+      "transform": {
+        "x": 0,
+        "y": 0,
+        "scale": 800.0,
+        "rotation_degrees": 45
+      },
+      "graphics": {
+        "shape": "rectangle",
+        "material": "solid",
+        "color": "#888888"
+      },
+      "kinematics": {
+        "rot_vel_degrees": -60
+      }
+    },
+    {
       "id": "central square",
       "transform": {
         "x": 0,
@@ -13,15 +30,16 @@
         "rotation": 0
       },
       "graphics": {
-        "shape": "rectangle",
+        "shape": "pentagon",
         "material": "solid",
         "color": "#c0ffee"
       },
       "kinematics": {
         "vel": {
           "x": 0,
-          "y": -0.00000005
-        }
+          "y": -50
+        },
+        "rot_vel_degrees": 5
       }
     },
     {
@@ -29,13 +47,16 @@
       "transform": {
         "x": 0,
         "y": -300,
-        "scale": 100,
+        "scale": {
+          "x": 150,
+          "y": 25
+        },
         "rotation": 0
       },
       "graphics": {
-        "shape": "triangle",
+        "shape": "rectangle",
         "material": "solid",
-        "color": "#c0ffee"
+        "color": "#c0c00c"
       }
     }
   ]

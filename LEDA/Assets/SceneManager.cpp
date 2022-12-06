@@ -14,6 +14,10 @@
 #include <fstream>
 #include "json.hpp"
 
+#define _USE_MATH_DEFINES
+#include <cmath>
+#include <corecrt_math_defines.h>
+
 #include "SceneManager.h"
 #include "LEDA_Components.h"
 
@@ -107,8 +111,14 @@ void SceneManager::load(std::string filename) {
 					if (!value["y"].is_null()) tc->position.y = value["y"];
 
 					if (!value["scale"].is_null()) {
-						tc->scale.x = value["scale"];
-						tc->scale.y = value["scale"];
+						if (value["scale"].is_number()) {
+							tc->scale.x = value["scale"];
+							tc->scale.y = value["scale"];
+						}
+						else {
+							if (!value["scale"]["x"].is_null()) tc->scale.x = value["scale"]["x"];
+							if (!value["scale"]["y"].is_null()) tc->scale.y = value["scale"]["y"];
+						}
 					}
 
 					// scalex and scaley are a bit weird (and scaly)
@@ -116,6 +126,7 @@ void SceneManager::load(std::string filename) {
 					if (!value["scaley"].is_null()) tc->scale.y = value["scaley"];
 					
 					if (!value["rotation"].is_null()) tc->rotation = value["rotation"];
+					if (!value["rotation_degrees"].is_null()) tc->rotation = value["rotation_degrees"] * M_PI / 180;
 
 					addComponent(obj, tc);
 				}
@@ -179,6 +190,18 @@ void SceneManager::load(std::string filename) {
 					if (!value["acceleration"].is_null()) {
 						if (!value["acceleration"]["x"].is_null()) kc->acc.x = value["acceleration"]["x"];
 						if (!value["acceleration"]["y"].is_null()) kc->acc.y = value["acceleration"]["y"];
+					}
+					if (!value["rot_vel"].is_null()) {
+						kc->rot_vel = value["rot_vel"];
+					}
+					if (!value["rot_acc"].is_null()) {
+						kc->rot_acc = value["rot_acc"];
+					}
+					if (!value["rot_vel_degrees"].is_null()) {
+						kc->rot_vel = value["rot_vel_degrees"] * M_PI / 180;
+					}
+					if (!value["rot_acc_degrees"].is_null()) {
+						kc->rot_acc = value["rot_acc_degrees"] * M_PI / 180;
 					}
 
 					// Add the component to the game object

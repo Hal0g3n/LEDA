@@ -87,18 +87,16 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 			}
 			
 			// End Frame Timer
-			frameTime = (std::chrono::system_clock::now() - frameStartTime).count();
+			frameTime = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now() - frameStartTime).count() / 1e9;
 
 			// check for forced exit (full of AE)
 			// if ((AESysDoesWindowExist() == false) || AEInputCheckTriggered(AEVK_ESCAPE))
 			//  	nxt = "quit";
 
 			// loop until frame time is over
-			while (frameTime < 1e9 / frameRate) {
-				frameTime = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now() - frameStartTime).count();
+			while (frameTime < 1.0 / frameRate) {
+				frameTime = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now() - frameStartTime).count() / 1e9;
 			}
-
-			// std::cout << frameTime << "\n";
 
 			appTime += frameTime;
 		}

@@ -53,6 +53,18 @@ unsigned int rectangle_[] = {
 	0, 1, 3,
 	1, 2, 3,
 };
+float pentagon[] = {
+	0.0f, 0.5f, 0.0f,
+	0.4755f, 0.1545f, 0.0f,
+	0.2939f, -0.4045f, 0.0f,
+	-0.2939f, -0.4045f, 0.0f,
+	-0.4755f, 0.1545f, 0.0f,
+};
+unsigned int pentagon_[] = {
+	0, 1, 2,
+	0, 2, 3,
+	0, 3, 4,
+};
 float amogus[] = {
 	// TODO: amogus vertices
 	0.0f, 0.0f, 0.0f,
@@ -109,7 +121,7 @@ void LEDA::initializeDrawer() {
 	unsigned int VAO = 0, VBO = 0, EBO = 0;
 	unsigned int numberOfVertices = 0;
 
-	for (std::string meshType : { "triangle", "rectangle" }) {
+	for (std::string meshType : { "triangle", "rectangle", "pentagon" }) {
 
 		float* vertices = nullptr;
 		unsigned int* indices = nullptr;
@@ -128,6 +140,13 @@ void LEDA::initializeDrawer() {
 			sizeof_vertices = sizeof(rectangle);
 			sizeof_indices = sizeof(rectangle_);
 			numberOfVertices = std::size(rectangle_);
+		}
+		else if (meshType == "pentagon") {
+			vertices = pentagon;
+			indices = pentagon_;
+			sizeof_vertices = sizeof(pentagon);
+			sizeof_indices = sizeof(pentagon_);
+			numberOfVertices = std::size(pentagon_);
 		}
 		else {
 			LOG_WARNING(std::string("skill issue! unknown mesh type: '") + meshType + "'");
@@ -165,6 +184,10 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 		GraphicsComponent* graphicsComponent = getComponent<GraphicsComponent>(object);
 		if (graphicsComponent == nullptr) continue;
 		std::string shape = graphicsComponent->shape;
+		if (meshes.find(shape) == meshes.end()) {
+			LOG_WARNING(std::string("unknown game object shape: ") + shape);
+			continue;
+		}
 		if (shapes.find(shape) == shapes.end()) {
 			shapes.emplace(shape, std::initializer_list<GameObject*>{ object });
 		}
@@ -178,40 +201,6 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 
 	// actually draw the objects in this loop
 	for (std::pair<const std::string, std::vector<GameObject*>> &it : shapes) {
-
-		/*
-		const std::string shape = it.first;
-		
-		// bind the shape before drawing all objects with the same shape
-
-		unsigned int numberOfVertices = 0;
-
-		if (shape == "triangle") {
-		}
-		else if (shape == "rectangle" || shape == "square") {
-			glGenVertexArrays(1, &VAO);
-			glGenBuffers(1, &VBO);
-			glGenBuffers(1, &EBO);
-
-			glBindVertexArray(VAO);
-
-			glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(rectangle), rectangle, GL_STATIC_DRAW);
-
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(rectangle_), rectangle_, GL_STATIC_DRAW);
-
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-			glEnableVertexAttribArray(0);
-
-			glBindVertexArray(0);
-
-			numberOfVertices = std::size(rectangle_);
-		}
-		else if (shape == "sus") {
-			// TODO: draw an amogus (coming soon)
-		}
-		*/
 
 		const std::string shape = it.first;
 

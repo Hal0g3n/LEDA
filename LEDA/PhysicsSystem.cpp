@@ -42,11 +42,17 @@ namespace LEDA {
 			KinematicsComponent* kine = getComponent<KinematicsComponent>(obj);
 			TransformComponent* trans = getComponent<TransformComponent>(obj);
 
-			//update the velocity
+			// update the velocity
 			kine->vel += kine->acc * frameTime;
 
 			// update the displacement, which is in transform component
 			trans->position += kine->vel * frameTime;
+
+			// update the angular velocity
+			kine->rot_vel += kine->rot_acc * frameTime;
+
+			// update the angle
+			trans->rotation += kine->rot_vel * frameTime;
 		}
 	}
 
