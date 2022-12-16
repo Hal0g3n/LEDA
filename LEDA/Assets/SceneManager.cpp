@@ -209,6 +209,10 @@ void SceneManager::load(std::string filename) {
 				}
 			}
 
+			// it always has a logic component
+			LogicComponent* lc = new LogicComponent([] {}, [] {}, [] {});
+			addComponent(obj, lc);
+	
 			// Register the game object to the system
 			registerGameObject(obj->getId(), obj);
 

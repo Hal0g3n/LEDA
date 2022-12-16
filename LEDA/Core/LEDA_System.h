@@ -27,17 +27,24 @@
 */
 
 namespace LEDA {
-	//make frame time, app time accessible for other systems
-	double frameTime, appTime;
+
+	// make frame time, app time accessible for other systems
+	extern double LEDA_API frameTime, appTime;
+
+	// remove this comment and add a more helpful one to describe these 2 things
+	std::unordered_map<std::string, std::function<void(void)>> startFunctions;
+	std::unordered_map<std::string, std::function<void(void)>> endFunctions; // unused for now
+
+	void LEDA_API LEDA_INIT(std::string state, std::function<void(void)> fn);
 
 	/**
 	 * @brief Entry Point into LEDA
-	 * @param showConsole  true to show console
-	 * @param frameRate	   The maximum frame rate (LEDA can only garuntee that frame rate does not exceed)
-	 * @param windowTitle  The Initial Window Title
-	 * @param initState    The Initial Window State
+	 * @param showConsole	true to show console
+	 * @param frameRate		the maximum frame rate (LEDA can only guarantee that frame rate does not exceed it)
+	 * @param windowTitle	The Initial Window Title
+	 * @param initialState	The Initial Window State
 	*/
-	void LEDA_API LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, std::string initStateFile);
+	void LEDA_API LEDA_START(bool showConsole, double frameRate, std::string windowTitle, std::string initialState);
 
 
 	// GameStateManager Functions //
@@ -52,8 +59,9 @@ namespace LEDA {
 	bool LEDA_API removeGameObject(GameObject*);
 	bool LEDA_API removeGameObject(std::string id);
 
-	// Logger Functions//
+	// Logger Functions //
 	void LEDA_API LOG_WARNING(std::string);
+
 }
 
 #endif // LEDA_SYSTEM_H_

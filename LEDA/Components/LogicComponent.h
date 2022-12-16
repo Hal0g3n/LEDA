@@ -28,7 +28,7 @@ namespace LEDA {
 	// new LogicComponent(fname, fname, fname);
 
 	struct LEDA_API LogicComponent : IComponent {
-		std::function<void(void)> init, update, free;
+		std::function<void(void)> init = []() {}, update = []() {}, free = []() {}; // [](){}[](){}[](){} might as well set default lambdas for fun [](){}[](){}[](){}
 		
 		LogicComponent(std::function<void(void)> i, std::function<void(void)> u, std::function<void(void)> f):
 			init{ i }, update{ u }, free{ f } {}

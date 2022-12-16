@@ -13,6 +13,22 @@
 #include <fstream>
 #include "LEDA_Graphics.h"
 
+using namespace LEDA;
+
+void sus_update() {
+    GameObject* sus = retrieveGameObject("sus");
+    TransformComponent* tc = getComponent<TransformComponent>(sus);
+    tc->position.x = sin(LEDA::appTime) * 100;
+}
+
+void snakey_wow() {
+    GameObject* sus = retrieveGameObject("sus");
+    LEDA::printGameObject(sus);
+    LogicComponent* lc = getComponent<LogicComponent>(sus);
+    lc->update = sus_update;
+    std::cout << "wow this works!" << std::endl;
+}
+
 int main()
 {
     std::cout << "Hello World!" << std::endl;
@@ -24,7 +40,11 @@ int main()
     
     // return LEDA::test();
 
-    LEDA::LEDA_INIT(true, 60.0, "sneak", "snakey"); // initial state - change this to json filename
+    LEDA::LEDA_INIT("snakey", snakey_wow);
+
+    LEDA::LEDA_START(true, 60.0, "sneak", "snakey"); // initial state - change this to json filename
+
+    std::cout << "Hello World!" << std::endl;
     return 0;
 }
 

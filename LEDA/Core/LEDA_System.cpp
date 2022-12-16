@@ -26,8 +26,7 @@ using namespace LEDA;
 *   File Scope Variables    *
 ****************************/
 
-// doubles keeping track of frame and app time
-extern double frameTime = 0.0, appTime = 0.0;
+extern double LEDA::frameTime = 0.0, LEDA::appTime = 0.0;
 
 // Tracking Previous, Current and Next GameStates
 std::string pre, cur, nxt;
@@ -49,9 +48,15 @@ std::vector<ISystem*> systems{
 	new PhysicsSystem(),
 };
 
+// why china
 void china() {}
 
-void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle, std::string initialState) {
+void LEDA::LEDA_INIT(std::string state, std::function<void(void)> fn) {
+	// it works
+	startFunctions.insert(std::make_pair(state, fn));
+}
+
+void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitle, std::string initialState) {
 
 	std::cout << "LEDA runs!" << std::endl;
 
@@ -62,6 +67,7 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 
 	// Initialize important managers
 	SceneManager sm{};
+
 	// TODO: We need a window manager?
 	
 	// initializes all systems (for the current state)
@@ -76,6 +82,13 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 		// Scene Load/Initialize (Scene Manager Load level)
 		sm.load(cur + ".json");
 
+		// something to make it work
+		std::unordered_map<std::string, std::function<void(void)>>::iterator something_iterator = startFunctions.find(cur);
+		if (something_iterator != startFunctions.end()) {
+			// i hope this works
+			something_iterator->second();
+		}
+
 		while (cur == nxt) { // While state is unchanged
 
 			// Start Frame Timer
@@ -89,7 +102,6 @@ void LEDA::LEDA_INIT(bool showConsole, double frameRate, std::string windowTitle
 			// End Frame Timer
 			frameTime = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now() - frameStartTime).count() / 1e9;
 
-			// check for forced exit (full of AE)
 			// if ((AESysDoesWindowExist() == false) || AEInputCheckTriggered(AEVK_ESCAPE))
 			//  	nxt = "quit";
 
@@ -144,6 +156,7 @@ void LEDA::registerGameObject(std::string id, GameObject* obj) {
 	}
 
 	objects.emplace(id, obj);
+
 }
 
 bool LEDA::removeGameObject(GameObject* obj) {

@@ -47,5 +47,7 @@ void GraphicsSystem::onRegisterGameObject(GameObject* obj) {
 }
 
 void GraphicsSystem::onRemoveGameObject(GameObject* obj) {
+
 	objects.erase(std::find(objects.begin(), objects.end(), obj));
+
 }

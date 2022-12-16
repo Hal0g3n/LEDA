@@ -32,13 +32,19 @@ namespace LEDA {
 		~LogicSystem() {};
 
 		void init() {
-			for (GameObject* obj : objects) getComponent<LogicComponent>(obj)->init();
+			for (GameObject* obj : objects) {
+				getComponent<LogicComponent>(obj)->init();
+			}
 		};
 		void update() {
-			for (GameObject* obj : objects) getComponent<LogicComponent>(obj)->update();
+			for (GameObject* obj : objects) {
+				getComponent<LogicComponent>(obj)->update();
+			}
 		};
 		void free() {
-			for (GameObject* obj : objects) getComponent<LogicComponent>(obj)->free();
+			for (GameObject* obj : objects) {
+				getComponent<LogicComponent>(obj)->free();
+			}
 			objects.clear();
 		};
 		
