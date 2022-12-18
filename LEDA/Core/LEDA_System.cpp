@@ -12,6 +12,8 @@
 
 #include "LEDA_System.h"
 
+#include "SceneManager.h"
+
 // include all the systems too
 #include "LogicSystem.h"
 #include "GraphicsSystem.h"
@@ -36,6 +38,8 @@ std::chrono::time_point<std::chrono::system_clock> frameStartTime;
 
 // Game Objects List
 std::unordered_map<std::string, GameObject*> objects;
+
+extern LEDA::SceneManager sceneManager;
 
 /****************************
 *   Main System Functions   *
@@ -65,8 +69,8 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 	// set window title
 	LEDA::windowTitle = windowTitle;
 
-	// Initialize important managers
-	SceneManager sm{};
+	// scene manager
+	LEDA::sceneManager = new SceneManager{};
 
 	// TODO: We need a window manager?
 	
@@ -80,7 +84,7 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 		std::cout << "Loading scene '" << cur << "'..." << std::endl;
 
 		// Scene Load/Initialize (Scene Manager Load level)
-		sm.load(cur + ".json");
+		sceneManager->load(cur + ".json");
 
 		// something to make it work
 		std::unordered_map<std::string, std::function<void(void)>>::iterator something_iterator = startFunctions.find(cur);
@@ -131,6 +135,8 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 	for (ISystem* system : systems) {
 		delete system;
 	}
+
+	delete sceneManager;
 
 }
 

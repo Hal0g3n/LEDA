@@ -15,28 +15,38 @@
 
 using namespace LEDA;
 
+void background_update() {
+    GameObject* sus = retrieveGameObject("sus");
+
+}
+
 void sus_update() {
     GameObject* sus = retrieveGameObject("sus");
     TransformComponent* tc = getComponent<TransformComponent>(sus);
-    tc->position.x = sin(LEDA::appTime) * 100;
+    tc->position.x = sin(LEDA::appTime * 5) * 100;
 }
 
 void snakey_wow() {
+
     GameObject* sus = retrieveGameObject("sus");
     LEDA::printGameObject(sus);
     LogicComponent* lc = getComponent<LogicComponent>(sus);
     lc->update = sus_update;
+
+    std::cout << "yes" << std::endl;
+    GameObject* among = sceneManager->createObject("among", "among us");
+    std::cout << among << std::endl;
+    TransformComponent* tc = getComponent<TransformComponent>(among);
+    tc->position.x = 0;
+    tc->position.y = 0;
+
     std::cout << "wow this works!" << std::endl;
+
 }
 
-int main()
-{
-    std::cout << "Hello World!" << std::endl;
-    
-    /*
-    LEDA::AssetsManager testingmanager{};
-    testingmanager.load("example.json");
-    */
+int main() {
+
+    std::cout << "ok time to make snake!" << std::endl;
     
     // return LEDA::test();
 
@@ -46,7 +56,10 @@ int main()
 
     std::cout << "Hello World!" << std::endl;
     return 0;
+
 }
+
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu

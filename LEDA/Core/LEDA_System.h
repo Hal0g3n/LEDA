@@ -31,6 +31,9 @@ namespace LEDA {
 	// make frame time, app time accessible for other systems
 	extern double LEDA_API frameTime, appTime;
 
+	class LEDA_API SceneManager; // forward reference
+	SceneManager LEDA_API * sceneManager;
+
 	// remove this comment and add a more helpful one to describe these 2 things
 	std::unordered_map<std::string, std::function<void(void)>> startFunctions;
 	std::unordered_map<std::string, std::function<void(void)>> endFunctions; // unused for now
