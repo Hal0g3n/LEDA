@@ -192,5 +192,5 @@ GameObject* LEDA::retrieveGameObject(std::string id) {
 }
 
 void LEDA::LOG_WARNING(std::string msg) {
-	std::cerr << "[LEDA WARNING]: " << msg << '\n';
+	std::cerr << "[LEDA WARNING]: " << msg << std::endl;
 }

@@ -56,16 +56,13 @@ std::vector<double> string2rgba(std::string hex) {
 
 GameObject* loadObject(object* entry, std::string objectId = "") {
 
-	std::cout << "wow, a pointer: " << entry << std::endl;
 	json& objectData = entry->value();
-	std::cout << "wow, some data:" << objectData << std::endl;
 
 	// get the id and init game object
 	// the id will be "unnamed entity #n" (where n is a non-negative integer) if an id is not provided anywhere
 	if (objectData["id"].is_string()) {
 		objectId = objectData["id"];
 	}
-	std::cout << objectId << std::endl;
 	GameObject* obj = new GameObject(
 		objectId != "" ?
 		objectId.c_str() :
@@ -230,21 +227,17 @@ void SceneManager::load(std::string filename) {
 	std::ifstream stream(filename);
 
 	if (!stream.good()) {
-		std::cout << "Could not open file: " << filename << std::endl;
+		LOG_WARNING(std::string("couldn't open file: ") + filename);
 		throw std::runtime_error("Could not open file");
 	}
 
 	this->clear();
-
-	std::cout << "wow it went past here" << std::endl;
 
 	// read and parse scene data
 	// also ignore comments because... yes
 	json data = json::parse(stream, nullptr, false, true);
 
 	this->_json = data;
-
-	std::cout << "0" << std::endl;
 
 	if (!_json["assets"].is_null()) { // if additional assets exist
 
@@ -277,8 +270,6 @@ void SceneManager::load(std::string filename) {
 	if (!_json["templates"].is_null()) { // if the object template object exists
 		for (object& entry : _json["templates"].items()) {
 			object* entry_pointer = new object(entry);
-			std::cout << "template pointer: " << entry_pointer << std::endl;
-			std::cout << "what it contains: " << *entry_pointer << std::endl;
 			this->objects.emplace(std::make_pair(std::string(entry.key().c_str()), entry_pointer));
 		}
 	}
