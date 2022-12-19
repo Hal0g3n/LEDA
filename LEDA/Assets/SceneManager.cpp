@@ -54,16 +54,22 @@ std::vector<double> string2rgba(std::string hex) {
 	return { r / w, g / w, b / w, a / w };
 }
 
-GameObject * loadObject(object * entry, std::string objectId = "") {
+GameObject* loadObject(object* entry, std::string objectId = "") {
 
-	auto& objectData = entry->value();
+	std::cout << "wow, a pointer: " << entry << std::endl;
+	json& objectData = entry->value();
+	std::cout << "wow, some data:" << objectData << std::endl;
 
 	// get the id and init game object
 	// the id will be "unnamed entity #n" (where n is a non-negative integer) if an id is not provided anywhere
+	if (objectData["id"].is_string()) {
+		objectId = objectData["id"];
+	}
+	std::cout << objectId << std::endl;
 	GameObject* obj = new GameObject(
-		objectData["id"].is_null() ?
-		(objectId != "" ? objectId.c_str() : "unnamed entity #" + ++objectCount) :
-		objectData["id"]
+		objectId != "" ?
+		objectId.c_str() :
+		"unnamed entity #" + ++objectCount
 	);
 
 	// for each object component
@@ -199,6 +205,16 @@ GameObject * loadObject(object * entry, std::string objectId = "") {
 	return obj;
 }
 
+SceneManager::SceneManager() {
+
+}
+
+SceneManager::~SceneManager() {
+	for (auto& it : this->objects) {
+		delete it.second;
+	}
+}
+
 void SceneManager::clear() {
 	if (!this->assets.empty()) {
 		this->assets.clear();
@@ -226,13 +242,15 @@ void SceneManager::load(std::string filename) {
 	// also ignore comments because... yes
 	json data = json::parse(stream, nullptr, false, true);
 
+	this->_json = data;
+
 	std::cout << "0" << std::endl;
 
-	if (!data["assets"].is_null()) { // if additional assets exist
+	if (!_json["assets"].is_null()) { // if additional assets exist
 
 		// TODO: Find assets set difference
 		// Load/Unload the diff
-		for (auto &asset : data["assets"].items())
+		for (auto &asset : _json["assets"].items())
 			if ("fonts" == asset.key()) {
 				for (auto& s : asset.value().items()) {
 					// TODO: Figure out loading the asset from file name
@@ -246,9 +264,9 @@ void SceneManager::load(std::string filename) {
 
 	}
 
-	if (!data["objects"].is_null()) { // if the game object list exists
+	if (!_json["objects"].is_null()) { // if the game object list exists
 		objectCount = 0;
-		for (auto &entry : data["objects"].items()) {
+		for (auto &entry : _json["objects"].items()) {
 			loadObject(&entry);
 		}
 	}
@@ -256,9 +274,12 @@ void SceneManager::load(std::string filename) {
 		LOG_WARNING(std::string("no game objects found in ") + filename);
 	}
 
-	if (!data["templates"].is_null()) { // if the object template object exists
-		for (auto& entry : data["templates"].items()) {
-			this->objects.emplace(std::make_pair<std::string, object*>(std::string(entry.key().c_str()), &entry));
+	if (!_json["templates"].is_null()) { // if the object template object exists
+		for (object& entry : _json["templates"].items()) {
+			object* entry_pointer = new object(entry);
+			std::cout << "template pointer: " << entry_pointer << std::endl;
+			std::cout << "what it contains: " << *entry_pointer << std::endl;
+			this->objects.emplace(std::make_pair(std::string(entry.key().c_str()), entry_pointer));
 		}
 	}
 	else {

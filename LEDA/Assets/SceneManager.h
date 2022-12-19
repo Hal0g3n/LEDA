@@ -32,10 +32,13 @@ using object = const nlohmann::json_abi_v3_11_2::detail::iteration_proxy_value<n
 namespace LEDA {
 
 	class LEDA_API SceneManager {
+		json _json;
 		std::unordered_map<std::string, Asset*> assets{};
 		std::unordered_map<std::string, object*> objects{};
 
 	public:
+		SceneManager();
+		~SceneManager();
 		void clear();
 		void load(std::string);
 		Asset* getAsset(std::string assetName);

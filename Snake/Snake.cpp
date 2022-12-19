@@ -16,7 +16,7 @@
 using namespace LEDA;
 
 void background_update() {
-    GameObject* sus = retrieveGameObject("sus");
+    GameObject* background = retrieveGameObject("background");
 
 }
 
@@ -26,35 +26,38 @@ void sus_update() {
     tc->position.x = sin(LEDA::appTime * 5) * 100;
 }
 
-void snakey_wow() {
+void snakey_init() {
+
+    GameObject* background = retrieveGameObject("background");
+    LogicComponent* lc = getComponent<LogicComponent>(background);
+    lc->update = background_update;
 
     GameObject* sus = retrieveGameObject("sus");
-    LEDA::printGameObject(sus);
-    LogicComponent* lc = getComponent<LogicComponent>(sus);
+    lc = getComponent<LogicComponent>(sus);
     lc->update = sus_update;
 
     std::cout << "yes" << std::endl;
-    GameObject* among = sceneManager->createObject("among", "among us");
+    GameObject* among = sceneManager->createObject("among", "amongst");
     std::cout << among << std::endl;
     TransformComponent* tc = getComponent<TransformComponent>(among);
-    tc->position.x = 0;
-    tc->position.y = 0;
+    tc->position.x = 10;
+    tc->position.y = 10;
 
-    std::cout << "wow this works!" << std::endl;
+    std::cout << "no way it reaches here" << std::endl;
 
 }
 
 int main() {
 
-    std::cout << "ok time to make snake!" << std::endl;
+    std::cout << "ok, it's not yet time to make snake" << std::endl;
     
     // return LEDA::test();
 
-    LEDA::LEDA_INIT("snakey", snakey_wow);
+    LEDA::LEDA_INIT("snakey", snakey_init);
 
     LEDA::LEDA_START(true, 60.0, "sneak", "snakey"); // initial state - change this to json filename
 
-    std::cout << "Hello World!" << std::endl;
+    std::cout << "Goodbye World!" << std::endl;
     return 0;
 
 }

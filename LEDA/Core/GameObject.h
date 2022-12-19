@@ -88,7 +88,7 @@ namespace LEDA {
 		}
 		KinematicsComponent* kc = getComponent<KinematicsComponent>(obj);
 		if (kc != nullptr) {
-			ss << "\n    velocity: "; // TODO vector std::string operator thing
+			ss << "\n    velocity: (" << kc->vel.x << ", " << kc->vel.y << ")\n    acceleration: (" << kc->acc.x << ", " << kc->acc.y << ")\n    angular velocity: " << kc->rot_vel << "\n    angular acceleration: " << kc->rot_acc; // TODO vector std::string operator thing
 		}
 		LogicComponent* lc = getComponent<LogicComponent>(obj);
 		if (lc != nullptr) {
