@@ -178,6 +178,7 @@
     <ClInclude Include="Graphics\LEDA_Graphics.h" />
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Graphics\Transform.h" />
+    <ClInclude Include="Input\InputSystem.h" />
     <ClInclude Include="Input\LEDA_Input.h" />
     <ClInclude Include="Logic\LogicSystem.h" />
     <ClInclude Include="pch.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="Graphics\Graphics_Test.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Graphics\Transform.cpp" />
+    <ClCompile Include="Input\InputSystem.cpp" />
     <ClCompile Include="Input\LEDA_Input.cpp" />
     <ClCompile Include="Logic\LogicSystem.cpp" />
     <ClCompile Include="pch.cpp">

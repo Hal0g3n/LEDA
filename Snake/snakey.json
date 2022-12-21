@@ -63,8 +63,6 @@
   "templates": {
     "among": {
       "transform": {
-        "x": 0,
-        "y": 0,
         "scale": {
           "x": 25,
           "y": 25
@@ -76,7 +74,15 @@
         "color": "#c00cc0"
       },
       "kinematics": {
-        "rot_vel_degrees": 30
+        "rot_vel_degrees": 30,
+        "vel": {
+          "x": -100,
+          "y": 0
+        },
+        "acc": {
+          "x": 50,
+          "y": 0
+        }
       }
     }
   }

@@ -37,9 +37,6 @@
     <Filter Include="Source Files\Graphics">
       <UniqueIdentifier>{c5cfbd3a-cba3-4de2-97e5-3163a9242fc9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Input">
-      <UniqueIdentifier>{d4bf4a00-bb46-410e-9f62-7fa31495a1e5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Logic">
       <UniqueIdentifier>{3bf66d20-23a9-4fc6-8048-59ae275c8c2a}</UniqueIdentifier>
     </Filter>
@@ -66,6 +63,9 @@
     </Filter>
     <Filter Include="Source Files\Scene &amp; Asset Manager">
       <UniqueIdentifier>{0dbc8176-9e3a-4bd5-8eea-a3ac6a736935}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Input">
+      <UniqueIdentifier>{d4bf4a00-bb46-410e-9f62-7fa31495a1e5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +159,9 @@
     <ClInclude Include="PhysicsSystem.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Input\InputSystem.h">
+      <Filter>Header Files\Core\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -189,7 +192,7 @@
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Input\LEDA_Input.cpp">
-      <Filter>Source Files\Input</Filter>
+      <Filter>Source Files\Core\Input</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Transform.cpp">
       <Filter>Source Files\Graphics</Filter>
@@ -217,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="PhysicsSystem.cpp">
       <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\InputSystem.cpp">
+      <Filter>Source Files\Core\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

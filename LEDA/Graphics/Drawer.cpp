@@ -15,7 +15,6 @@
 #include "TransformComponent.h"
 #include "GraphicsComponent.h"
 #include "Drawer.h"
-#include "LEDA_Input.h"
 
 #include <GLFW/glfw3.h>
 
@@ -72,7 +71,7 @@ float amogus[] = {
 
 void LEDA::initializeDrawer() {
 
-	std::cout << "initializing drawer..." << std::endl;
+	std::cout << "initializing drawer... :)" << std::endl;
 
 	glfwInit();
 
@@ -87,7 +86,7 @@ void LEDA::initializeDrawer() {
 	// create GLFW window (global)
 	window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, LEDA::windowTitle.c_str(), NULL, NULL);
 	if (window == NULL) {
-		std::cout << "Error: failed to create GLFWindow\n";
+		std::cout << "error: failed to create GLFWindow\n";
 		glfwTerminate();
 		return;
 	}
@@ -95,21 +94,12 @@ void LEDA::initializeDrawer() {
 
 	// be glad
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-		std::cout << "Error: failed to initialize GLAD! [>:( <-- not glad]\n";
+		std::cout << "error: failed to initialize GLAD! [>:( <-- not glad]\n";
 		return;
 	}
 
 	// set resize window callback
 	glfwSetFramebufferSizeCallback(window, WINDOW_RESIZE);
-
-
-	// TODO: remove input functions from here
-
-	Input::initializeInput();
-
-	Input::addKeyTriggerCallback(Input::KEY::KEY_ESCAPE, []() {
-		glfwSetWindowShouldClose(window, GLFW_TRUE);
-	});
 
 	// load default shaders here
 	for (std::string shaderType : { "solid", "transparent" }) {
@@ -259,21 +249,20 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 
 void LEDA::updateDrawer(std::vector<GameObject*> objects) {
 
-	glfwPollEvents();
-
-	// draw background colour
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // around #1f74c9
+	// draw background color
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // around #1f74c9 (no, it's just #000000 now)
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	drawObjects(objects);
 
+	// last thing to do
 	glfwSwapBuffers(window);
 
 }
 
 void LEDA::freeDrawer() {
 
-	std::cout << "killing drawer..." << std::endl;
+	std::cout << "killing drawer... :(" << std::endl;
 
 	glfwTerminate();
 

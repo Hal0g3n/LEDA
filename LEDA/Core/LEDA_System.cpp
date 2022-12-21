@@ -15,8 +15,9 @@
 #include "SceneManager.h"
 
 // include all the systems too
-#include "LogicSystem.h"
 #include "GraphicsSystem.h"
+#include "InputSystem.h"
+#include "LogicSystem.h"
 #include "PhysicsSystem.h"
 
 // to set window title
@@ -46,13 +47,14 @@ extern LEDA::SceneManager sceneManager;
 ****************************/
 
 // List of Systems
-std::vector<ISystem*> systems{
+std::vector<ISystem*> systems {
+	new InputSystem(),
 	new LogicSystem(),
-	new GraphicsSystem(),
 	new PhysicsSystem(),
+	new GraphicsSystem(),
 };
 
-// why china
+// china
 void china() {}
 
 void LEDA::LEDA_INIT(std::string state, std::function<void(void)> fn) {
@@ -72,24 +74,24 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 	// scene manager
 	LEDA::sceneManager = new SceneManager{};
 
-	// TODO: We need a window manager?
+	// TODO: window manager?
 	
 	// initializes all systems (for the current state)
 	for (ISystem* system : systems) {
 		system->init();
 	}
 
-	while (cur != "quit") { // While the application is not quitted yet
+	while (cur != "quit") { // while application isn't quitted
 
 		std::cout << "Loading scene '" << cur << "'..." << std::endl;
 
-		// Scene Load/Initialize (Scene Manager Load level)
+		// Scene Load/Initialize (Scene Manager: load level)
 		sceneManager->load(cur + ".json");
 
 		// something to make it work
 		std::unordered_map<std::string, std::function<void(void)>>::iterator something_iterator = startFunctions.find(cur);
 		if (something_iterator != startFunctions.end()) {
-			// i hope this works
+			// ok it works
 			something_iterator->second();
 		}
 
@@ -117,21 +119,26 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 			appTime += frameTime;
 		}
 
-		// Clear all loaded objects
-		for (std::pair<std::string, GameObject*> pairs : objects) removeGameObject(pairs.second);
+		// clear all loaded objects
+		for (std::pair<std::string, GameObject*> pairs : objects) {
+			removeGameObject(pairs.second);
+		}
 
 		// Assets Manager Unload level (Persistent Assets)
-		if (nxt != "reset") nxt = cur; // Set up to load same file again
+		if (nxt != "reset") {
+			// Set up to load same file again
+			nxt = cur;
+		}
 
-		// Free all our systems for the current state
+		// free all our systems for the current state
 		for (ISystem* system : systems) system->free();
 
-		// Setting up for next loop
+		// set up for next loop
 		pre = cur;
 		cur = nxt;
 	}
 
-	// Destroys all systems
+	// destroy all systems (poof)
 	for (ISystem* system : systems) {
 		delete system;
 	}
@@ -148,6 +155,7 @@ std::string LEDA::getNextGameStateFile()			{ return nxt; }
 void LEDA::setNextGameStateFile(std::string state)  { nxt = state; }
 
 // SceneManager Functions //
+
 void LEDA::registerGameObject(std::string id, GameObject* obj) {
 	
 	// check if an object with the same id already exists
@@ -156,7 +164,7 @@ void LEDA::registerGameObject(std::string id, GameObject* obj) {
 		removeGameObject(id);
 	}
 
-	// Registers the object to each system
+	// registers the object to each system
 	for (ISystem* system : systems) {
 		system->onRegisterGameObject(obj);
 	}
@@ -191,6 +199,6 @@ GameObject* LEDA::retrieveGameObject(std::string id) {
 	return (objects.find(id) == objects.end()) ? nullptr : objects.find(id)->second; 
 }
 
-void LEDA::LOG_WARNING(std::string msg) {
-	std::cerr << "[LEDA WARNING]: " << msg << std::endl;
+void LEDA::LOG_WARNING(std::string message) {
+	std::cerr << "[LEDA WARNING]: " << message << std::endl;
 }

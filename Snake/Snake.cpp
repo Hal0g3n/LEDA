@@ -45,8 +45,6 @@ void snakey_init() {
     tc->position.x = -100;
     tc->position.y = -100;
 
-    std::cout << "end" << std::endl;
-
 }
 
 int main() {

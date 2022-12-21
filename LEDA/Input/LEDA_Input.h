@@ -14,6 +14,8 @@
 
 #include "pch.h"
 
+#include "InputSystem.h"
+
 #include "LEDA_Graphics.h"
 #include <GLFW/glfw3.h>
 

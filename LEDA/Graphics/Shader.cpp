@@ -1,7 +1,7 @@
 /**
  * @file        Shader.cpp
  * @author      your name (you@domain.com)
- * @brief       Wow, an actual shader class
+ * @brief       wow, an actual shader class
  * @version     0.1
  * @date        04-09-2022
  *
@@ -25,8 +25,7 @@
 
 
 namespace LEDA {
-
-
+    
     // public:
 
 	// constructors
