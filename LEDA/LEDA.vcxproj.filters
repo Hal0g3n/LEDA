@@ -165,6 +165,9 @@
     <ClInclude Include="CollisionShapes.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">

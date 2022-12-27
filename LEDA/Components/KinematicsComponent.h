@@ -1,5 +1,5 @@
 /**
- * @file        LEDA_Components.h
+ * @file        KinematicsComponent.h
  * @author      your name (you@domain.com)
  * @brief       Component containing kinematics data
  * @version     0.1

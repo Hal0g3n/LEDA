@@ -17,9 +17,6 @@
 #include "CollisionShapes.h"
 
 namespace LEDA { // LEDA Namespace
-	
-
-
 	// INTERSECTION FUNCTIONS
 	int LEDA_API CollisionIntersection_CircleLineSegment(const Circle& circle,			// Circle data - input
 		const LEDA::Vec2D& ptEnd,												// End circle position - input

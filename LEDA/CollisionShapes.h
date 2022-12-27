@@ -13,6 +13,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /******************************************************************************/
 #pragma once
 
+#ifndef LEDA_COLLISION_SHAPES_H
+#define LEDA_COLLISION_SHAPES_H
+
 #include "pch.h"
 #include "LEDA_Math.h"
 
@@ -54,3 +57,5 @@ namespace LEDA {
 		double scale,												// scale - input
 		double dir);													// direction - input
 }
+
+#endif //LEDA_COLLISION_SHAPES_H

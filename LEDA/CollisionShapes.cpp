@@ -12,7 +12,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************************/
 
-#include "pch.h"
 #include "CollisionShapes.h"
 
 namespace LEDA {
