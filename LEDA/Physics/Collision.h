@@ -14,44 +14,9 @@
 
 #include "pch.h"
 #include "LEDA_Math.h"
+#include "CollisionShapes.h"
 
 namespace LEDA { // LEDA Namespace
-		
-	/******************************************************************************/
-	/*!
-	 */
-	 /******************************************************************************/
-	struct LEDA_API Circle
-	{
-		LEDA::Vec2D	m_center;
-		float		m_radius{ 1.0f };
-		float		m_mass{ 1.0f };
-	};
-
-	struct LEDA_API LineSegment
-	{
-		LEDA::Vec2D	m_pt0;
-		LEDA::Vec2D	m_pt1;
-
-		LEDA::Vec2D	m_normal;
-	};
-
-	struct LEDA_API Ray
-	{
-		LEDA::Vec2D	m_pt0;
-		LEDA::Vec2D	m_dir;
-	};
-
-	/******************************************************************************/
-	/*!
-	 */
-	 /******************************************************************************/
-	void LEDA_API BuildLineSegment(LEDA::LineSegment& lineSegment,			// Line segment reference - input
-		const LEDA::Vec2D& pos,										// position - input
-		double scale,												// scale - input
-		double dir);													// direction - input
-
-
 	// INTERSECTION FUNCTIONS
 	int LEDA_API CollisionIntersection_CircleLineSegment(const Circle& circle,			// Circle data - input
 		const LEDA::Vec2D& ptEnd,												// End circle position - input

@@ -162,6 +162,12 @@
     <ClInclude Include="Input\InputSystem.h">
       <Filter>Header Files\Core\Input</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionShapes.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -223,6 +229,9 @@
     </ClCompile>
     <ClCompile Include="Input\InputSystem.cpp">
       <Filter>Source Files\Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionShapes.cpp">
+      <Filter>Source Files\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -54,6 +54,9 @@ namespace LEDA {
 			// update the angle
 			trans->rotation += kine->rot_vel * frameTime;
 		}
+
+		// collision checks
+
 	}
 
 	void PhysicsSystem::free() {
