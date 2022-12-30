@@ -15,7 +15,6 @@
 
 #include "pch.h"
 
-#include <functional>
 #include "ISystem.h"
 #include "LEDA_System.h"
 
@@ -32,18 +31,18 @@ namespace LEDA {
 		~LogicSystem() {};
 
 		void init() {
-			for (GameObject* obj : objects) {
-				getComponent<LogicComponent>(obj)->init();
+			for (size_t i = 0; i < objects.size(); ++i) {
+				getComponent<LogicComponent>(objects[i])->init();
 			}
 		};
 		void update() {
-			for (GameObject* obj : objects) {
-				getComponent<LogicComponent>(obj)->update();
+			for (size_t i = 0; i < objects.size(); ++i) {
+				getComponent<LogicComponent>(objects[i])->update();
 			}
 		};
 		void free() {
-			for (GameObject* obj : objects) {
-				getComponent<LogicComponent>(obj)->free();
+			for (size_t i = 0; i < objects.size(); ++i) {
+				getComponent<LogicComponent>(objects[i])->free();
 			}
 			objects.clear();
 		};

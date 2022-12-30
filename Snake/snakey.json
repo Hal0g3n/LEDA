@@ -21,6 +21,7 @@
         "rot_vel_degrees": -60
       }
     },
+    /*
     {
       "id": "central square",
       "transform": {
@@ -42,6 +43,7 @@
         "rot_vel_degrees": 5
       }
     },
+    */
     {
       "id": "sus", // oh no why does this comment exist in json
       "transform": {
@@ -64,8 +66,8 @@
     "among": {
       "transform": {
         "scale": {
-          "x": 25,
-          "y": 25
+          "x": 30,
+          "y": 30
         }
       },
       "graphics": {
@@ -81,6 +83,46 @@
         },
         "acc": {
           "x": 50,
+          "y": 0
+        }
+      }
+    },
+    "body": {
+      "transform": {
+        "scale": {
+          "x": 30,
+          "y": 30
+        },
+        "rotation": 0
+      },
+      "graphics": {
+        "shape": "rectangle",
+        "material": "solid",
+        "color": "#0cc00c"
+      },
+      "kinematics": {
+        "vel": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    "apple": {
+      "transform": {
+        "scale": {
+          "x": 30,
+          "y": 30
+        },
+        "rotation": 0
+      },
+      "graphics": {
+        "shape": "rectangle",
+        "material": "solid",
+        "color": "#c00c0c"
+      },
+      "kinematics": {
+        "vel": {
+          "x": 0,
           "y": 0
         }
       }

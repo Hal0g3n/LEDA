@@ -10,24 +10,16 @@
  */
 
 #include "pch.h"
+
+#include "LEDA_System.h"
 #include "LEDA_Input.h"
 
 using namespace LEDA;
 
-using namespace LEDA::Input;
 
-// how to store key trigger/release callback functions:
-
-using callbackMap = std::map<int, std::vector<emptyFunction>>;
-
-callbackMap triggerCallbacks;
-callbackMap releaseCallbacks;
-callbackMap repeatCallbacks;
-
-
-// for (storage purposes; how to iterate through all KEY::s; is shown in the comment below) { ignore all punctuation in this line }
+// for (storage purposes; how to iterate through all INPUT_KEY::s; is shown in the comment below) { ignore all punctuation in this line }
 /*
-	for (int k = KEY::KEY_SPACE; k < KEY::KEY_LAST; k++)
+	for (int k = INPUT_KEY::KEY_SPACE; k < INPUT_KEY::KEY_LAST; k++)
 */
 
 
@@ -60,7 +52,7 @@ void mainKeyCallback(GLFWwindow* window, int key, int scancode, int action, int 
 }
 
 
-void LEDA::Input::initializeInput(bool stickyKeys) {
+void LEDA::initializeInput(bool stickyKeys) {
 
 	// set GLFW input modes below
 
@@ -81,7 +73,7 @@ void LEDA::Input::initializeInput(bool stickyKeys) {
 
 }
 
-void LEDA::Input::doInput() {
+void LEDA::doInput() {
 
 	// processes received events in the event queue (calling key callbacks)
 	glfwPollEvents();
@@ -91,11 +83,11 @@ void LEDA::Input::doInput() {
 }
 
 
-bool LEDA::Input::keyPressed(LEDA::Input::KEY key) {
+bool LEDA::keyPressed(INPUT_KEY key) {
 	return glfwGetKey(window, key) == GLFW_PRESS;
 }
 
-bool LEDA::Input::keyRepeated(LEDA::Input::KEY key) {
+bool LEDA::keyRepeated(INPUT_KEY key) {
 	return glfwGetKey(window, key) == GLFW_REPEAT;
 }
 
@@ -117,12 +109,12 @@ bool LEDA::keyReleased(LEDA::KEY key) {
 
 // functions to add key callbacks
 
-void LEDA::Input::addKeyTriggerCallback(KEY key, emptyFunction function) {
+void LEDA::addKeyTriggerCallback(INPUT_KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = triggerCallbacks.find(key);
 	if (found == triggerCallbacks.end()) {
-		std::vector<emptyFunction> tempVector;
-		triggerCallbacks.emplace(key, tempVector);
+		std::vector<emptyFunction> tempFunctionList;
+		triggerCallbacks.emplace(key, tempFunctionList);
 		found = triggerCallbacks.find(key);
 	}
 	found->second.push_back(function);
@@ -130,12 +122,12 @@ void LEDA::Input::addKeyTriggerCallback(KEY key, emptyFunction function) {
 
 }
 
-void LEDA::Input::addKeyReleaseCallback(KEY key, emptyFunction function) {
+void LEDA::addKeyReleaseCallback(INPUT_KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = releaseCallbacks.find(key);
 	if (found == releaseCallbacks.end()) {
-		std::vector<emptyFunction> tempVector;
-		releaseCallbacks.emplace(key, tempVector);
+		std::vector<emptyFunction> tempFunctionList;
+		releaseCallbacks.emplace(key, tempFunctionList);
 		found = releaseCallbacks.find(key);
 	}
 	found->second.push_back(function);
@@ -143,12 +135,12 @@ void LEDA::Input::addKeyReleaseCallback(KEY key, emptyFunction function) {
 
 }
 
-void LEDA::Input::addKeyRepeatCallback(KEY key, emptyFunction function) {
+void LEDA::addKeyRepeatCallback(INPUT_KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = repeatCallbacks.find(key);
 	if (found == repeatCallbacks.end()) {
-		std::vector<emptyFunction> tempVector;
-		repeatCallbacks.emplace(key, tempVector);
+		std::vector<emptyFunction> tempFunctionList;
+		repeatCallbacks.emplace(key, tempFunctionList);
 		found = repeatCallbacks.find(key);
 	}
 	found->second.push_back(function);
@@ -159,52 +151,52 @@ void LEDA::Input::addKeyRepeatCallback(KEY key, emptyFunction function) {
 
 // functions to remove key callbacks
 
-void LEDA::Input::removeKeyTriggerCallback(KEY key, emptyFunction function) {
+void LEDA::removeKeyTriggerCallback(INPUT_KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = triggerCallbacks.find(key);
 	if (found == triggerCallbacks.end()) {
 		// there's nothing to remove!
 		return;
 	}
-	std::vector<emptyFunction> vector = found->second;
-	std::vector<emptyFunction>::iterator foundAgain = std::find(vector.begin(), vector.end(), function);
-	if (foundAgain != vector.end()) {
+	std::vector<emptyFunction> functionList = found->second;
+	std::vector<emptyFunction>::iterator foundAgain = std::find(functionList.begin(), functionList.end(), function);
+	if (foundAgain != functionList.end()) {
 		// only remove if the function is found
-		vector.erase(foundAgain);
+		functionList.erase(foundAgain);
 	}
 	return;
 
 }
 
-void LEDA::Input::removeKeyReleaseCallback(KEY key, emptyFunction function) {
+void LEDA::removeKeyReleaseCallback(INPUT_KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = releaseCallbacks.find(key);
 	if (found == releaseCallbacks.end()) {
 		// there's nothing to remove!
 		return;
 	}
-	std::vector<emptyFunction> vector = found->second;
-	std::vector<emptyFunction>::iterator foundAgain = std::find(vector.begin(), vector.end(), function);
-	if (foundAgain != vector.end()) {
+	std::vector<emptyFunction> functionList = found->second;
+	std::vector<emptyFunction>::iterator foundAgain = std::find(functionList.begin(), functionList.end(), function);
+	if (foundAgain != functionList.end()) {
 		// only remove if the function is found
-		vector.erase(foundAgain);
+		functionList.erase(foundAgain);
 	}
 	return;
 
 }
 
-void LEDA::Input::removeKeyRepeatCallback(KEY key, emptyFunction function) {
+void LEDA::removeKeyRepeatCallback(INPUT_KEY key, emptyFunction function) {
 
 	callbackMap::iterator found = repeatCallbacks.find(key);
 	if (found == repeatCallbacks.end()) {
 		// there's nothing to remove!
 		return;
 	}
-	std::vector<emptyFunction> vector = found->second;
-	std::vector<emptyFunction>::iterator foundAgain = std::find(vector.begin(), vector.end(), function);
-	if (foundAgain != vector.end()) {
+	std::vector<emptyFunction> functionList = found->second;
+	std::vector<emptyFunction>::iterator foundAgain = std::find(functionList.begin(), functionList.end(), function);
+	if (foundAgain != functionList.end()) {
 		// only remove if the function is found
-		vector.erase(foundAgain);
+		functionList.erase(foundAgain);
 	}
 	return;
 

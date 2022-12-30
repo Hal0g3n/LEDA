@@ -1,7 +1,7 @@
 /**
  * @file        SceneManager.h
  * @author      your name (you@domain.com)
- * @brief       ...
+ * @brief       Not to be confused with SceneBuilder.
  * @version     0.1
  * @date        21-11-2022
  *

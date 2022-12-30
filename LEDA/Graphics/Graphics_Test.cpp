@@ -22,8 +22,6 @@
 
 using namespace LEDA;
 
-using namespace LEDA::Input;
-
 // declare extern variable here
 GLFWwindow* LEDA::window;
 
@@ -136,16 +134,16 @@ int LEDA::test() {
 
         doInput();
 
-        if (keyPressed(KEY::KEY_UP) || keyPressed(KEY::KEY_W)) y += 0.1;
-        if (keyPressed(KEY::KEY_DOWN) || keyPressed(KEY::KEY_S)) y -= 0.1;
-        if (keyPressed(KEY::KEY_LEFT) || keyPressed(KEY::KEY_A)) x -= 0.1;
-        if (keyPressed(KEY::KEY_RIGHT) || keyPressed(KEY::KEY_D)) x += 0.1;
-        if (keyPressed(KEY::KEY_SPACE) || keyPressed(KEY::KEY_Q)) rotation -= 0.005;
-        if (keyPressed(KEY::KEY_F) || keyPressed(KEY::KEY_E)) rotation += 0.005;
-        if (keyPressed(KEY::KEY_Z)) rotation -= 0.05;
-        if (keyPressed(KEY::KEY_X)) rotation += 0.05;
-        if (keyPressed(KEY::KEY_C)) s -= 0.05;
-        if (keyPressed(KEY::KEY_V)) s += 0.05;
+        if (keyPressed(INPUT_KEY::KEY_UP) || keyPressed(INPUT_KEY::KEY_W)) y += 0.1;
+        if (keyPressed(INPUT_KEY::KEY_DOWN) || keyPressed(INPUT_KEY::KEY_S)) y -= 0.1;
+        if (keyPressed(INPUT_KEY::KEY_LEFT) || keyPressed(INPUT_KEY::KEY_A)) x -= 0.1;
+        if (keyPressed(INPUT_KEY::KEY_RIGHT) || keyPressed(INPUT_KEY::KEY_D)) x += 0.1;
+        if (keyPressed(INPUT_KEY::KEY_SPACE) || keyPressed(INPUT_KEY::KEY_Q)) rotation -= 0.005;
+        if (keyPressed(INPUT_KEY::KEY_F) || keyPressed(INPUT_KEY::KEY_E)) rotation += 0.005;
+        if (keyPressed(INPUT_KEY::KEY_Z)) rotation -= 0.05;
+        if (keyPressed(INPUT_KEY::KEY_X)) rotation += 0.05;
+        if (keyPressed(INPUT_KEY::KEY_C)) s -= 0.05;
+        if (keyPressed(INPUT_KEY::KEY_V)) s += 0.05;
         
         drawBackground();
 
@@ -208,7 +206,7 @@ void resize(GLFWwindow* window, int width, int height) {
 
 void initializeInput2() {
 
-    addKeyTriggerCallback(KEY::KEY_ESCAPE, []() {
+    addKeyTriggerCallback(INPUT_KEY::KEY_ESCAPE, []() {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     });
 

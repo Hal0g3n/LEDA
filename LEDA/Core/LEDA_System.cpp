@@ -57,9 +57,10 @@ std::vector<ISystem*> systems {
 // china
 void china() {}
 
-void LEDA::LEDA_INIT(std::string state, std::function<void(void)> fn) {
+void LEDA::LEDA_INIT(std::string state, std::function<void(void)> fn_start, std::function<void(void)> fn_end) {
 	// it works
-	startFunctions.insert(std::make_pair(state, fn));
+	startFunctions.insert(std::make_pair(state, fn_start));
+	endFunctions.insert(std::make_pair(state, fn_end));
 }
 
 void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitle, std::string initialState) {
@@ -103,6 +104,7 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 			// System Game Loop Updates
 			for (ISystem* system : systems) {
 				system->update();
+				// std::cout << typeid(system).name() << std::endl; // very debug (to check which system isn't working just in case)
 			}
 			
 			// End Frame Timer
@@ -117,6 +119,7 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 			}
 
 			appTime += frameTime;
+
 		}
 
 		// clear all loaded objects
@@ -143,6 +146,7 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 		delete system;
 	}
 
+	// gone too
 	delete sceneManager;
 
 }

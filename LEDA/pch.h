@@ -20,6 +20,7 @@
 #include <math.h>
 #include <typeinfo>
 #include <chrono>
+#include <functional>
 
 // DLL
 #ifdef LEDA_EXPORTS

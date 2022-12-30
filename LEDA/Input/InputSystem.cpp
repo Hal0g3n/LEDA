@@ -19,10 +19,10 @@ using namespace LEDA;
 void InputSystem::init() {
 
 	// initialize
-	Input::initializeInput();
+	initializeInput();
 
 	// and also add default behaviour (close on escape key)
-	Input::addKeyTriggerCallback(Input::KEY::KEY_ESCAPE, []() {
+	addKeyTriggerCallback(INPUT_KEY::KEY_ESCAPE, []() {
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
 	});
 
@@ -34,7 +34,7 @@ void InputSystem::update() {
 	glfwPollEvents();
 
 	// (and this too)
-	Input::doInput();
+	doInput();
 	
 }
 

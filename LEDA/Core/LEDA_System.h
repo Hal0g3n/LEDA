@@ -38,7 +38,7 @@ namespace LEDA {
 	std::unordered_map<std::string, std::function<void(void)>> startFunctions;
 	std::unordered_map<std::string, std::function<void(void)>> endFunctions; // unused for now
 
-	void LEDA_API LEDA_INIT(std::string state, std::function<void(void)> fn);
+	void LEDA_API LEDA_INIT(std::string state, std::function<void(void)> fn_start = []() {}, std::function<void(void)> fn_end = []() {});
 
 	/**
 	 * @brief Entry Point into LEDA
