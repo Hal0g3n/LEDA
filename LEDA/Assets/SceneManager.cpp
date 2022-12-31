@@ -12,6 +12,8 @@
 
 #include <cstdio>
 #include <fstream>
+#include <filesystem>
+#include <set>
 #include "json.hpp"
 
 #define _USE_MATH_DEFINES
@@ -25,6 +27,7 @@ using json = nlohmann::json;
 using object = const nlohmann::json_abi_v3_11_2::detail::iteration_proxy_value<nlohmann::json_abi_v3_11_2::detail::iter_impl<nlohmann::json_abi_v3_11_2::json>>;
 using namespace LEDA;
 
+// File Scope Variables
 unsigned int objectCount = 0;
 
 // some funny utility function... move this somewhere else?
@@ -57,6 +60,7 @@ std::vector<double> string2rgba(std::string hex) {
 GameObject* loadObject(object* entry, std::string objectId = "") {
 
 	json& objectData = entry->value();
+	std::string objectId = "";
 
 	// get the id and init game object
 	// the id will be "unnamed entity #n" (where n is a non-negative integer) if an id is not provided anywhere
@@ -239,23 +243,52 @@ void SceneManager::load(std::string filename) {
 
 	this->_json = data;
 
+	// Will contain all unused paths at the end of asset loading
+	std::set<std::filesystem::path> unused;
+	for (std::pair<std::filesystem::path, Asset*> asset : assets)
+		unused.insert(asset.first);
+
+	// Clear out aliases
+	alias.clear();
+
 	if (!_json["assets"].is_null()) { // if additional assets exist
 
-		// TODO: Find assets set difference
-		// Load/Unload the diff
-		for (auto &asset : _json["assets"].items())
-			if ("fonts" == asset.key()) {
-				for (auto& s : asset.value().items()) {
-					// TODO: Figure out loading the asset from file name
-				}
-			}
-			else if ("images" == asset.key()) {
-				for (auto& s : asset.value().items()) {
-					// TODO: Figure out loading the asset from file name
-				}
-			}
+		for (auto& asset : _json["assets"].items()) { // For each asset type
+			for (auto& s : asset.value().items()) { // For each asset
 
+				// Load the canonical path of the item (unique path basically)
+				std::filesystem::path p{ s.value() };
+				p = std::filesystem::canonical(p);
+
+
+				// Warning moment
+				if (alias.find(s.key()) != alias.end())
+					LOG_WARNING("Asset name conflict, overwriting asset with name " + s.key());
+
+
+				// Insert into alias
+				alias[s.key()] = p;
+
+				// If asset is found
+				if (assets.find(p) != assets.end()) {
+					unused.erase(p);
+					continue;
+				}
+
+				// Generate the asset (depending on type)
+				if (asset.key() == "fonts") assets[p] = new Font(p.u8string());
+				if (asset.key() == "images") assets[p] = new Image(p.u8string());
+			}
+		}
 	}
+
+	// If after loading assets it is unused
+	// Delete them all
+	for (std::filesystem::path k : unused) {
+		delete assets[k];
+		assets.erase(k);
+	}
+
 
 	if (!_json["objects"].is_null()) { // if the game object list exists
 		objectCount = 0;
@@ -280,8 +313,8 @@ void SceneManager::load(std::string filename) {
 
 }
 
-Asset* SceneManager::getAsset(std::string assetName) {
-	return this->assets.find(assetName)->second;
+inline Asset* SceneManager::getAsset(std::string assetName) {
+	return assets[alias[assetName]];
 }
 
 GameObject* SceneManager::createObject(std::string templateName, std::string objectId = "") {
