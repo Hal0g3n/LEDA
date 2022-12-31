@@ -12,14 +12,16 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************************/
 
+#include "pch.h"
+
 #include "CollisionShapes.h"
 
 namespace LEDA {
 	/******************************************************************************/
-/*!
-	Builds a line segment with the given center, scale dir
- */
- /******************************************************************************/
+	/*!
+		Builds a line segment with the given center, scale dir
+	*/
+	/******************************************************************************/
 	void BuildLineSegment(LEDA::LineSegment& lineSegment,
 		const LEDA::Vec2D& pos,
 		double scale,

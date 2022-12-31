@@ -11,12 +11,14 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************************/
+
 #pragma once
 
 #ifndef LEDA_COLLISION_SHAPES_H
 #define LEDA_COLLISION_SHAPES_H
 
 #include "pch.h"
+
 #include "LEDA_Math.h"
 
 namespace LEDA {
@@ -58,4 +60,4 @@ namespace LEDA {
 		double dir);													// direction - input
 }
 
-#endif //LEDA_COLLISION_SHAPES_H
+#endif // LEDA_COLLISION_SHAPES_H

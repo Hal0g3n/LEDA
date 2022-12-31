@@ -76,9 +76,8 @@ void LEDA::initializeInput(bool stickyKeys) {
 void LEDA::doInput() {
 
 	// processes received events in the event queue (calling key callbacks)
+	// important! if not the window will not respond
 	glfwPollEvents();
-	
-	return;
 
 }
 

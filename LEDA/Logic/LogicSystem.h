@@ -35,11 +35,13 @@ namespace LEDA {
 				getComponent<LogicComponent>(objects[i])->init();
 			}
 		};
+
 		void update() {
 			for (size_t i = 0; i < objects.size(); ++i) {
 				getComponent<LogicComponent>(objects[i])->update();
 			}
 		};
+
 		void free() {
 			for (size_t i = 0; i < objects.size(); ++i) {
 				getComponent<LogicComponent>(objects[i])->free();

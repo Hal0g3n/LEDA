@@ -48,6 +48,7 @@ extern LEDA::SceneManager sceneManager;
 
 // List of Systems
 std::vector<ISystem*> systems {
+	// in order
 	new InputSystem(),
 	new LogicSystem(),
 	new PhysicsSystem(),
@@ -178,31 +179,35 @@ void LEDA::registerGameObject(std::string id, GameObject* obj) {
 }
 
 bool LEDA::removeGameObject(GameObject* obj) {
+
 	if (obj == nullptr) return false;
 
-	for (ISystem* sys : systems) sys->onRemoveGameObject(obj);
+	for (ISystem* sys : systems) {
+		sys->onRemoveGameObject(obj);
+	}
 	
-	// remove all components from object first
+	// remove all components from object
 	deleteAllComponents(obj);
 
 	// Erase from mapping
 	objects.erase(obj->getId());
 
-	// Delete the object
+	// Delete the object (pointer)
 	delete obj;
 
 	return true;
+
 }
 
 bool LEDA::removeGameObject(std::string id) {
 	GameObject* obj = retrieveGameObject(id);
 	return obj ? removeGameObject(obj) : false;
-};
+}
 
 GameObject* LEDA::retrieveGameObject(std::string id) { 
 	return (objects.find(id) == objects.end()) ? nullptr : objects.find(id)->second; 
 }
 
 void LEDA::LOG_WARNING(std::string message) {
-	std::cerr << "[LEDA WARNING]: " << message << std::endl;
+	std::cerr << "[LEDA WARNING]: " << message << std::endl; // cerr
 }

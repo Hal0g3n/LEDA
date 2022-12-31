@@ -18,7 +18,7 @@
         "color": "#888888"
       },
       "kinematics": {
-        "rot_vel_degrees": -60
+        "rot_vel_degrees": 10
       }
     },
     /*
@@ -44,23 +44,23 @@
       }
     },
     */
-    {
-      "id": "sus", // oh no why does this comment exist in json
-      "transform": {
-        "x": 0,
-        "y": -300,
-        "scale": {
-          "x": 150,
-          "y": 25
+      {
+        "id": "sus", // oh no why does this comment exist in json
+        "transform": {
+          "x": 0,
+          "y": -300,
+          "scale": {
+            "x": 150,
+            "y": 25
+          },
+          "rotation": 0
         },
-        "rotation": 0
-      },
-      "graphics": {
-        "shape": "rectangle",
-        "material": "solid",
-        "color": "#c0c00c"
+        "graphics": {
+          "shape": "rectangle",
+          "material": "solid",
+          "color": "#c0c00c"
+        }
       }
-    }
   ],
   "templates": {
     "among": {

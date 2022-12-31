@@ -23,6 +23,11 @@ using namespace LEDA;
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 800;
 
+int SNAKE_SPEED = 200;
+int SNAKE_SIZE = 30;
+int APPLE_SIZE = 30;
+double SNAKE_TIME = (double) SNAKE_SIZE / SNAKE_SPEED;
+
 // apples
 std::vector<std::pair<int, int>> apples;
 std::vector<GameObject*> game_apples;
@@ -30,22 +35,51 @@ std::vector<GameObject*> game_apples;
 // snake
 std::vector<std::pair<int, int>> snake_bodies;
 std::vector<GameObject*> game_bodies;
-std::deque<int> snake_directions;
+std::deque<std::pair<std::pair<int, int>, double>> head_positions; // pair<position, time>
 
-int current_direction = 0; // up
-                   // = 1; // down
-                   // = 2; // right
-                   // = 3; // left
+int current_direction = 1; // up
+                   // = 0; // down
+                   // = 3; // right
+                   // = 2; // left
+
+double targetTime = 0;
 
 bool apples_changed = false;
+bool late_init_done = false;
 
 // randomness
 std::random_device random_device;
 std::mt19937 mt{ random_device() };
 std::uniform_int_distribution<> random_x, random_y;
 
+void background_update();
+void sus_update();
+void snakey_init();
+void late_init();
+void snakey_free();
+
+// 2 helper functions which could be included in LEDA
+
+double lerp(double a, double b, double t) {
+    return a * (1 - t) + b * t;
+}
+
+bool very_simple_rect_rect(double x1, double y1, double w1, double h1, double x2, double y2, double w2, double h2) {
+    return abs(x1 - x2) < (w1 + w2) / 2 && abs(y1 - y2) < (h1 + h2) / 2;
+}
+
+void add_snake_body() {
+    std::pair<int, int> last_body = snake_bodies.empty() ? std::make_pair<int, int>(0, 0) : snake_bodies[snake_bodies.size() - 1];
+    snake_bodies.push_back(std::make_pair(last_body.first, last_body.second));
+}
+
 // main update function
 void background_update() {
+
+    if (!late_init_done) {
+        late_init();
+        late_init_done = true;
+    }
 
     // [only one update function for now...]
     GameObject* background = retrieveGameObject("background");
@@ -65,42 +99,70 @@ void background_update() {
             TransformComponent* tc = getComponent<TransformComponent>(o);
             tc->position.x = apple.first;
             tc->position.y = apple.second;
+            
+            // check if apple is collected
+            if (very_simple_rect_rect(apple.first, apple.second, APPLE_SIZE, APPLE_SIZE, snake_bodies[0].first, snake_bodies[0].second, SNAKE_SIZE, SNAKE_SIZE)) {
+                // delete apple
+                apples.erase(std::next(apples.begin(), i));
+                // increase snake size by 1
+                add_snake_body();
+            }
         }
     }
 
     // snakey stuff
     while (snake_bodies.size() > game_bodies.size()) {
-        game_bodies.push_back(sceneManager->createObject("body", std::string("body") + std::to_string(game_bodies.size())));
+        GameObject* o = sceneManager->createObject("body", std::string("body") + std::to_string(game_bodies.size()));
+        game_bodies.push_back(o);
+        TransformComponent* tc = getComponent<TransformComponent>(o);
+        tc->position.x = snake_bodies[game_bodies.size() - 1].first;
+        tc->position.y = snake_bodies[game_bodies.size() - 1].second;
     }
     for (size_t i = 0; i < snake_bodies.size(); ++i) {
         std::pair<int, int>& body = snake_bodies[i];
         GameObject* o = game_bodies[i];
+        TransformComponent* tc = getComponent<TransformComponent>(o);
         // special head things
         if (i == 0) {
-
+            body.first = tc->position.x;
+            body.second = tc->position.y;
         }
         // special body things
         else {
-
+            tc->position.x = body.first;
+            tc->position.y = body.second;
         }
-        TransformComponent* tc = getComponent<TransformComponent>(o);
-        tc->position.x = body.first;
-        tc->position.y = body.second;
     }
 
     // more snakey stuff (but not LEDA related this time)
-    snake_directions.push_front(current_direction);
-    if (snake_directions.size() > snake_bodies.size()) {
-        snake_directions.pop_back();
+
+    head_positions.push_front(std::make_pair(snake_bodies[0], appTime));
+    while (head_positions.back().second < appTime - 60) {
+        head_positions.pop_back();
     }
-    for (size_t i = 0; i < snake_directions.size(); ++i) {
-        int delta_x = (current_direction >= 2) ? current_direction * 2 - 5 : 0;
-        int delta_y = (current_direction >= 2) ? 0 : current_direction * 2 - 1;
-        GameObject* o = game_bodies[i];
-        KinematicsComponent* kc = getComponent<KinematicsComponent>(o);
-        kc->vel.x = delta_x * 300;
-        kc->vel.y = delta_y * 300;
-        // std::cout << o->getId() << " " << kc->vel.x << " " << kc->vel.y << std::endl;
+
+    int dir = current_direction;
+    int delta_x = (dir >= 2) ? dir * 2 - 5 : 0;
+    int delta_y = (dir >= 2) ? 0 : dir * 2 - 1;
+    GameObject* o = game_bodies[0];
+    KinematicsComponent* kc = getComponent<KinematicsComponent>(o);
+    kc->vel.x = delta_x * SNAKE_SPEED;
+    kc->vel.y = delta_y * SNAKE_SPEED;
+
+    int j = 1;
+    std::pair<std::pair<int, int>, double> old_position = std::make_pair(snake_bodies[0], appTime);
+    for (size_t i = 0; i < head_positions.size(); ++i) {
+        if (j >= snake_bodies.size()) {
+            break;
+        }
+        const std::pair<std::pair<int, int>, double> position = head_positions[i];
+        if (position.second < appTime - SNAKE_TIME * j) {
+            double t = (appTime - SNAKE_TIME * j - position.second) / (old_position.second - position.second);
+            snake_bodies[j].first = lerp(position.first.first, old_position.first.first, t);
+            snake_bodies[j].second = lerp(position.first.second, old_position.first.second, t);
+            j++;
+        }
+        old_position = position;
     }
 
 }
@@ -120,21 +182,9 @@ void snakey_init() {
     random_y = std::uniform_int_distribution<>{ -halfheight, halfheight };
 
     // put initial snake "head"
-    snake_bodies.push_back(std::make_pair<int, int>(123, 321));
-
-    // keyboard input (snake control)
-    addKeyTriggerCallback(INPUT_KEY::KEY_UP, []() {
-        current_direction = 0;
-    });
-    addKeyTriggerCallback(INPUT_KEY::KEY_DOWN, []() {
-        current_direction = 1;
-    });
-    addKeyTriggerCallback(INPUT_KEY::KEY_RIGHT, []() {
-        current_direction = 2;
-    });
-    addKeyTriggerCallback(INPUT_KEY::KEY_LEFT, []() {
-        current_direction = 3;
-    });
+    for (int i = 0; i < 5; i++) {
+        add_snake_body();
+    }
 
     GameObject* background = retrieveGameObject("background");
     LogicComponent* lc = getComponent<LogicComponent>(background);
@@ -144,15 +194,35 @@ void snakey_init() {
     lc = getComponent<LogicComponent>(sus);
     lc->update = sus_update;
 
+    /*
     GameObject* among = sceneManager->createObject("among", "amongst");
     TransformComponent* tc = getComponent<TransformComponent>(among);
-    tc->position.x = 100;
-    tc->position.y = 100;
+    tc->position.x = -100;
+    tc->position.y = -100;
 
     GameObject* among2 = sceneManager->createObject("among", "amongst us");
     tc = getComponent<TransformComponent>(among2);
-    tc->position.x = -100;
-    tc->position.y = -100;
+    tc->position.x = 100;
+    tc->position.y = 100;
+    */
+
+}
+
+void late_init() {
+
+    // keyboard input (snake control)
+    addKeyTriggerCallback(INPUT_KEY::KEY_UP, []() {
+        current_direction = 1;
+        });
+    addKeyTriggerCallback(INPUT_KEY::KEY_DOWN, []() {
+        current_direction = 0;
+        });
+    addKeyTriggerCallback(INPUT_KEY::KEY_RIGHT, []() {
+        current_direction = 3;
+        });
+    addKeyTriggerCallback(INPUT_KEY::KEY_LEFT, []() {
+        current_direction = 2;
+        });
 
 }
 

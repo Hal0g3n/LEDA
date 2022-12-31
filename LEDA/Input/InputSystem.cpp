@@ -16,7 +16,9 @@
 
 using namespace LEDA;
 
-void InputSystem::init() {
+bool real_init_done = false;
+// important! wait 1 frame? to initialize, because it waits for graphics to initialize first
+void real_init() {
 
 	// initialize
 	initializeInput();
@@ -28,14 +30,16 @@ void InputSystem::init() {
 
 }
 
+void InputSystem::init() {
+
+}
+
 void InputSystem::update() {
-
-	// important! if not window will not be responding
-	glfwPollEvents();
-
-	// (and this too)
+	if (!real_init_done) {
+		real_init();
+		real_init_done = true;
+	}
 	doInput();
-	
 }
 
 void InputSystem::free() {

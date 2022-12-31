@@ -193,7 +193,7 @@ GameObject* loadObject(object* entry, std::string objectId = "") {
 	LogicComponent* lc = new LogicComponent([] {}, [] {}, [] {});
 	addComponent(obj, lc);
 
-	// register the game object to the system
+	// register the game object to the systems
 	registerGameObject(obj->getId(), obj);
 
 	// print game object for debugging (TODO: remove)
