@@ -60,7 +60,6 @@ std::vector<double> string2rgba(std::string hex) {
 GameObject* loadObject(object* entry, std::string objectId = "") {
 
 	json& objectData = entry->value();
-	std::string objectId = "";
 
 	// get the id and init game object
 	// the id will be "unnamed entity #n" (where n is a non-negative integer) if an id is not provided anywhere
@@ -257,7 +256,7 @@ void SceneManager::load(std::string filename) {
 			for (auto& s : asset.value().items()) { // For each asset
 
 				// Load the canonical path of the item (unique path basically)
-				std::filesystem::path p{ s.value() };
+				std::filesystem::path p = s.value();
 				p = std::filesystem::canonical(p);
 
 

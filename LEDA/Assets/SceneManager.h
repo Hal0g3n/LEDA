@@ -37,7 +37,7 @@ namespace LEDA {
 
 		// For all assets used here, load name to alias (for better variable naming)
 		std::unordered_map<std::string, std::filesystem::path> alias{};
-		std::unordered_map<std::filesystem::path, Asset*> assets{};
+		std::map<std::filesystem::path, Asset*> assets{};
 
 		// List of all game objects
 		std::unordered_map<std::string, object*> objects{};
