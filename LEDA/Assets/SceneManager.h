@@ -23,7 +23,7 @@
 
 #include <map>
 #include <unordered_map>
-
+#include <filesystem>
 #include "json.hpp"
 
 using json = nlohmann::json;
@@ -32,8 +32,14 @@ using object = const nlohmann::json_abi_v3_11_2::detail::iteration_proxy_value<n
 namespace LEDA {
 
 	class LEDA_API SceneManager {
+		// Json of the current level
 		json _json;
-		std::unordered_map<std::string, Asset*> assets{};
+
+		// For all assets used here, load name to alias (for better variable naming)
+		std::unordered_map<std::string, std::filesystem::path> alias{};
+		std::map<std::filesystem::path, Asset*> assets{};
+
+		// List of all game objects
 		std::unordered_map<std::string, object*> objects{};
 
 	public:
@@ -41,9 +47,8 @@ namespace LEDA {
 		~SceneManager();
 		void clear();
 		void load(std::string);
-		Asset* getAsset(std::string assetName);
+		inline Asset* getAsset(std::string assetName);
 		GameObject* createObject(std::string templateName, std::string objectId);
-
 	};
 
 }
