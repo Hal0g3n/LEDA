@@ -19,7 +19,7 @@
 namespace LEDA {
 	struct LEDA_API CollisionComponent : public IComponent {
 		CollisionShape shape;
-		bool collide; //flag for if this object collides with others
+		bool collide{ false }; //flag for if this object collides with others
 	};
 }
 

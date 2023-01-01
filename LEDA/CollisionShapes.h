@@ -50,6 +50,11 @@ namespace LEDA {
 		LEDA::Vec2D	m_dir;
 	};
 
+	struct LEDA_API AABB : CollisionShape {
+		LEDA::Vec2D min;
+		LEDA::Vec2D max;
+	};
+
 	/******************************************************************************/
 	/*!
 	 */
