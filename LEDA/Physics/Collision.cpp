@@ -279,9 +279,9 @@ void LEDA::CollisionResponse_CircleCircle(LEDA::Vec2D &normal,
 	Checks for collisions between moving AABBs
  */
  /******************************************************************************/
-int LEDA::CollisionIntersection_AABB(LEDA::AABB aabb1, LEDA::Vec2 vel1, LEDA::AABB aabb2, LEDA::Vec2 vel2) {
+int LEDA::CollisionIntersection_AABB(LEDA::AABB* aabb1, LEDA::Vec2 vel1, LEDA::AABB* aabb2, LEDA::Vec2 vel2) {
 	// Check if they are already colliding
-	if (!(aabb1.min.x > aabb2.max.x || aabb1.min.y > aabb2.max.y || aabb1.max.x < aabb2.min.x || aabb1.max.y < aabb2.min.y)) {
+	if (!(aabb1->min.x > aabb2->max.x || aabb1->min.y > aabb2->max.y || aabb1->max.x < aabb2->min.x || aabb1->max.y < aabb2->min.y)) {
 		return 1;
 	}
 
@@ -295,22 +295,22 @@ int LEDA::CollisionIntersection_AABB(LEDA::AABB aabb1, LEDA::Vec2 vel1, LEDA::AA
 
 	// x-axis check
 	if (vRel.x < 0) {
-		if (aabb1.min.x > aabb2.max.x)
+		if (aabb1->min.x > aabb2->max.x)
 			return 0;
 		else {
 			// we notice that there is no need to check the separate cases for a.min < b.max and a.max < b.min 
 			// this is because the first case is the negation of case 1 above, and the second is always true if the first case is true
 			// the first cannot be true while the second is false, since that would be a static collision
-			tFirst = max((aabb1.max.x - aabb2.min.x) / vRel.x, tFirst);
-			tLast = min((aabb1.min.x - aabb2.max.x) / vRel.x, tLast);
+			tFirst = max((aabb1->max.x - aabb2->min.x) / vRel.x, tFirst);
+			tLast = min((aabb1->min.x - aabb2->max.x) / vRel.x, tLast);
 		}
 	}
 	else if (vRel.x > 0) {
-		if (aabb1.max.x < aabb2.min.x)
+		if (aabb1->max.x < aabb2->min.x)
 			return 0;
 		else {
-			tFirst = max((aabb1.min.x - aabb2.max.x) / vRel.x, tFirst);
-			tLast = min((aabb1.max.x - aabb2.min.x) / vRel.x, tLast);
+			tFirst = max((aabb1->min.x - aabb2->max.x) / vRel.x, tFirst);
+			tLast = min((aabb1->max.x - aabb2->min.x) / vRel.x, tLast);
 		}
 	}
 
@@ -319,22 +319,22 @@ int LEDA::CollisionIntersection_AABB(LEDA::AABB aabb1, LEDA::Vec2 vel1, LEDA::AA
 
 	// y-axis check
 	if (vRel.y < 0) {
-		if (aabb1.min.y > aabb2.max.y)
+		if (aabb1->min.y > aabb2->max.y)
 			return 0;
 		else {
 			// we notice that there is no need to check the separate cases for a.min < b.max and a.max < b.min 
 			// this is because the first case is the negation of case 1 above, and the second is always true if the first case is true
 			// the first cannot be true while the second is false, since that would be a static collision
-			tFirst = max((aabb1.max.y - aabb2.min.y) / vRel.y, tFirst);
-			tLast = min((aabb1.min.y - aabb2.max.y) / vRel.y, tLast);
+			tFirst = max((aabb1->max.y - aabb2->min.y) / vRel.y, tFirst);
+			tLast = min((aabb1->min.y - aabb2->max.y) / vRel.y, tLast);
 		}
 	}
 	else if (vRel.y > 0) {
-		if (aabb1.max.y < aabb2.min.y)
+		if (aabb1->max.y < aabb2->min.y)
 			return 0;
 		else {
-			tFirst = max((aabb1.min.y - aabb2.max.y) / vRel.y, tFirst);
-			tLast = min((aabb1.max.y - aabb2.min.y) / vRel.y, tLast);
+			tFirst = max((aabb1->min.y - aabb2->max.y) / vRel.y, tFirst);
+			tLast = min((aabb1->max.y - aabb2->min.y) / vRel.y, tLast);
 		}
 	}
 

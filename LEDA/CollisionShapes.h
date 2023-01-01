@@ -27,7 +27,9 @@ namespace LEDA {
 	/*!
 	 */
 	 /******************************************************************************/
-	struct LEDA_API CollisionShape {};
+	struct LEDA_API CollisionShape {
+		virtual ~CollisionShape() = 0;
+	};
 
 	struct LEDA_API Circle : CollisionShape
 	{

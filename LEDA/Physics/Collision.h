@@ -78,7 +78,7 @@ namespace LEDA { // LEDA Namespace
 		LEDA::Vec2D& reflectedVectorB,										// Non-Normalized reflected vector of Circle B - output
 		LEDA::Vec2D& ptEndB);												// Final position of the circle B after reflection - output
 
-	int LEDA_API CollisionIntersection_AABB(LEDA::AABB aabb1, LEDA::Vec2 vel1, LEDA::AABB aabb2, LEDA::Vec2 vel2);
+	int LEDA_API CollisionIntersection_AABB(LEDA::AABB* aabb1, LEDA::Vec2 vel1, LEDA::AABB* aabb2, LEDA::Vec2 vel2);
 } // LEDA Namespace end
 
 #endif // LEDA_COLLISION_H_

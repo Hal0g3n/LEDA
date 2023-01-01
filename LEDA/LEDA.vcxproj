@@ -165,6 +165,7 @@
     <ClInclude Include="Assets\json.hpp" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="CollisionShapes.h" />
+    <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Components\GraphicsComponent.h" />
     <ClInclude Include="Components\KinematicsComponent.h" />
     <ClInclude Include="Components\LEDA_Components.h" />
@@ -197,6 +198,7 @@
   <ItemGroup>
     <ClCompile Include="Assets\Asset.cpp" />
     <ClCompile Include="Assets\SceneManager.cpp" />
+    <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Core\LEDA_System.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Graphics\Drawer.cpp" />

@@ -18,5 +18,6 @@
 #include "KinematicsComponent.h"
 #include "GraphicsComponent.h"
 #include "LogicComponent.h"
+#include "CollisionComponent.h"
 
 #endif // LEDA_COMPONENTS_H_

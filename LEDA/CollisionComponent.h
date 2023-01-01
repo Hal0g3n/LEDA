@@ -20,6 +20,7 @@ namespace LEDA {
 	struct LEDA_API CollisionComponent : public IComponent {
 		CollisionShape shape;
 		bool collide{ false }; //flag for if this object collides with others
+		void (*collisionResponse)(GameObject* other) = 0; // function pointer: collision response when colliding with other
 	};
 }
 
