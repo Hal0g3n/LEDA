@@ -42,15 +42,23 @@ namespace LEDA {
 				if (!otherCom->collide) continue; // the other object does not collide
 
 				// AABB check
-				if (instanceof<AABB>(&objCom->shape) && instanceof<AABB>(&otherCom->shape)) {
+				if (instanceof<AABB>(objCom->shape) && instanceof<AABB>(otherCom->shape)) {
 					// we need the velocities
 					Vec2 objVel = getComponent<KinematicsComponent>(obj) == nullptr ? getComponent<KinematicsComponent>(obj)->vel : Vec2{ 0, 0 };
 					Vec2 otherVel = getComponent<KinematicsComponent>(other) == nullptr ? getComponent<KinematicsComponent>(other)->vel : Vec2{ 0, 0 };
 
 					// perform collision check
-					if (CollisionIntersection_AABB(dynamic_cast<AABB*>(&objCom->shape), objVel, dynamic_cast<AABB*>(&otherCom->shape), otherVel)) {
+					if (CollisionIntersection_AABB(dynamic_cast<AABB*>(objCom->shape), objVel, dynamic_cast<AABB*>(otherCom->shape), otherVel)) {
 						objCom->collisionResponse(other);
 						otherCom->collisionResponse(obj); //they both trigger!
+					}
+				}
+
+				// obj is circle
+				if (instanceof<Circle>(objCom->shape)) {
+					// check: other is also circle
+					if (instanceof<Circle>(otherCom->shape)) {
+
 					}
 				}
 			}
