@@ -27,7 +27,9 @@ namespace LEDA {
 	/*!
 	 */
 	 /******************************************************************************/
-	struct LEDA_API CollisionShape {};
+	struct LEDA_API CollisionShape {
+		virtual ~CollisionShape() = 0;
+	};
 
 	struct LEDA_API Circle : CollisionShape
 	{
@@ -48,6 +50,11 @@ namespace LEDA {
 	{
 		LEDA::Vec2D	m_pt0;
 		LEDA::Vec2D	m_dir;
+	};
+
+	struct LEDA_API AABB : CollisionShape {
+		LEDA::Vec2D min;
+		LEDA::Vec2D max;
 	};
 
 	/******************************************************************************/

@@ -8,18 +8,14 @@
  * @copyright   Copyright (c) 2022
  */
 
-#include "pch.h"
-
-#include "LEDA_System.h"
 #include "PhysicsSystem.h"
-#include "KinematicsComponent.h"
-#include "TransformComponent.h"
+#include "LEDA_Components.h"
 
 namespace LEDA {
 
 	// registering new object
 	void PhysicsSystem::onRegisterGameObject(GameObject* obj) {
-		// find the kinematics component and transform component; physics system only governs movement for now
+		// find the kinematics component and transform component
 		KinematicsComponent* kine = getComponent<KinematicsComponent>(obj);
 		TransformComponent* trans = getComponent<TransformComponent>(obj);
 
@@ -54,9 +50,6 @@ namespace LEDA {
 			// update the angle
 			trans->rotation += kine->rot_vel * frameTime;
 		}
-
-		// collision checks
-
 	}
 
 	void PhysicsSystem::free() {

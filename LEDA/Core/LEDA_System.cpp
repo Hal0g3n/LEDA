@@ -19,6 +19,7 @@
 #include "InputSystem.h"
 #include "LogicSystem.h"
 #include "PhysicsSystem.h"
+#include "CollisionSystem.h"
 
 // to set window title
 #include "LEDA_Graphics.h"
@@ -47,11 +48,12 @@ extern LEDA::SceneManager sceneManager;
 ****************************/
 
 // List of Systems
-std::vector<ISystem*> systems {
+std::vector<ISystem*> systems{
 	// in order
 	new InputSystem(),
 	new LogicSystem(),
 	new PhysicsSystem(),
+	new CollisionSystem(),
 	new GraphicsSystem(),
 };
 
