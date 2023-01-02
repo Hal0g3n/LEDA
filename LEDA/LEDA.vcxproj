@@ -163,6 +163,7 @@
     <ClInclude Include="Assets\Asset.h" />
     <ClInclude Include="Assets\SceneManager.h" />
     <ClInclude Include="Assets\json.hpp" />
+    <ClInclude Include="Assets\stb_image.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="CollisionShapes.h" />
     <ClInclude Include="Components\GraphicsComponent.h" />

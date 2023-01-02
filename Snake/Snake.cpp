@@ -26,6 +26,7 @@ const int WINDOW_HEIGHT = 800;
 int SNAKE_SPEED = 200;
 int SNAKE_SIZE = 30;
 int APPLE_SIZE = 30;
+int MAX_APPLES = 25;
 double SNAKE_TIME = (double) SNAKE_SIZE / SNAKE_SPEED;
 
 // apples
@@ -45,7 +46,6 @@ int current_direction = 1; // up
 double targetTime = 0;
 
 bool apples_changed = false;
-bool late_init_done = false;
 
 // randomness
 std::random_device random_device;
@@ -55,7 +55,6 @@ std::uniform_int_distribution<> random_x, random_y;
 void background_update();
 void sus_update();
 void snakey_init();
-void late_init();
 void snakey_free();
 
 // 2 helper functions which could be included in LEDA
@@ -76,16 +75,11 @@ void add_snake_body() {
 // main update function
 void background_update() {
 
-    if (!late_init_done) {
-        late_init();
-        late_init_done = true;
-    }
-
     // [only one update function for now...]
     GameObject* background = retrieveGameObject("background");
 
     // apple stuff
-    if (apples.empty()) {
+    while (apples.size() < MAX_APPLES) {
         apples.push_back(std::make_pair<int, int>(random_x(mt), random_y(mt)));
         apples_changed = true;
     }
@@ -165,6 +159,24 @@ void background_update() {
         old_position = position;
     }
 
+    // make sure the snake is still on the screen!
+    int head_x = snake_bodies[0].first;
+    int head_y = snake_bodies[0].second;
+    int halfwidth = WINDOW_WIDTH / 2;
+    int halfheight = WINDOW_HEIGHT / 2;
+    if (head_x < -halfwidth) {
+        current_direction = 3;
+    }
+    else if (head_x > halfwidth) {
+        current_direction = 2;
+    }
+    else if (head_y < -halfheight) {
+        current_direction = 1;
+    }
+    else if (head_y > halfheight) {
+        current_direction = 0;
+    }
+
 }
 
 void sus_update() {
@@ -186,15 +198,29 @@ void snakey_init() {
         add_snake_body();
     }
 
+    // keyboard input (snake control)
+    addKeyTriggerCallback(INPUT_KEY::KEY_UP, []() {
+        current_direction = 1;
+    });
+    addKeyTriggerCallback(INPUT_KEY::KEY_DOWN, []() {
+        current_direction = 0;
+    });
+    addKeyTriggerCallback(INPUT_KEY::KEY_RIGHT, []() {
+        current_direction = 3;
+    });
+    addKeyTriggerCallback(INPUT_KEY::KEY_LEFT, []() {
+        current_direction = 2;
+    });
+
     GameObject* background = retrieveGameObject("background");
     LogicComponent* lc = getComponent<LogicComponent>(background);
     lc->update = background_update;
 
+    /*
     GameObject* sus = retrieveGameObject("sus");
     lc = getComponent<LogicComponent>(sus);
     lc->update = sus_update;
 
-    /*
     GameObject* among = sceneManager->createObject("among", "amongst");
     TransformComponent* tc = getComponent<TransformComponent>(among);
     tc->position.x = -100;
@@ -205,24 +231,6 @@ void snakey_init() {
     tc->position.x = 100;
     tc->position.y = 100;
     */
-
-}
-
-void late_init() {
-
-    // keyboard input (snake control)
-    addKeyTriggerCallback(INPUT_KEY::KEY_UP, []() {
-        current_direction = 1;
-        });
-    addKeyTriggerCallback(INPUT_KEY::KEY_DOWN, []() {
-        current_direction = 0;
-        });
-    addKeyTriggerCallback(INPUT_KEY::KEY_RIGHT, []() {
-        current_direction = 3;
-        });
-    addKeyTriggerCallback(INPUT_KEY::KEY_LEFT, []() {
-        current_direction = 2;
-        });
 
 }
 
