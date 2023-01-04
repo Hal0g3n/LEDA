@@ -39,7 +39,9 @@ void GraphicsSystem::onRegisterGameObject(GameObject* obj) {
 
 	// check if the object contains a graphics component
 	GraphicsComponent* graphics = getComponent<GraphicsComponent>(obj);
-	if (graphics != nullptr) {
+	// transform component is also needed, so must check also just in case
+	TransformComponent* transform = getComponent<TransformComponent>(obj);
+	if (graphics != nullptr && transform != nullptr) {
 		// if so, add to this system's object list
 		this->objects.push_back(obj);
 	}
