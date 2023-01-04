@@ -87,6 +87,29 @@
         }
       }
     },
+    "head": {
+      "transform": {
+        "scale": {
+          "x": 30,
+          "y": 30
+        },
+        "rotation": 0
+      },
+      "graphics": {
+        "shape": "rectangle",
+        "material": "solid",
+        "color": "#0cc00c"
+      },
+      "kinematics": {
+        "vel": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "collision": {
+        "type": "rectangle"
+      }
+    },
     "body": {
       "transform": {
         "scale": {
@@ -126,6 +149,9 @@
           "y": 0
         },
         "rot_vel_degrees": 100
+      },
+      "collision": {
+        "type": "rectangle"
       }
     }
   }

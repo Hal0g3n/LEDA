@@ -49,7 +49,7 @@ extern LEDA::SceneManager sceneManager;
 
 // List of Systems
 std::vector<ISystem*> systems{
-	// in order
+	// it's in order (not in-order)
 	new InputSystem(),
 	new LogicSystem(),
 	new PhysicsSystem(),
@@ -107,7 +107,7 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 			// System Game Loop Updates
 			for (ISystem* system : systems) {
 				system->update();
-				// std::cout << typeid(system).name() << std::endl; // very debug (to check which system isn't working just in case)
+				std::cout << typeid(system).name() << std::endl; // very debug (to check which system isn't working just in case)
 			}
 			
 			// End Frame Timer

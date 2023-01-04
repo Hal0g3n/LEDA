@@ -44,10 +44,6 @@ int current_direction = 1; // up
                    // = 3; // right
                    // = 2; // left
 
-double targetTime = 0;
-
-bool apples_changed = false;
-
 // randomness
 std::random_device random_device;
 std::mt19937 mt{ random_device() };
@@ -57,6 +53,7 @@ void background_update();
 void sus_update();
 void snakey_init();
 void snakey_free();
+void apple_collide(GameObject*, GameObject*);
 
 // 2 helper functions which could be included in LEDA
 
@@ -73,6 +70,34 @@ void add_snake_body() {
     snake_bodies.push_back(std::make_pair(last_body.first, last_body.second));
 }
 
+void add_apple() {
+    GameObject* o = sceneManager->createObject("apple", std::string("apple") + std::to_string(game_apples.size()));
+    game_apples.push_back(o);
+    TransformComponent* tc = getComponent<TransformComponent>(o);
+    tc->position.x = 0.0 + random_x(mt);
+    tc->position.y = 0.0 + random_y(mt);
+    CollisionComponent* cc = getComponent<CollisionComponent>(o);
+    cc->collisionResponse = apple_collide;
+}
+
+void apple_collide(GameObject* apple, GameObject* head) {
+    // check if apple is collected by the head (and not another apple)
+    if (head->getId() == "head") {
+        // find this apple
+        std::vector<GameObject *>::iterator found = std::find(game_apples.begin(), game_apples.end(), apple);
+        // delete apple
+        if (found != game_apples.end()) {
+            game_apples.erase(found);
+            removeGameObject(apple);
+        }
+        // increase snake size by 1
+        add_snake_body();
+    }
+    else {
+        return;
+    }
+}
+
 // main update function
 void background_update() {
 
@@ -80,6 +105,10 @@ void background_update() {
     GameObject* background = retrieveGameObject("background");
 
     // apple stuff
+    while (game_apples.size() < MAX_APPLES) {
+        add_apple();
+    }
+    /*
     while (apples.size() < MAX_APPLES) {
         apples.push_back(std::make_pair<int, int>(random_x(mt), random_y(mt)));
         apples_changed = true;
@@ -94,7 +123,6 @@ void background_update() {
             TransformComponent* tc = getComponent<TransformComponent>(o);
             tc->position.x = apple.first;
             tc->position.y = apple.second;
-            
             // check if apple is collected
             if (very_simple_rect_rect(apple.first, apple.second, APPLE_SIZE, APPLE_SIZE, snake_bodies[0].first, snake_bodies[0].second, SNAKE_SIZE, SNAKE_SIZE)) {
                 // delete apple
@@ -104,10 +132,17 @@ void background_update() {
             }
         }
     }
+    */
 
     // snakey stuff
     while (snake_bodies.size() > game_bodies.size()) {
-        GameObject* o = sceneManager->createObject("body", std::string("body") + std::to_string(game_bodies.size()));
+        GameObject* o;
+        if (game_bodies.empty()) {
+            o = sceneManager->createObject("head", "head");
+        }
+        else {
+            o = sceneManager->createObject("body", std::string("body") + std::to_string(game_bodies.size()));
+        }
         game_bodies.push_back(o);
         TransformComponent* tc = getComponent<TransformComponent>(o);
         tc->position.x = snake_bodies[game_bodies.size() - 1].first;

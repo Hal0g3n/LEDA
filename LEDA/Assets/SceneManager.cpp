@@ -1,7 +1,7 @@
 /**
  * @file        SceneManager.cpp
  * @author      your name (you@domain.com)
- * @brief       ...
+ * @brief       Not to be confused with SceneBuilder.
  * @version     0.1
  * @date        21-11-2022
  *
@@ -189,6 +189,29 @@ GameObject* loadObject(object* entry, std::string objectId = "") {
 
 			// add the kinematics component to the game object
 			addComponent(obj, kc);
+		}
+
+		else if (componentType == "collision") {
+			CollisionComponent* cc = new CollisionComponent();
+
+			// set values if they exist
+			std::string shapeType = "rectangle";
+			if (!value["shape"].is_null() && value["shape"].is_string()) {
+				shapeType = value["shape"];
+			}
+			if (shapeType == "rectangle") {
+				cc->shape = new AABB();
+			}
+			else if (shapeType == "circle") {
+				cc->shape = new Circle();
+			}
+			// remove
+			if (!value["mass"].is_null()) {
+				
+			}
+
+			// add the collision component to the game object
+			addComponent(obj, cc);
 		}
 	}
 

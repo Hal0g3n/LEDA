@@ -14,8 +14,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #pragma once
 
-#ifndef LEDA_COLLISION_SHAPES_H
-#define LEDA_COLLISION_SHAPES_H
+#ifndef LEDA_COLLISION_SHAPES_H_
+#define LEDA_COLLISION_SHAPES_H_
 
 #include "pch.h"
 
@@ -29,7 +29,7 @@ namespace LEDA {
 	 /******************************************************************************/
 	struct LEDA_API CollisionShape
 	{
-		virtual ~CollisionShape() = 0;
+		virtual ~CollisionShape() {};
 	};
 
 	struct LEDA_API Circle : CollisionShape
@@ -70,4 +70,4 @@ namespace LEDA {
 
 }
 
-#endif // LEDA_COLLISION_SHAPES_H
+#endif // LEDA_COLLISION_SHAPES_H_

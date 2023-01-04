@@ -15,7 +15,7 @@
 
 #include "pch.h"
 
-#include "LEDA_Components.h"
+#include "IComponent.h"
 #include "LEDA_Math.h"
 
 namespace LEDA {

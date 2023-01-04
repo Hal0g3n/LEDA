@@ -10,7 +10,7 @@
 
 #include "pch.h"
 
-#include "GameObject.h"
+#include "CollisionComponent.h"
 #include "CollisionSystem.h"
 #include "Collision.h"
 #include "LEDA_Components.h"
@@ -24,8 +24,12 @@ namespace LEDA {
 
 	void CollisionSystem::onRegisterGameObject (GameObject* obj) {
 		// find the collision component
-		CollisionComponent* col = getComponent<CollisionComponent>(obj);
-		if (col != nullptr) objects.push_back(obj);
+		CollisionComponent* cc = getComponent<CollisionComponent>(obj);
+		KinematicsComponent* kc = getComponent<KinematicsComponent>(obj);
+		TransformComponent* tc = getComponent<TransformComponent>(obj);
+		if (cc != nullptr && kc != nullptr && tc != nullptr) {
+			objects.push_back(obj);
+		}
 	}
 
 	void CollisionSystem::onRemoveGameObject(GameObject* obj) {
@@ -35,12 +39,36 @@ namespace LEDA {
 	void CollisionSystem::init() {};
 
 	void CollisionSystem::update() {
+
+		// updates collision shapes for everything
+		for (int i = 0; i < objects.size(); ++i) {
+			GameObject* obj = objects.at(i);
+			CollisionComponent* objCom = getComponent<CollisionComponent>(obj);
+			TransformComponent* tc = getComponent<TransformComponent>(obj);
+			if (instanceof<AABB>(objCom->shape)) {
+				AABB* aabb = dynamic_cast<AABB*>(objCom->shape);
+				aabb->min.x = tc->position.x - tc->scale.x / 2.0;
+				aabb->min.y = tc->position.y - tc->scale.y / 2.0;
+				aabb->max.x = tc->position.x + tc->scale.x / 2.0;
+				aabb->max.y = tc->position.y + tc->scale.y / 2.0;
+			}
+			else if (instanceof<Circle>(objCom->shape)) {
+				Circle* circle = dynamic_cast<Circle*>(objCom->shape);
+				circle->m_center.x = tc->position.x;
+				circle->m_center.y = tc->position.y;
+				circle->m_radius = (tc->scale.x + tc->scale.y) / 2.0 / 2.0;
+			}
+			else {
+
+			}
+		}
+
 		// checks collisions for everything
 		for (int i = 0; i < objects.size(); ++i) {
 			GameObject* obj = objects.at(i);
 			CollisionComponent* objCom = getComponent<CollisionComponent>(obj);
 			if (!objCom->collide) continue; // this object does not collide
-			for (int j = i; j < objects.size(); ++j) {
+			for (int j = i + 1; j < objects.size(); ++j) {
 				GameObject* other = objects.at(j);
 				CollisionComponent* otherCom = getComponent<CollisionComponent>(other);
 				if (!otherCom->collide) continue; // the other object does not collide
@@ -53,8 +81,13 @@ namespace LEDA {
 
 					// perform collision check
 					if (CollisionIntersection_AABB(dynamic_cast<AABB*>(objCom->shape), objVel, dynamic_cast<AABB*>(otherCom->shape), otherVel)) {
-						objCom->collisionResponse(other);
-						otherCom->collisionResponse(obj); // they both trigger!
+						// they both trigger!
+						if (objCom->collisionResponse != nullptr) {
+							objCom->collisionResponse(obj, other);
+						}
+						if (otherCom->collisionResponse != nullptr) {
+							otherCom->collisionResponse(other, obj);
+						}
 					}
 				}
 
