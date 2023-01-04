@@ -32,7 +32,7 @@ using namespace LEDA;
 
 extern double LEDA::frameTime = 0.0, LEDA::appTime = 0.0;
 
-// Tracking Previous, Current and Next GameStates
+// Tracking Previous, Current and Next Game states
 std::string pre, cur, nxt;
 
 // Frame rate variables
@@ -57,7 +57,7 @@ std::vector<ISystem*> systems{
 	new GraphicsSystem(),
 };
 
-// china
+// china?
 void china() {}
 
 void LEDA::LEDA_INIT(std::string state, std::function<void(void)> fn_start, std::function<void(void)> fn_end) {

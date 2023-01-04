@@ -126,7 +126,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Core;$(ProjectDir)Graphics;$(ProjectDir)Physics;$(ProjectDir)Tools\Shapes;$(ProjectDir)Tools\Math;$(ProjectDir)Logic;$(ProjectDir)Input;$(ProjectDir)Components;$(ProjectDir)Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Core;$(ProjectDir)Graphics;$(ProjectDir)Physics;$(ProjectDir)Tools\Shapes;$(ProjectDir)Tools\Math;$(ProjectDir)Logic;$(ProjectDir)Input;$(ProjectDir)Components;$(ProjectDir)Assets;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -164,9 +164,6 @@
     <ClInclude Include="Assets\SceneManager.h" />
     <ClInclude Include="Assets\json.hpp" />
     <ClInclude Include="Assets\stb_image.h" />
-    <ClInclude Include="CollisionComponent.h" />
-    <ClInclude Include="CollisionShapes.h" />
-    <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Components\GraphicsComponent.h" />
     <ClInclude Include="Components\KinematicsComponent.h" />
     <ClInclude Include="Components\LEDA_Components.h" />
@@ -188,9 +185,12 @@
     <ClInclude Include="Input\LEDA_Input.h" />
     <ClInclude Include="Logic\LogicSystem.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="Physics\Collision.h" />
+    <ClInclude Include="Physics\CollisionComponent.h" />
+    <ClInclude Include="Physics\CollisionShapes.h" />
+    <ClInclude Include="Physics\CollisionSystem.h" />
     <ClInclude Include="Physics\LEDA_Physics.h" />
+    <ClInclude Include="Physics\PhysicsSystem.h" />
     <ClInclude Include="Tools\FrameRate\FrameRateController.h" />
     <ClInclude Include="Tools\Math\LEDA_Math.h" />
     <ClInclude Include="Tools\Math\Matrix.h" />
@@ -199,7 +199,6 @@
   <ItemGroup>
     <ClCompile Include="Assets\Asset.cpp" />
     <ClCompile Include="Assets\SceneManager.cpp" />
-    <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Core\LEDA_System.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Graphics\Drawer.cpp" />
@@ -219,10 +218,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="Physics\Collision.cpp" />
+    <ClCompile Include="Physics\CollisionShapes.cpp" />
+    <ClCompile Include="Physics\CollisionSystem.cpp" />
     <ClCompile Include="Physics\Movement.cpp" />
-    <ClCompile Include="CollisionShapes.cpp" />
+    <ClCompile Include="Physics\PhysicsSystem.cpp" />
     <ClCompile Include="Tools\FrameRate\FrameRateController.cpp" />
     <ClCompile Include="Tools\Math\Matrix.cpp" />
     <ClCompile Include="Tools\Math\Vector.cpp" />

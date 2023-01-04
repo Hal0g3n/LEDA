@@ -16,6 +16,9 @@
         "shape": "rectangle",
         "material": "solid",
         "color": "#d1ffe0"
+      },
+      "kinematics": {
+        "rot_vel_degrees": 10
       }
     }
     /*
@@ -121,7 +124,8 @@
         "vel": {
           "x": 0,
           "y": 0
-        }
+        },
+        "rot_vel_degrees": 100
       }
     }
   }

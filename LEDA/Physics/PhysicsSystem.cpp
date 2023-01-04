@@ -8,6 +8,8 @@
  * @copyright   Copyright (c) 2022
  */
 
+#include "pch.h"
+
 #include "PhysicsSystem.h"
 #include "LEDA_Components.h"
 

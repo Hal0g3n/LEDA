@@ -26,8 +26,9 @@ const int WINDOW_HEIGHT = 800;
 int SNAKE_SPEED = 200;
 int SNAKE_SIZE = 30;
 int APPLE_SIZE = 30;
-int MAX_APPLES = 25;
+int MAX_APPLES = 10;
 double SNAKE_TIME = (double) SNAKE_SIZE / SNAKE_SPEED;
+double SNAKE_MAX_TIME = 60; // seconds
 
 // apples
 std::vector<std::pair<int, int>> apples;
@@ -131,7 +132,7 @@ void background_update() {
     // more snakey stuff (but not LEDA related this time)
 
     head_positions.push_front(std::make_pair(snake_bodies[0], appTime));
-    while (head_positions.back().second < appTime - 60) {
+    while (head_positions.back().second < appTime - SNAKE_MAX_TIME) {
         head_positions.pop_back();
     }
 

@@ -27,7 +27,8 @@ namespace LEDA {
 	/*!
 	 */
 	 /******************************************************************************/
-	struct LEDA_API CollisionShape {
+	struct LEDA_API CollisionShape
+	{
 		virtual ~CollisionShape() = 0;
 	};
 
@@ -52,7 +53,8 @@ namespace LEDA {
 		LEDA::Vec2D	m_dir;
 	};
 
-	struct LEDA_API AABB : CollisionShape {
+	struct LEDA_API AABB : CollisionShape
+	{
 		LEDA::Vec2D min;
 		LEDA::Vec2D max;
 	};
@@ -61,10 +63,11 @@ namespace LEDA {
 	/*!
 	 */
 	 /******************************************************************************/
-	void LEDA_API BuildLineSegment(LEDA::LineSegment& lineSegment,			// Line segment reference - input
-		const LEDA::Vec2D& pos,										// position - input
-		double scale,												// scale - input
+	void LEDA_API BuildLineSegment(LEDA::LineSegment& lineSegment,		// Line segment reference - input
+		const LEDA::Vec2D& pos,											// position - input
+		double scale,													// scale - input
 		double dir);													// direction - input
+
 }
 
 #endif // LEDA_COLLISION_SHAPES_H

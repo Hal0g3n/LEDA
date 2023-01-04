@@ -7,22 +7,31 @@
  *
  * @copyright   Copyright (c) 2022
  */
+
 #pragma once
 
-#ifndef LEDA_COLLISION_COMPONENT_H
-#define LEDA_COLLISION_COMPONENT_H
+#ifndef LEDA_COLLISION_COMPONENT_H_
+#define LEDA_COLLISION_COMPONENT_H_
 
 #include "pch.h"
+
+#include "GameObject.h"
 #include "LEDA_Components.h"
 #include "CollisionShapes.h"
 
 namespace LEDA {
+
 	struct LEDA_API CollisionComponent : public IComponent {
-		CollisionShape* shape;
-		bool collide{ true }; //flag for if this object collides with others
+
+		CollisionShape* shape = 0;
+
+		bool collide{ true }; // flag for if this object collides with others
 		bool reflect{ true }; // flag for reflection upon collision; otherwise just stick
+
 		void (*collisionResponse)(GameObject* other) = 0; // function pointer: collision response when colliding with other
+
 	};
+
 }
 
-#endif //LEDA_COLLISION_COMPONENT_H
+#endif // LEDA_COLLISION_COMPONENT_H_

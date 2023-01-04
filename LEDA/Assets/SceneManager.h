@@ -15,6 +15,7 @@
 
 #include "pch.h"
 
+#include "LEDA_System.h"
 #include "GameObject.h"
 #include "IComponent.h"
 #include "ISystem.h"

@@ -1,5 +1,5 @@
 /**
- * @file        PhysicsSystem.cpp
+ * @file        CollisionSystem.cpp
  * @author      your name (you@domain.com)
  * @brief       <something here>
  * @version     0.1
@@ -8,11 +8,15 @@
  * @copyright   Copyright (c) 2022
  */
 
+#include "pch.h"
+
+#include "GameObject.h"
 #include "CollisionSystem.h"
 #include "Collision.h"
 #include "LEDA_Components.h"
 
 namespace LEDA {
+
 	template<typename Base, typename T>
 	inline bool instanceof(const T* ptr) {
 		return dynamic_cast<const Base*>(ptr) != nullptr;
@@ -50,7 +54,7 @@ namespace LEDA {
 					// perform collision check
 					if (CollisionIntersection_AABB(dynamic_cast<AABB*>(objCom->shape), objVel, dynamic_cast<AABB*>(otherCom->shape), otherVel)) {
 						objCom->collisionResponse(other);
-						otherCom->collisionResponse(obj); //they both trigger!
+						otherCom->collisionResponse(obj); // they both trigger!
 					}
 				}
 
@@ -70,4 +74,5 @@ namespace LEDA {
 		// clear object list
 		objects.clear();
 	}
+
 }

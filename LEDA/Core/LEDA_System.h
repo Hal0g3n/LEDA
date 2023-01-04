@@ -21,9 +21,11 @@
 #include "IGameState.h"
 #include "SceneManager.h"
 /*
+#include "InputSystem.h"
 #include "LogicSystem.h"
 #include "GraphicsSystem.h"
 #include "PhysicsSystem.h"
+#include "CollisionSystem.h"
 */
 
 namespace LEDA {

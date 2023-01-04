@@ -17,6 +17,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "CollisionShapes.h"
 
 namespace LEDA {
+
 	/******************************************************************************/
 	/*!
 		Builds a line segment with the given center, scale dir
@@ -40,6 +41,6 @@ namespace LEDA {
 
 		// Normalise the normal
 		lineSegment.m_normal = lineSegment.m_normal.normalize();
-
 	}
+
 }
