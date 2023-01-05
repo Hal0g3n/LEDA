@@ -59,6 +59,7 @@ std::vector<ISystem*> systems{
 
 // china?
 void china() {}
+bool actuallyRemoveGameObject(GameObject* obj);
 
 void LEDA::LEDA_INIT(std::string state, std::function<void(void)> fn_start, std::function<void(void)> fn_end) {
 	// it works
@@ -109,6 +110,12 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 				system->update();
 				std::cout << typeid(system).name() << std::endl; // very debug (to check which system isn't working just in case)
 			}
+
+			// delete objects that need to be deleted
+			for (GameObject* o : objectsToDelete) {
+				actuallyRemoveGameObject(o);
+			}
+			objectsToDelete.clear();
 			
 			// End Frame Timer
 			frameTime = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now() - frameStartTime).count() / 1e9;
@@ -180,14 +187,14 @@ void LEDA::registerGameObject(std::string id, GameObject* obj) {
 
 }
 
-bool LEDA::removeGameObject(GameObject* obj) {
+bool actuallyRemoveGameObject(GameObject* obj) {
 
 	if (obj == nullptr) return false;
 
 	for (ISystem* sys : systems) {
 		sys->onRemoveGameObject(obj);
 	}
-	
+
 	// remove all components from object
 	deleteAllComponents(obj);
 
@@ -199,6 +206,11 @@ bool LEDA::removeGameObject(GameObject* obj) {
 
 	return true;
 
+}
+
+bool LEDA::removeGameObject(GameObject* obj) {
+	objectsToDelete.push_back(obj);
+	return true;
 }
 
 bool LEDA::removeGameObject(std::string id) {
