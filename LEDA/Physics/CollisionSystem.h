@@ -1,5 +1,5 @@
 /**
- * @file        PhysicsSystem.h
+ * @file        CollisionSystem.h
  * @author      your name (you@domain.com)
  * @brief       <something here>
  * @version     0.1
@@ -7,7 +7,11 @@
  *
  * @copyright   Copyright (c) 2022
  */
+
 #pragma once
+
+#ifndef LEDA_COLLISION_SYSTEM_H_
+#define LEDA_COLLISION_SYSTEM_H_
 
 #include "pch.h"
 
@@ -15,6 +19,7 @@
 #include "ISystem.h"
 
 namespace LEDA {
+
 	class CollisionSystem : public ISystem {
 		std::vector<GameObject*> objects{};
 
@@ -28,8 +33,11 @@ namespace LEDA {
 		void update();
 		void free();
 
-		//registering new objects
+		// registering new objects
 		void onRegisterGameObject(GameObject* obj);
 		void onRemoveGameObject(GameObject* obj);
 	};
+
 }
+
+#endif // LEDA_COLLISION_SYSTEM_H_

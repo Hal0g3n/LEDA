@@ -10,17 +10,17 @@
         "x": 0,
         "y": 0,
         "scale": 800.0,
-        "rotation_degrees": 45
+        "rotation_degrees": 0
       },
       "graphics": {
         "shape": "rectangle",
         "material": "solid",
-        "color": "#888888"
+        "color": "#d1ffe0"
       },
       "kinematics": {
         "rot_vel_degrees": 10
       }
-    },
+    }
     /*
     {
       "id": "central square",
@@ -43,24 +43,24 @@
         "rot_vel_degrees": 5
       }
     },
-    */
-      {
-        "id": "sus", // oh no why does this comment exist in json
-        "transform": {
-          "x": 0,
-          "y": -300,
-          "scale": {
-            "x": 150,
-            "y": 25
-          },
-          "rotation": 0
+    {
+      "id": "sus", // oh no why does this comment exist in json
+      "transform": {
+        "x": 0,
+        "y": -300,
+        "scale": {
+          "x": 150,
+          "y": 25
         },
-        "graphics": {
-          "shape": "rectangle",
-          "material": "solid",
-          "color": "#c0c00c"
-        }
+        "rotation": 0
+      },
+      "graphics": {
+        "shape": "rectangle",
+        "material": "solid",
+        "color": "#c0c00c"
       }
+    }
+    */
   ],
   "templates": {
     "among": {
@@ -85,6 +85,29 @@
           "x": 50,
           "y": 0
         }
+      }
+    },
+    "head": {
+      "transform": {
+        "scale": {
+          "x": 30,
+          "y": 30
+        },
+        "rotation": 0
+      },
+      "graphics": {
+        "shape": "rectangle",
+        "material": "solid",
+        "color": "#0cc00c"
+      },
+      "kinematics": {
+        "vel": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "collision": {
+        "type": "rectangle"
       }
     },
     "body": {
@@ -124,7 +147,11 @@
         "vel": {
           "x": 0,
           "y": 0
-        }
+        },
+        "rot_vel_degrees": 100
+      },
+      "collision": {
+        "type": "rectangle"
       }
     }
   }

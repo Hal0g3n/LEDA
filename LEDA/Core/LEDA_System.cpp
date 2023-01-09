@@ -32,7 +32,7 @@ using namespace LEDA;
 
 extern double LEDA::frameTime = 0.0, LEDA::appTime = 0.0;
 
-// Tracking Previous, Current and Next GameStates
+// Tracking Previous, Current and Next Game states
 std::string pre, cur, nxt;
 
 // Frame rate variables
@@ -49,7 +49,7 @@ extern LEDA::SceneManager sceneManager;
 
 // List of Systems
 std::vector<ISystem*> systems{
-	// in order
+	// it's in order (not in-order)
 	new InputSystem(),
 	new LogicSystem(),
 	new PhysicsSystem(),
@@ -57,8 +57,9 @@ std::vector<ISystem*> systems{
 	new GraphicsSystem(),
 };
 
-// china
+// china?
 void china() {}
+bool actuallyRemoveGameObject(GameObject* obj);
 
 void LEDA::LEDA_INIT(std::string state, std::function<void(void)> fn_start, std::function<void(void)> fn_end) {
 	// it works
@@ -107,8 +108,14 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 			// System Game Loop Updates
 			for (ISystem* system : systems) {
 				system->update();
-				// std::cout << typeid(system).name() << std::endl; // very debug (to check which system isn't working just in case)
+				std::cout << typeid(system).name() << std::endl; // very debug (to check which system isn't working just in case)
 			}
+
+			// delete objects that need to be deleted
+			for (GameObject* o : objectsToDelete) {
+				actuallyRemoveGameObject(o);
+			}
+			objectsToDelete.clear();
 			
 			// End Frame Timer
 			frameTime = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now() - frameStartTime).count() / 1e9;
@@ -180,14 +187,14 @@ void LEDA::registerGameObject(std::string id, GameObject* obj) {
 
 }
 
-bool LEDA::removeGameObject(GameObject* obj) {
+bool actuallyRemoveGameObject(GameObject* obj) {
 
 	if (obj == nullptr) return false;
 
 	for (ISystem* sys : systems) {
 		sys->onRemoveGameObject(obj);
 	}
-	
+
 	// remove all components from object
 	deleteAllComponents(obj);
 
@@ -199,6 +206,11 @@ bool LEDA::removeGameObject(GameObject* obj) {
 
 	return true;
 
+}
+
+bool LEDA::removeGameObject(GameObject* obj) {
+	objectsToDelete.push_back(obj);
+	return true;
 }
 
 bool LEDA::removeGameObject(std::string id) {

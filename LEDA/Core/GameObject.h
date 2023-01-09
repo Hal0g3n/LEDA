@@ -16,6 +16,13 @@
 #include "pch.h"
 
 #include "IComponent.h"
+/*
+#include "TransformComponent.h"
+#include "KinematicsComponent.h"
+#include "GraphicsComponent.h"
+#include "LogicComponent.h"
+#include "CollisionComponent.h"
+*/
 #include "LEDA_Components.h"
 
 #include <unordered_map>
@@ -90,10 +97,16 @@ namespace LEDA {
 		if (kc != nullptr) {
 			ss << "\n    velocity: (" << kc->vel.x << ", " << kc->vel.y << ")\n    acceleration: (" << kc->acc.x << ", " << kc->acc.y << ")\n    angular velocity: " << kc->rot_vel << "\n    angular acceleration: " << kc->rot_acc; // TODO vector std::string operator thing
 		}
+		/*
 		LogicComponent* lc = getComponent<LogicComponent>(obj);
 		if (lc != nullptr) {
 			ss << "\n    logic: <exists>";
 		}
+		CollisionComponent* cc = getComponent<CollisionComponent>(obj);
+		if (cc != nullptr) {
+			ss << "\n    collision: <exists>";
+		}
+		*/
 		ss << "\n}\n";
 		return ss.str();
 		

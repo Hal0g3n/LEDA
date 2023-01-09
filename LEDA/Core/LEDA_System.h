@@ -21,9 +21,11 @@
 #include "IGameState.h"
 #include "SceneManager.h"
 /*
+#include "InputSystem.h"
 #include "LogicSystem.h"
 #include "GraphicsSystem.h"
 #include "PhysicsSystem.h"
+#include "CollisionSystem.h"
 */
 
 namespace LEDA {
@@ -36,7 +38,10 @@ namespace LEDA {
 
 	// remove this comment and add a more helpful one to describe these 2 things
 	std::unordered_map<std::string, std::function<void(void)>> startFunctions;
-	std::unordered_map<std::string, std::function<void(void)>> endFunctions; // unused for now
+	std::unordered_map<std::string, std::function<void(void)>> endFunctions;
+
+	// yet another thing to make things work
+	std::vector<GameObject*> objectsToDelete; // to delete between this frame and the next frame
 
 	void LEDA_API LEDA_INIT(std::string state, std::function<void(void)> fn_start = []() {}, std::function<void(void)> fn_end = []() {});
 

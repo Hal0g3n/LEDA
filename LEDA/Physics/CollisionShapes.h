@@ -14,8 +14,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #pragma once
 
-#ifndef LEDA_COLLISION_SHAPES_H
-#define LEDA_COLLISION_SHAPES_H
+#ifndef LEDA_COLLISION_SHAPES_H_
+#define LEDA_COLLISION_SHAPES_H_
 
 #include "pch.h"
 
@@ -27,8 +27,9 @@ namespace LEDA {
 	/*!
 	 */
 	 /******************************************************************************/
-	struct LEDA_API CollisionShape {
-		virtual ~CollisionShape() = 0;
+	struct LEDA_API CollisionShape
+	{
+		virtual ~CollisionShape() {};
 	};
 
 	struct LEDA_API Circle : CollisionShape
@@ -52,7 +53,8 @@ namespace LEDA {
 		LEDA::Vec2D	m_dir;
 	};
 
-	struct LEDA_API AABB : CollisionShape {
+	struct LEDA_API AABB : CollisionShape
+	{
 		LEDA::Vec2D min;
 		LEDA::Vec2D max;
 	};
@@ -61,10 +63,11 @@ namespace LEDA {
 	/*!
 	 */
 	 /******************************************************************************/
-	void LEDA_API BuildLineSegment(LEDA::LineSegment& lineSegment,			// Line segment reference - input
-		const LEDA::Vec2D& pos,										// position - input
-		double scale,												// scale - input
+	void LEDA_API BuildLineSegment(LEDA::LineSegment& lineSegment,		// Line segment reference - input
+		const LEDA::Vec2D& pos,											// position - input
+		double scale,													// scale - input
 		double dir);													// direction - input
+
 }
 
-#endif // LEDA_COLLISION_SHAPES_H
+#endif // LEDA_COLLISION_SHAPES_H_

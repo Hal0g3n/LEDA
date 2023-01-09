@@ -156,20 +156,23 @@
     <ClInclude Include="Graphics\GraphicsSystem.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicsSystem.h">
-      <Filter>Header Files\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="Input\InputSystem.h">
       <Filter>Header Files\Core\Input</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionShapes.h">
+    <ClInclude Include="Assets\stb_image.h">
+      <Filter>Header Files\Scene &amp; Asset Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CollisionShapes.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionComponent.h">
+    <ClInclude Include="Physics\CollisionSystem.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\PhysicsSystem.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CollisionComponent.h">
       <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionSystem.h">
-      <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -227,16 +230,16 @@
     <ClCompile Include="Graphics\GraphicsSystem.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="PhysicsSystem.cpp">
-      <Filter>Source Files\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="Input\InputSystem.cpp">
       <Filter>Source Files\Core\Input</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionShapes.cpp">
+    <ClCompile Include="Physics\CollisionShapes.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionSystem.cpp">
+    <ClCompile Include="Physics\CollisionSystem.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\PhysicsSystem.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
   </ItemGroup>

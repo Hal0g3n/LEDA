@@ -9,15 +9,19 @@
  *
  */
 
+#pragma once
+
 #ifndef LEDA_COLLISION_H_
 #define LEDA_COLLISION_H_
 
 #include "pch.h"
+
 #include "LEDA_System.h"
 #include "LEDA_Math.h"
 #include "CollisionShapes.h"
 
 namespace LEDA { // LEDA Namespace
+
 	// INTERSECTION FUNCTIONS
 	int LEDA_API CollisionIntersection_CircleLineSegment(const Circle& circle,			// Circle data - input
 		const LEDA::Vec2D& ptEnd,												// End circle position - input
@@ -79,6 +83,7 @@ namespace LEDA { // LEDA Namespace
 		LEDA::Vec2D& ptEndB);												// Final position of the circle B after reflection - output
 
 	int LEDA_API CollisionIntersection_AABB(LEDA::AABB* aabb1, LEDA::Vec2 vel1, LEDA::AABB* aabb2, LEDA::Vec2 vel2);
+
 } // LEDA Namespace end
 
 #endif // LEDA_COLLISION_H_

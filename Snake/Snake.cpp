@@ -26,7 +26,9 @@ const int WINDOW_HEIGHT = 800;
 int SNAKE_SPEED = 200;
 int SNAKE_SIZE = 30;
 int APPLE_SIZE = 30;
+int MAX_APPLES = 10;
 double SNAKE_TIME = (double) SNAKE_SIZE / SNAKE_SPEED;
+double SNAKE_MAX_TIME = 60; // seconds
 
 // apples
 std::vector<std::pair<int, int>> apples;
@@ -42,11 +44,6 @@ int current_direction = 1; // up
                    // = 3; // right
                    // = 2; // left
 
-double targetTime = 0;
-
-bool apples_changed = false;
-bool late_init_done = false;
-
 // randomness
 std::random_device random_device;
 std::mt19937 mt{ random_device() };
@@ -55,8 +52,8 @@ std::uniform_int_distribution<> random_x, random_y;
 void background_update();
 void sus_update();
 void snakey_init();
-void late_init();
 void snakey_free();
+void apple_collide(GameObject*, GameObject*);
 
 // 2 helper functions which could be included in LEDA
 
@@ -73,19 +70,46 @@ void add_snake_body() {
     snake_bodies.push_back(std::make_pair(last_body.first, last_body.second));
 }
 
+void add_apple() {
+    GameObject* o = sceneManager->createObject("apple", std::string("apple") + std::to_string(game_apples.size()));
+    game_apples.push_back(o);
+    TransformComponent* tc = getComponent<TransformComponent>(o);
+    tc->position.x = 0.0 + random_x(mt);
+    tc->position.y = 0.0 + random_y(mt);
+    CollisionComponent* cc = getComponent<CollisionComponent>(o);
+    cc->collisionResponse = apple_collide;
+}
+
+void apple_collide(GameObject* apple, GameObject* head) {
+    // check if apple is collected by the head (and not another apple)
+    if (head->getId() == "head") {
+        // find this apple
+        std::vector<GameObject *>::iterator found = std::find(game_apples.begin(), game_apples.end(), apple);
+        // delete apple
+        if (found != game_apples.end()) {
+            game_apples.erase(found);
+            removeGameObject(apple);
+        }
+        // increase snake size by 1
+        add_snake_body();
+    }
+    else {
+        return;
+    }
+}
+
 // main update function
 void background_update() {
-
-    if (!late_init_done) {
-        late_init();
-        late_init_done = true;
-    }
 
     // [only one update function for now...]
     GameObject* background = retrieveGameObject("background");
 
     // apple stuff
-    if (apples.empty()) {
+    while (game_apples.size() < MAX_APPLES) {
+        add_apple();
+    }
+    /*
+    while (apples.size() < MAX_APPLES) {
         apples.push_back(std::make_pair<int, int>(random_x(mt), random_y(mt)));
         apples_changed = true;
     }
@@ -99,7 +123,6 @@ void background_update() {
             TransformComponent* tc = getComponent<TransformComponent>(o);
             tc->position.x = apple.first;
             tc->position.y = apple.second;
-            
             // check if apple is collected
             if (very_simple_rect_rect(apple.first, apple.second, APPLE_SIZE, APPLE_SIZE, snake_bodies[0].first, snake_bodies[0].second, SNAKE_SIZE, SNAKE_SIZE)) {
                 // delete apple
@@ -109,10 +132,17 @@ void background_update() {
             }
         }
     }
+    */
 
     // snakey stuff
     while (snake_bodies.size() > game_bodies.size()) {
-        GameObject* o = sceneManager->createObject("body", std::string("body") + std::to_string(game_bodies.size()));
+        GameObject* o;
+        if (game_bodies.empty()) {
+            o = sceneManager->createObject("head", "head");
+        }
+        else {
+            o = sceneManager->createObject("body", std::string("body") + std::to_string(game_bodies.size()));
+        }
         game_bodies.push_back(o);
         TransformComponent* tc = getComponent<TransformComponent>(o);
         tc->position.x = snake_bodies[game_bodies.size() - 1].first;
@@ -137,7 +167,7 @@ void background_update() {
     // more snakey stuff (but not LEDA related this time)
 
     head_positions.push_front(std::make_pair(snake_bodies[0], appTime));
-    while (head_positions.back().second < appTime - 60) {
+    while (head_positions.back().second < appTime - SNAKE_MAX_TIME) {
         head_positions.pop_back();
     }
 
@@ -165,6 +195,24 @@ void background_update() {
         old_position = position;
     }
 
+    // make sure the snake is still on the screen!
+    int head_x = snake_bodies[0].first;
+    int head_y = snake_bodies[0].second;
+    int halfwidth = WINDOW_WIDTH / 2;
+    int halfheight = WINDOW_HEIGHT / 2;
+    if (head_x < -halfwidth) {
+        current_direction = 3;
+    }
+    else if (head_x > halfwidth) {
+        current_direction = 2;
+    }
+    else if (head_y < -halfheight) {
+        current_direction = 1;
+    }
+    else if (head_y > halfheight) {
+        current_direction = 0;
+    }
+
 }
 
 void sus_update() {
@@ -186,15 +234,29 @@ void snakey_init() {
         add_snake_body();
     }
 
+    // keyboard input (snake control)
+    addKeyTriggerCallback(INPUT_KEY::KEY_UP, []() {
+        current_direction = 1;
+    });
+    addKeyTriggerCallback(INPUT_KEY::KEY_DOWN, []() {
+        current_direction = 0;
+    });
+    addKeyTriggerCallback(INPUT_KEY::KEY_RIGHT, []() {
+        current_direction = 3;
+    });
+    addKeyTriggerCallback(INPUT_KEY::KEY_LEFT, []() {
+        current_direction = 2;
+    });
+
     GameObject* background = retrieveGameObject("background");
     LogicComponent* lc = getComponent<LogicComponent>(background);
     lc->update = background_update;
 
+    /*
     GameObject* sus = retrieveGameObject("sus");
     lc = getComponent<LogicComponent>(sus);
     lc->update = sus_update;
 
-    /*
     GameObject* among = sceneManager->createObject("among", "amongst");
     TransformComponent* tc = getComponent<TransformComponent>(among);
     tc->position.x = -100;
@@ -205,24 +267,6 @@ void snakey_init() {
     tc->position.x = 100;
     tc->position.y = 100;
     */
-
-}
-
-void late_init() {
-
-    // keyboard input (snake control)
-    addKeyTriggerCallback(INPUT_KEY::KEY_UP, []() {
-        current_direction = 1;
-        });
-    addKeyTriggerCallback(INPUT_KEY::KEY_DOWN, []() {
-        current_direction = 0;
-        });
-    addKeyTriggerCallback(INPUT_KEY::KEY_RIGHT, []() {
-        current_direction = 3;
-        });
-    addKeyTriggerCallback(INPUT_KEY::KEY_LEFT, []() {
-        current_direction = 2;
-        });
 
 }
 
