@@ -36,7 +36,6 @@ namespace LEDA {
 	{
 		LEDA::Vec2D	m_center;
 		float		m_radius{ 1.0f };
-		float		m_mass{ 1.0f };
 	};
 
 	struct LEDA_API LineSegment : CollisionShape

@@ -28,10 +28,8 @@ namespace LEDA { // LEDA Namespace
 		const LEDA::LineSegment& lineSeg,										// Line segment - input
 		LEDA::Vec2D& interPt,													// Intersection point - output
 		LEDA::Vec2D& normalAtCollision,											// Normal vector at collision time - output
-		double& interTime,														// Intersection time ti - output
-		bool& checkLineEdges);													// The last parameter is new - for Extra Credits: true = check collision with line segment edges
+		double& interTime);														// Intersection time ti - output		
 
-	// 
 	int LEDA_API CheckMovingCircleToLineEdge(bool withinBothLines,						// Flag stating that the circle is starting from between 2 imaginary line segments distant +/- Radius respectively - input
 		const Circle& circle,													// Circle data - input
 		const LEDA::Vec2D& ptEnd,												// End circle position - input
