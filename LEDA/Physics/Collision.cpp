@@ -29,8 +29,7 @@ int LEDA::CollisionIntersection_CircleLineSegment(const Circle &circle,
 											const LineSegment &lineSeg,
 											LEDA::Vec2D &interPt,
 											LEDA::Vec2D &normalAtCollision,
-											double &interTime,
-											bool & checkLineEdges) {
+											double &interTime) {
 
 	// d indicates signed distance from line
 	float d = lineSeg.m_normal * (circle.m_center - lineSeg.m_pt0);
@@ -40,7 +39,7 @@ int LEDA::CollisionIntersection_CircleLineSegment(const Circle &circle,
 
 	// Check for edge collision if starting inbetween lines
 	if (!d)
-		return checkLineEdges ? LEDA::CheckMovingCircleToLineEdge(true, circle, ptEnd, lineSeg, interPt, normalAtCollision, interTime) : 0;
+		return LEDA::CheckMovingCircleToLineEdge(true, circle, ptEnd, lineSeg, interPt, normalAtCollision, interTime) : 0;
 
 	// Calculate v
 	Vec2D v = ptEnd - circle.m_center;
@@ -54,7 +53,7 @@ int LEDA::CollisionIntersection_CircleLineSegment(const Circle &circle,
 
 	// Check for edge collision if line does not pass through path (P0, P1 on same side of path)
 	if ((m * (p0 - circle.m_center)) * (m * (p1 - circle.m_center)) >= 0)
-		return checkLineEdges ? LEDA::CheckMovingCircleToLineEdge(false, circle, ptEnd, lineSeg, interPt, normalAtCollision, interTime) : 0;
+		return LEDA::CheckMovingCircleToLineEdge(false, circle, ptEnd, lineSeg, interPt, normalAtCollision, interTime) : 0;
 
 	// Calculate Time of Intersection
 	interTime = (lineSeg.m_normal * (lineSeg.m_pt0 - circle.m_center)) + d * circle.m_radius;
@@ -178,6 +177,7 @@ int LEDA::CollisionIntersection_CircleCircle(const Circle &circleA,
 									   double &interTime) {
 	// Compute Relative Velocity
 	LEDA::Vec2D v_rel = velA - velB;
+	if (v_rel.squareLength() == 0) return (circleB.m_center - circleA.m_center).squareLength() < (circleA.m_radius + circleB.m_radius) * (circleA.m_radius + circleB.m_radius);
 	LEDA::Vec2D v_rel_normal = { v_rel.y, -v_rel.x };
 	double rad_sum = circleA.m_radius + circleB.m_radius;
 

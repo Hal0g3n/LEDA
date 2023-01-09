@@ -26,6 +26,7 @@ namespace LEDA {
 	struct LEDA_API CollisionComponent : public IComponent {
 
 		CollisionShape* shape = 0;
+		float		m_mass{ 1.0f };
 
 		bool collide{ true }; // flag for if this object collides with others
 		bool reflect{ true }; // flag for reflection upon collision; otherwise just stick
