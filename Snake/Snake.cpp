@@ -25,10 +25,11 @@ const int WINDOW_HEIGHT = 800;
 
 int SNAKE_SPEED = 200;
 int SNAKE_SIZE = 30;
+int STARTING_SNAKE = 500;
 int APPLE_SIZE = 30;
 int MAX_APPLES = 10;
 double SNAKE_TIME = (double) SNAKE_SIZE / SNAKE_SPEED;
-double SNAKE_MAX_TIME = 60; // seconds
+double SNAKE_MAX_TIME = 180; // seconds
 
 // apples
 std::vector<std::pair<int, int>> apples;
@@ -50,7 +51,6 @@ std::mt19937 mt{ random_device() };
 std::uniform_int_distribution<> random_x, random_y;
 
 void background_update();
-void sus_update();
 void snakey_init();
 void snakey_free();
 void apple_collide(GameObject*, GameObject*);
@@ -215,12 +215,6 @@ void background_update() {
 
 }
 
-void sus_update() {
-    GameObject* sus = retrieveGameObject("sus");
-    TransformComponent* tc = getComponent<TransformComponent>(sus);
-    tc->position.x = sin(LEDA::appTime * 5) * 100;
-}
-
 void snakey_init() {
 
     int halfwidth = WINDOW_WIDTH / 2 - 50;
@@ -230,7 +224,7 @@ void snakey_init() {
     random_y = std::uniform_int_distribution<>{ -halfheight, halfheight };
 
     // put initial snake "head"
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < STARTING_SNAKE; i++) {
         add_snake_body();
     }
 
@@ -253,10 +247,6 @@ void snakey_init() {
     lc->update = background_update;
 
     /*
-    GameObject* sus = retrieveGameObject("sus");
-    lc = getComponent<LogicComponent>(sus);
-    lc->update = sus_update;
-
     GameObject* among = sceneManager->createObject("among", "amongst");
     TransformComponent* tc = getComponent<TransformComponent>(among);
     tc->position.x = -100;
