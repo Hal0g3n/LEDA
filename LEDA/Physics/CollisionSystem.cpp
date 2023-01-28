@@ -167,6 +167,35 @@ namespace LEDA {
 						}
 					}
 				}
+
+				// obj is line segment
+				if (instanceof<LineSegment>(objCom->shape)) {
+					// check: other is circle
+					if (instanceof<Circle>(otherCom->shape)) {
+						// get previous position
+						Vec2 otherPrevPos = otherPos - otherVel * frameTime;
+						// output
+						Vec2 otherInterPos, collisionNormal;
+						double interTime;
+						if (CollisionIntersection_CircleLineSegment(*dynamic_cast<Circle*>(otherCom->shape), otherPrevPos, *dynamic_cast<LineSegment*>(objCom->shape), otherInterPt, collisionNormal, interTime)) {
+							if (objCom->reflect) {
+								Vec2 reflect;
+								CollisionResponse_CircleLineSegment(otherInterPt, collisionNormal, otherPos, reflect);
+							}
+							else {
+								otherPos = otherInterPt;
+								// maybe do something with the velocity
+							}
+							// collision response
+							if (objCom->collisionResponse != nullptr) {
+								objCom->collisionResponse(obj, other);
+							}
+							if (otherCom->collisionResponse != nullptr) {
+								otherCom->collisionResponse(other, obj);
+							}
+						}
+					}
+				}
 			}
 		}
 
