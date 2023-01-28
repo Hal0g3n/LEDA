@@ -102,15 +102,15 @@ namespace LEDA {
 
 					// object output variable
 					Vec2 objInterPt;
+					double interTime;
 
 					// check: other is also circle
 					if (instanceof<Circle>(otherCom->shape)) {
 						// retrieve the old position of the other object
 						Vec2 otherPrevPos = otherPos - otherVel * frameTime;
 						
-						// output variables
+						// output variable
 						Vec2 otherInterPt;
-						double interTime;
 						if (CollisionIntersection_CircleCircle(*dynamic_cast<Circle*>(objCom->shape), objVel, *dynamic_cast<Circle*>(otherCom->shape), otherVel, objInterPt, otherInterPt, interTime)) {
 							if (objCom->reflect || otherCom->reflect) {
 								Vec2 objReflectPt, objReflectVec, otherReflectPt, otherReflectVec;
@@ -121,17 +121,17 @@ namespace LEDA {
 									objPos = objReflectPt;
 									getComponent<KinematicsComponent>(obj)->vel = Vec2{ objVel.x * objReflectVec.x, objVel.y * objReflectVec.y };
 								}
-								else objPos = objInterPt;
+								else objPos = objInterPt; // todo: maybe set component parallel to collision normal to 0? 
 								// other object too
 								if (otherCom->reflect) {
 									// reflected position and velocity
 									otherPos = otherReflectPt;
 									getComponent<KinematicsComponent>(obj)->vel = Vec2{ otherVel.x * otherReflectVec.x, otherVel.y * otherReflectVec.y };
 								}
-								else otherPos = otherInterPt;
+								else otherPos = otherInterPt; // todo: maybe set component parallel to collision normal to 0? 
 							}
 							else {
-								objPos = objInterPt;
+								objPos = objInterPt; // see above
 								otherPos = otherInterPt;
 							}
 							if (objCom->collisionResponse != nullptr) {
@@ -145,7 +145,19 @@ namespace LEDA {
 
 					// check: other is line segment
 					if (instanceof<LineSegment>(otherCom->shape)) {
-
+						// we don't mess with the line segment position (it has infinite mass)
+						// output
+						Vec2 collisionNormal;
+						if (CollisionIntersection_CircleLineSegment(*dynamic_cast<Circle*>(objCom->shape), objPrevPos, *dynamic_cast<LineSegment*>(otherCom->shape), objInterPt, collisionNormal, interTime)) {
+							if (objCom->reflect) {
+								Vec2 reflect;
+								CollisionResponse_CircleLineSegment(objInterPt, collisionNormal, objPos, reflect);
+							}
+							else {
+								objPos = objInterPt;
+								// maybe do something with the velocity
+							}
+						}
 					}
 				}
 			}
