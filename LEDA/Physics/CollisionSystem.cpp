@@ -157,6 +157,13 @@ namespace LEDA {
 								objPos = objInterPt;
 								// maybe do something with the velocity
 							}
+							// collision response
+							if (objCom->collisionResponse != nullptr) {
+								objCom->collisionResponse(obj, other);
+							}
+							if (otherCom->collisionResponse != nullptr) {
+								otherCom->collisionResponse(other, obj);
+							}
 						}
 					}
 				}
