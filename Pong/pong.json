@@ -1,0 +1,21 @@
+{
+  "assets": {
+    "fonts": [],
+    "images": []
+  },
+  "objects": [
+    {
+      "id": "background",
+      "transform": {
+        "x": 0,
+        "y": 0,
+        "scale": 800.0
+      },
+      "graphics": {
+        "shape": "rectangle",
+        "material": "solid",
+        "color": "#d1ffe0"
+      }
+    }
+  ]
+}
