@@ -25,7 +25,7 @@ using namespace LEDA;
  */
 /******************************************************************************/
 int LEDA::CollisionIntersection_CircleLineSegment(const Circle &circle,
-											const LEDA::Vec2D &ptEnd,
+											const LEDA::Vec2D &ptStart,
 											const LineSegment &lineSeg,
 											LEDA::Vec2D &interPt,
 											LEDA::Vec2D &normalAtCollision,
@@ -39,10 +39,10 @@ int LEDA::CollisionIntersection_CircleLineSegment(const Circle &circle,
 
 	// Check for edge collision if starting inbetween lines
 	if (!d)
-		return LEDA::CheckMovingCircleToLineEdge(true, circle, ptEnd, lineSeg, interPt, normalAtCollision, interTime) : 0;
+		return LEDA::CheckMovingCircleToLineEdge(true, circle, ptStart, lineSeg, interPt, normalAtCollision, interTime);
 
 	// Calculate v
-	Vec2D v = ptEnd - circle.m_center;
+	Vec2D v = circle.m_center - ptStart;
 
 	// Normal (m) of Bs -> Be
 	Vec2D m{v.y, -v.x};
@@ -53,7 +53,7 @@ int LEDA::CollisionIntersection_CircleLineSegment(const Circle &circle,
 
 	// Check for edge collision if line does not pass through path (P0, P1 on same side of path)
 	if ((m * (p0 - circle.m_center)) * (m * (p1 - circle.m_center)) >= 0)
-		return LEDA::CheckMovingCircleToLineEdge(false, circle, ptEnd, lineSeg, interPt, normalAtCollision, interTime) : 0;
+		return LEDA::CheckMovingCircleToLineEdge(false, circle, ptStart, lineSeg, interPt, normalAtCollision, interTime);
 
 	// Calculate Time of Intersection
 	interTime = (lineSeg.m_normal * (lineSeg.m_pt0 - circle.m_center)) + d * circle.m_radius;
@@ -63,7 +63,7 @@ int LEDA::CollisionIntersection_CircleLineSegment(const Circle &circle,
 	if (interTime < 0 || interTime > 1) return 0;
 
 	// Calculate Intersection Point
-	interPt = circle.m_center + v * interTime;
+	interPt = ptStart + v * interTime;
 
 	// Calculate Normal at collision
 	normalAtCollision = lineSeg.m_normal * d;
@@ -80,13 +80,13 @@ int LEDA::CollisionIntersection_CircleLineSegment(const Circle &circle,
 /******************************************************************************/
 int LEDA::CheckMovingCircleToLineEdge(bool withinBothLines,
 								const Circle &circle,
-								const LEDA::Vec2D &ptEnd,
+								const LEDA::Vec2D &ptStart,
 								const LineSegment &lineSeg,
 								LEDA::Vec2D &interPt,
 								LEDA::Vec2D &normalAtCollision,
 								double &interTime) {
 	// Calculate velocity vector v
-	Vec2D v = ptEnd - circle.m_center;
+	Vec2D v = circle.m_center - ptStart;
 
 	// Compute Normal to v
 	Vec2D M { v.y, -v.x };
@@ -103,11 +103,11 @@ int LEDA::CheckMovingCircleToLineEdge(bool withinBothLines,
 	
 	if (withinBothLines) {
 		// Checks the Collision Point
-		P0Side = ((lineSeg.m_pt0 - circle.m_center) * (lineSeg.m_pt1 - lineSeg.m_pt0) > 0);
+		P0Side = ((lineSeg.m_pt0 - ptStart) * (lineSeg.m_pt1 - lineSeg.m_pt0) > 0);
 
 		// Computes the values
-		m = (((P0Side ? lineSeg.m_pt0 : lineSeg.m_pt1) - circle.m_center) * v) / v.length();
-		s = fabs(((P0Side ? lineSeg.m_pt0 : lineSeg.m_pt1) - circle.m_center) * M);
+		m = (((P0Side ? lineSeg.m_pt0 : lineSeg.m_pt1) - ptStart) * v) / v.length();
+		s = fabs(((P0Side ? lineSeg.m_pt0 : lineSeg.m_pt1) - ptStart) * M);
 
 		// Checks if circle is actually facing P0
 		if (m < 0) return 0;
@@ -118,26 +118,26 @@ int LEDA::CheckMovingCircleToLineEdge(bool withinBothLines,
 	else { // Circle not within both lines
 
 		// Does circle path touch P0 or P1
-		bool touch0 = (fabs((lineSeg.m_pt0 - circle.m_center) * M)) <= circle.m_radius;
-		bool touch1 = (fabs((lineSeg.m_pt1 - circle.m_center) * M)) <= circle.m_radius;
+		bool touch0 = (fabs((lineSeg.m_pt0 - ptStart) * M)) <= circle.m_radius;
+		bool touch1 = (fabs((lineSeg.m_pt1 - ptStart) * M)) <= circle.m_radius;
 
 		// Is it clear which is touched
 		if (touch0 != touch1) P0Side = touch0;
 		else if (!touch0 && !touch1) return 0; // Both are untouched
 
 		// Calculate Distance along path till collision
-		float m0 = ((lineSeg.m_pt0 - circle.m_center) * v) / v.length();
-		float m1 = ((lineSeg.m_pt1 - circle.m_center) * v) / v.length();
+		float m0 = ((lineSeg.m_pt0 - ptStart) * v) / v.length();
+		float m1 = ((lineSeg.m_pt1 - ptStart) * v) / v.length();
 
 		// Only case for this to be true is if both are true
 		if (touch0 == touch1) P0Side = fabs(m0) < fabs(m1);
 
 		if (P0Side) // P0 Collision
 			if (m0 < 0) return 0; // Moving away lol
-			else s = (lineSeg.m_pt0 - circle.m_center) * M;
+			else s = (lineSeg.m_pt0 - ptStart) * M;
 		else // P1 Collision
 			if (m1 < 0) return 0; // Moving away lol
-			else s = (lineSeg.m_pt1 - circle.m_center) * M;
+			else s = (lineSeg.m_pt1 - ptStart) * M;
 
 		// Assign the relevant m
 		if (P0Side) m = m0;
@@ -155,11 +155,11 @@ int LEDA::CheckMovingCircleToLineEdge(bool withinBothLines,
 	if (interTime > 1) return 0;
 
 	// Compute Collision Point and indicate there is collision
-	interPt = circle.m_center + v * interTime;
+	interPt = ptStart + v * interTime;
 	
 	// Compute Normal
 	normalAtCollision = P0Side ? lineSeg.m_pt0 : lineSeg.m_pt1;
-	normalAtCollision = (normalAtCollision - circle.m_center).normalize();
+	normalAtCollision = (normalAtCollision - ptStart).normalize();
 	return 1;
 }
 
