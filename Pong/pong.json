@@ -9,7 +9,7 @@
       "transform": {
         "x": 0,
         "y": 0,
-        "scale": 800.0
+        "scale": 800
       },
       "graphics": {
         "shape": "rectangle",
@@ -34,8 +34,47 @@
         "color": "#0c0cc0"
       },
       "kinematics": {
-        "rot_vel_degrees": 0
+        "vel": {
+          "x": 0,
+          "y": 0
+        }
       }
     }
-  ]
+  ],
+  "templates": {
+    "wall": {
+      "transform": {
+        "x": 0,
+        "y": 0
+      },
+      "graphics": {
+        "shape": "rectangle",
+        "material": "solid",
+        "color": "#000000"
+      }
+    },
+    "ball": {
+      "transform": {
+        "scale": {
+          "x": 30,
+          "y": 30
+        },
+        "rotation": 0
+      },
+      "graphics": {
+        "shape": "triangle",
+        "material": "solid",
+        "color": "#c00c0c"
+      },
+      "kinematics": {
+        "vel": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "collision": {
+        "type": "rectangle"
+      }
+    }
+  }
 }
