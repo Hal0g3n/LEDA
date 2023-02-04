@@ -75,6 +75,44 @@ namespace LEDA {
             )SHADER";
 
         }
+        else if (shaderType == "solid_circle") {
+
+            vertexShaderCode = R"SHADER(
+
+                #version 330 core
+                layout (location = 0) in vec3 position;
+                out vec4 vertexColor;
+                uniform mat4 projection;
+                uniform mat4 transform;
+                uniform vec4 color;
+                varying vec2 v;
+                void main() {
+                    gl_Position = projection * transform * vec4(position, 1.0);
+                    v = vec2(position) * vec2(2.0, 2.0);
+                    vertexColor = color;
+                }
+
+            )SHADER";
+
+            fragmentShaderCode = R"SHADER(
+
+                #version 330 core
+                layout (location = 0) out vec4 FragColor;
+                in vec4 vertexColor;
+                varying vec2 v;
+                void main() {
+                    float r = 1.0;
+                    float dist = sqrt(dot(v, v));
+                    if (dist >= r) {
+                        discard;
+                    }
+                    float a = smoothstep(r, r - 0.01, dist);
+                    FragColor = vertexColor * vec4(1.0, 1.0, 1.0, a);
+                }
+
+            )SHADER";
+
+        }
         else if (shaderType == "transparent") {
 
             vertexShaderCode = R"SHADER(

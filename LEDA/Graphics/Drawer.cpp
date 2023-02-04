@@ -64,6 +64,16 @@ unsigned int pentagon_[] = {
 	0, 2, 3,
 	0, 3, 4,
 };
+float circle[] = {
+	0.5f, 0.5f, 0.0f,
+	0.5f, -0.5f, 0.0f,
+	-0.5f, -0.5f, 0.0f,
+	-0.5f, 0.5f, 0.0f,
+};
+unsigned int circle_[] = {
+	0, 1, 3,
+	1, 2, 3,
+};
 float amogus[] = {
 	// TODO: amogus vertices
 	0.0f, 0.0f, 0.0f,
@@ -102,7 +112,7 @@ void LEDA::initializeDrawer() {
 	glfwSetFramebufferSizeCallback(window, WINDOW_RESIZE);
 
 	// load default shaders here
-	for (std::string shaderType : { "solid", "transparent" }) {
+	for (std::string shaderType : { "solid", "transparent", "solid_circle" }) {
 		Shader shader{ shaderType };
 		shaders.emplace(shaderType, shader);
 	}
@@ -111,7 +121,7 @@ void LEDA::initializeDrawer() {
 	unsigned int VAO = 0, VBO = 0, EBO = 0;
 	unsigned int numberOfVertices = 0;
 
-	for (std::string meshType : { "triangle", "rectangle", "pentagon" }) {
+	for (std::string meshType : { "triangle", "rectangle", "pentagon", "circle" }) {
 
 		float* vertices = nullptr;
 		unsigned int* indices = nullptr;
@@ -138,6 +148,13 @@ void LEDA::initializeDrawer() {
 			sizeof_indices = sizeof(pentagon_);
 			numberOfVertices = std::size(pentagon_);
 		}
+		else if (meshType == "circle") {
+			vertices = rectangle;
+			indices = rectangle_;
+			sizeof_vertices = sizeof(rectangle);
+			sizeof_indices = sizeof(rectangle_);
+			numberOfVertices = std::size(rectangle_);
+		}
 		else {
 			LOG_WARNING(std::string("skill issue! unknown mesh type: '") + meshType + "'");
 		}
@@ -162,6 +179,9 @@ void LEDA::initializeDrawer() {
 		meshes.emplace(meshType, std::make_tuple(VAO, VBO, EBO, numberOfVertices));
 
 	}
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 }
 
@@ -207,8 +227,13 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 			
 			// get graphics data
 			GraphicsComponent* graphicsComponent = getComponent<GraphicsComponent>(object);
+			// get material from graphics data
+			std::string material = graphicsComponent->material;
+			if (shape == "circle") {
+				material += "_circle";
+			}
 			// get shader too, initialize it with shader type (material)
-			Shader shader = shaders.at(graphicsComponent->material);
+			Shader shader = shaders.at(material);
 
 			// set shader uniforms
 
