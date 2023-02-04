@@ -148,6 +148,27 @@ void LEDA::addKeyRepeatCallback(INPUT_KEY key, emptyFunction function) {
 }
 
 
+// functions to add key callbacks, but multiple keys at once
+
+void LEDA::addKeyTriggerCallback(std::vector<INPUT_KEY> keys, emptyFunction function) {
+	for (INPUT_KEY key : keys) {
+		addKeyTriggerCallback(key, function);
+	}
+}
+
+void LEDA::addKeyReleaseCallback(std::vector<INPUT_KEY> keys, emptyFunction function) {
+	for (INPUT_KEY key : keys) {
+		addKeyReleaseCallback(key, function);
+	}
+}
+
+void LEDA::addKeyRepeatCallback(std::vector<INPUT_KEY> keys, emptyFunction function) {
+	for (INPUT_KEY key : keys) {
+		addKeyRepeatCallback(key, function);
+	}
+}
+
+
 // functions to remove key callbacks
 
 void LEDA::removeKeyTriggerCallback(INPUT_KEY key, emptyFunction function) {

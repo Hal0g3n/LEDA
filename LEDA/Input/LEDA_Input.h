@@ -180,6 +180,10 @@ namespace LEDA {
 	void LEDA_API addKeyReleaseCallback(INPUT_KEY key, emptyFunction function);
 	void LEDA_API addKeyRepeatCallback(INPUT_KEY key, emptyFunction function);
 
+	void LEDA_API addKeyTriggerCallback(std::vector<INPUT_KEY> keys, emptyFunction function);
+	void LEDA_API addKeyReleaseCallback(std::vector<INPUT_KEY> keys, emptyFunction function);
+	void LEDA_API addKeyRepeatCallback(std::vector<INPUT_KEY> keys, emptyFunction function);
+
 	void LEDA_API removeKeyTriggerCallback(INPUT_KEY key, emptyFunction function);
 	void LEDA_API removeKeyReleaseCallback(INPUT_KEY key, emptyFunction function);
 	void LEDA_API removeKeyRepeatCallback(INPUT_KEY key, emptyFunction function);

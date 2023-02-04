@@ -229,16 +229,16 @@ void snakey_init() {
     }
 
     // keyboard input (snake control)
-    addKeyTriggerCallback(INPUT_KEY::KEY_UP, []() {
+    addKeyTriggerCallback({ INPUT_KEY::KEY_UP, INPUT_KEY::KEY_W }, []() {
         current_direction = 1;
     });
-    addKeyTriggerCallback(INPUT_KEY::KEY_DOWN, []() {
+    addKeyTriggerCallback({ INPUT_KEY::KEY_DOWN, INPUT_KEY::KEY_S }, []() {
         current_direction = 0;
     });
-    addKeyTriggerCallback(INPUT_KEY::KEY_RIGHT, []() {
+    addKeyTriggerCallback({ INPUT_KEY::KEY_RIGHT, INPUT_KEY::KEY_D }, []() {
         current_direction = 3;
     });
-    addKeyTriggerCallback(INPUT_KEY::KEY_LEFT, []() {
+    addKeyTriggerCallback({ INPUT_KEY::KEY_LEFT, INPUT_KEY::KEY_A }, []() {
         current_direction = 2;
     });
 
