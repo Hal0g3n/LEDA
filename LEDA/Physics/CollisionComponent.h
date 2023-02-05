@@ -31,7 +31,7 @@ namespace LEDA {
 		bool collide{ true }; // flag for if this object collides with others
 		bool reflect{ true }; // flag for reflection upon collision; otherwise just stick
 
-		void (*collisionResponse)(GameObject* this_object, GameObject* other_object); // function pointer: collision response when colliding with other
+		void (*collisionResponse)(GameObject* this_object, GameObject* other_object) = 0; // function pointer: collision response when colliding with other
 
 		~CollisionComponent() {
 			delete this->shape;

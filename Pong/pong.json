@@ -48,9 +48,12 @@
         "y": 0
       },
       "graphics": {
-        "shape": "rectangle",
+        "shape": "line",
         "material": "solid",
         "color": "#000000"
+      },
+      "collision": {
+        "type": "line"
       }
     },
     "ball": {

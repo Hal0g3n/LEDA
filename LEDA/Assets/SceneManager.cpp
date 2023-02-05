@@ -57,6 +57,23 @@ std::vector<double> string2rgba(std::string hex) {
 	return { r / w, g / w, b / w, a / w };
 }
 
+void LEDA::makeSegment(TransformComponent* tc, double x1, double y1, double x2, double y2) {
+
+	double x = (x1 + x2) / 2.0;
+	tc->position.x = x;
+	double y = (y1 + y2) / 2.0;
+	tc->position.y = y;
+
+	double r = std::sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+	tc->scale.x = r;
+	tc->scale.y = r;
+
+	tc->rotation = std::atan2(y2 - y1, x2 - x1);
+
+	return;
+
+}
+
 GameObject* loadObject(object* entry, std::string objectId = "") {
 
 	json& objectData = entry->value();
@@ -106,6 +123,24 @@ GameObject* loadObject(object* entry, std::string objectId = "") {
 
 			if (!value["rotation"].is_null()) tc->rotation = value["rotation"];
 			if (!value["rotation_degrees"].is_null()) tc->rotation = value["rotation_degrees"] * M_PI / 180;
+
+			if (!value["x1"].is_null() && !value["y1"].is_null() && !value["x2"].is_null() && !value["y2"].is_null()) {
+				double x1 = value["x1"];
+				double y1 = value["y1"];
+				double x2 = value["x2"];
+				double y2 = value["y2"];
+
+				double x = (x1 + x2) / 2.0;
+				tc->position.x = x;
+				double y = (y1 + y2) / 2.0;
+				tc->position.y = y;
+
+				double r = std::sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+				tc->scale.x = r;
+				tc->scale.y = r;
+
+				tc->rotation = std::atan2(y2 - y1, x2 - x1);
+			}
 
 			// add the transform component to the game object
 			addComponent(obj, tc);
@@ -196,8 +231,8 @@ GameObject* loadObject(object* entry, std::string objectId = "") {
 
 			// set values if they exist
 			std::string shapeType = "rectangle";
-			if (!value["shape"].is_null() && value["shape"].is_string()) {
-				shapeType = value["shape"];
+			if (!value["type"].is_null() && value["type"].is_string()) {
+				shapeType = value["type"];
 			}
 			if (shapeType == "rectangle") {
 				cc->shape = new AABB();

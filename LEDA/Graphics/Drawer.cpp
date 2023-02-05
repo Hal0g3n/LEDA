@@ -52,6 +52,16 @@ unsigned int rectangle_[] = {
 	0, 1, 3,
 	1, 2, 3,
 };
+float line[] = {
+	0.501f, 0.001f, 0.0f,
+	0.501f, -0.001f, 0.0f,
+	-0.501f, -0.001f, 0.0f,
+	-0.501f, 0.001f, 0.0f,
+};
+unsigned int line_[] = {
+	0, 1, 3,
+	1, 2, 3,
+};
 float pentagon[] = {
 	0.0f, 0.5f, 0.0f,
 	0.4755f, 0.1545f, 0.0f,
@@ -85,7 +95,7 @@ void LEDA::initializeDrawer() {
 
 	glfwInit();
 
-	// OpenGL version 4.6, but use 3.3
+	// OpenGL version 4.6, but use 3.3 (what did I mean when I wrote this)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // 3
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); // 3
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -121,7 +131,7 @@ void LEDA::initializeDrawer() {
 	unsigned int VAO = 0, VBO = 0, EBO = 0;
 	unsigned int numberOfVertices = 0;
 
-	for (std::string meshType : { "triangle", "rectangle", "pentagon", "circle" }) {
+	for (std::string meshType : { "triangle", "rectangle", "pentagon", "circle", "line" }) {
 
 		float* vertices = nullptr;
 		unsigned int* indices = nullptr;
@@ -149,11 +159,18 @@ void LEDA::initializeDrawer() {
 			numberOfVertices = std::size(pentagon_);
 		}
 		else if (meshType == "circle") {
-			vertices = rectangle;
-			indices = rectangle_;
-			sizeof_vertices = sizeof(rectangle);
-			sizeof_indices = sizeof(rectangle_);
-			numberOfVertices = std::size(rectangle_);
+			vertices = circle;
+			indices = circle_;
+			sizeof_vertices = sizeof(circle);
+			sizeof_indices = sizeof(circle_);
+			numberOfVertices = std::size(circle_);
+		}
+		else if (meshType == "line") {
+			vertices = line;
+			indices = line_;
+			sizeof_vertices = sizeof(line);
+			sizeof_indices = sizeof(line_);
+			numberOfVertices = std::size(line_);
 		}
 		else {
 			LOG_WARNING(std::string("skill issue! unknown mesh type: '") + meshType + "'");
@@ -238,7 +255,7 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 			// get shader too, initialize it with shader type (material)
 			Shader shader = shaders.at(material);
 
-			// USE THE SHADER BEFORE SETTING UNIFORMS!!!
+			// USE THE SHADER BEFORE SETTING UNIFORMS!!! a mistake was made
 			shader.use();
 
 			// set shader uniforms

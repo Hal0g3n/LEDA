@@ -40,11 +40,15 @@ namespace LEDA {
 	void CollisionSystem::update() {
 
 		// updates collision shapes for everything
-		for (int i = 0; i < objects.size(); ++i) {
+		for (unsigned int i = 0; i < objects.size(); ++i) {
 			GameObject* obj = objects.at(i);
 			CollisionComponent* objCom = getComponent<CollisionComponent>(obj);
 			TransformComponent* tc = getComponent<TransformComponent>(obj);
-			if (instanceof<AABB>(objCom->shape)) {
+			if (objCom->shape == nullptr) {
+				LOG_WARNING("collision shape is null!");
+				continue;
+			}
+			else if (instanceof<AABB>(objCom->shape)) {
 				AABB* aabb = dynamic_cast<AABB*>(objCom->shape);
 				aabb->min.x = tc->position.x - tc->scale.x / 2.0;
 				aabb->min.y = tc->position.y - tc->scale.y / 2.0;
@@ -60,7 +64,7 @@ namespace LEDA {
 			else if (instanceof<LineSegment>(objCom->shape)) {
 				LineSegment* segment = dynamic_cast<LineSegment*>(objCom->shape);
 				// calculate pt0, pt1
-				Vector2D delta = Vector2D{ tc->scale.x / 2.0 * cos(tc->rotation), tc->scale.y / 2.0 * sin(tc->rotation) };
+				Vec2 delta = Vec2{ tc->scale.x / 2.0 * cos(tc->rotation), tc->scale.y / 2.0 * sin(tc->rotation) };
 				segment->m_pt0 = tc->position + delta;
 				segment->m_pt1 = tc->position - delta;
 				// m_normal = (y, -x)
@@ -76,22 +80,27 @@ namespace LEDA {
 		}
 
 		// checks collisions for everything
-		for (int i = 0; i < objects.size(); ++i) {
+		for (unsigned int i = 0; i < objects.size(); ++i) {
+
 			GameObject* obj = objects.at(i);
+
 			CollisionComponent* objCom = getComponent<CollisionComponent>(obj);
-			if (!objCom->collide) continue; // this object does not collide
-			for (int j = i + 1; j < objects.size(); ++j) {
+			if (!objCom || !objCom->collide) continue; // this object does not collide
+
+			for (unsigned int j = i + 1; j < objects.size(); ++j) {
+
 				GameObject* other = objects.at(j);
+
 				CollisionComponent* otherCom = getComponent<CollisionComponent>(other);
+				if (!otherCom || !otherCom->collide) continue; // the other object does not collide
 
 				// we need the positions
 				Vec2& objPos = getComponent<TransformComponent>(obj)->position;
 				Vec2& otherPos = getComponent<TransformComponent>(other)->position;
 
 				// we need the velocities
-				Vec2 objVel = getComponent<KinematicsComponent>(obj) == nullptr ? getComponent<KinematicsComponent>(obj)->vel : Vec2{ 0, 0 };
-				Vec2 otherVel = getComponent<KinematicsComponent>(other) == nullptr ? getComponent<KinematicsComponent>(other)->vel : Vec2{ 0, 0 };
-				if (!otherCom->collide) continue; // the other object does not collide
+				Vec2 objVel = getComponent<KinematicsComponent>(obj) != nullptr ? getComponent<KinematicsComponent>(obj)->vel : Vec2{ 0, 0 };
+				Vec2 otherVel = getComponent<KinematicsComponent>(other) != nullptr ? getComponent<KinematicsComponent>(other)->vel : Vec2{ 0, 0 };
 
 				// AABB check
 				if (instanceof<AABB>(objCom->shape) && instanceof<AABB>(otherCom->shape)) {

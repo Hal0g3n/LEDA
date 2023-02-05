@@ -28,9 +28,11 @@
 #include "json.hpp"
 
 using json = nlohmann::json;
-using object = const nlohmann::json_abi_v3_11_2::detail::iteration_proxy_value<nlohmann::json_abi_v3_11_2::detail::iter_impl<nlohmann::json_abi_v3_11_2::json>>;
+using object = const nlohmann::json_abi_v3_11_2::detail::iteration_proxy_value<nlohmann::json_abi_v3_11_2::detail::iter_impl<nlohmann::json_abi_v3_11_2::json>>; // a very very long comment just to make this line even longer!
 
 namespace LEDA {
+
+	void LEDA_API makeSegment(TransformComponent* tc, double x1, double y1, double x2, double y2);
 
 	class LEDA_API SceneManager {
 		// Json of the current level
