@@ -64,7 +64,7 @@ namespace LEDA {
 			else if (instanceof<LineSegment>(objCom->shape)) {
 				LineSegment* segment = dynamic_cast<LineSegment*>(objCom->shape);
 				// calculate pt0, pt1
-				Vec2 delta = Vec2{ tc->scale.x / 2.0 * cos(tc->rotation), tc->scale.y / 2.0 * sin(tc->rotation) };
+				Vec2 delta = Vec2{ tc->scale.x / 2.0 * cos(tc->rotation), tc->scale.x / 2.0 * sin(tc->rotation) };
 				segment->m_pt0 = tc->position + delta;
 				segment->m_pt1 = tc->position - delta;
 				// m_normal = (y, -x)

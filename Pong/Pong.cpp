@@ -23,8 +23,10 @@ const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 800;
 const int WALL_X = 350;
 const int WALL_Y = 350;
+const double WALL_THICKNESS = 3.0;
 
 const double PADDLE_SPEED = 200.0;
+const double BALL_Y_SPEED = 350.0;
 const unsigned int BALLS = 1;
 
 double paddle_vx = 0.0;
@@ -49,6 +51,7 @@ void background_update() {
 }
 
 void start() {
+
     if (started) return;
     started = true;
 
@@ -56,7 +59,7 @@ void start() {
     GameObject* ball = retrieveGameObject("ball1"); // this looks like balll
     KinematicsComponent* kc = getComponent<KinematicsComponent>(ball);
     kc->vel.x = paddle_vx;
-    kc->vel.y = -200.0;
+    kc->vel.y = BALL_Y_SPEED;
 
 }
 
@@ -64,7 +67,7 @@ unsigned int number_of_walls = 0;
 void add_wall(double x1, double y1, double x2, double y2) {
     GameObject* wall = sceneManager->createObject("wall", std::string("wall") + std::to_string(++number_of_walls));
     TransformComponent* tc = getComponent<TransformComponent>(wall);
-    makeSegment(tc, x1 * WALL_X, y1 * WALL_Y, x2 * WALL_X, y2 * WALL_Y);
+    makeSegment(tc, x1 * WALL_X, y1 * WALL_Y, x2 * WALL_X, y2 * WALL_Y, WALL_THICKNESS);
 }
 
 void _init() {
@@ -98,8 +101,8 @@ void _init() {
     for (int i = 0; i < BALLS; i++) {
         GameObject* ball = sceneManager->createObject("ball", std::string("ball") + std::to_string(i + 1));
         TransformComponent* tc = getComponent<TransformComponent>(ball);
-        tc->position.x = 0;
-        tc->position.y = -280;
+        tc->position.x = 0.0;
+        tc->position.y = -280.0;
     }
 
     // add walls
@@ -108,6 +111,9 @@ void _init() {
     add_wall(1, -1, -1, -1);
     add_wall(-1, -1, -1, 1);
     add_wall(-1, 1, 1, 1);
+    add_wall(0.1, -0.2, 0.5, -0.4);
+    add_wall(-0.2, -0.2, -0.3, 0.4);
+    add_wall(0.5, 0.5, 1, 1);
 
 }
 

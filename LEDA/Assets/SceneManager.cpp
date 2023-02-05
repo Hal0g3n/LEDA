@@ -57,7 +57,7 @@ std::vector<double> string2rgba(std::string hex) {
 	return { r / w, g / w, b / w, a / w };
 }
 
-void LEDA::makeSegment(TransformComponent* tc, double x1, double y1, double x2, double y2) {
+void LEDA::makeSegment(TransformComponent* tc, double x1, double y1, double x2, double y2, double thickness) {
 
 	double x = (x1 + x2) / 2.0;
 	tc->position.x = x;
@@ -65,8 +65,8 @@ void LEDA::makeSegment(TransformComponent* tc, double x1, double y1, double x2, 
 	tc->position.y = y;
 
 	double r = std::sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-	tc->scale.x = r;
-	tc->scale.y = r;
+	tc->scale.x = r + thickness;
+	tc->scale.y = thickness;
 
 	tc->rotation = std::atan2(y2 - y1, x2 - x1);
 
@@ -129,17 +129,8 @@ GameObject* loadObject(object* entry, std::string objectId = "") {
 				double y1 = value["y1"];
 				double x2 = value["x2"];
 				double y2 = value["y2"];
-
-				double x = (x1 + x2) / 2.0;
-				tc->position.x = x;
-				double y = (y1 + y2) / 2.0;
-				tc->position.y = y;
-
-				double r = std::sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-				tc->scale.x = r;
-				tc->scale.y = r;
-
-				tc->rotation = std::atan2(y2 - y1, x2 - x1);
+				double thickness = value["thickness"];
+				makeSegment(tc, x1, y1, x2, y2, thickness);
 			}
 
 			// add the transform component to the game object

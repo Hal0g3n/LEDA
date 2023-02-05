@@ -32,7 +32,7 @@ using object = const nlohmann::json_abi_v3_11_2::detail::iteration_proxy_value<n
 
 namespace LEDA {
 
-	void LEDA_API makeSegment(TransformComponent* tc, double x1, double y1, double x2, double y2);
+	void LEDA_API makeSegment(TransformComponent* tc, double x1, double y1, double x2, double y2, double thickness);
 
 	class LEDA_API SceneManager {
 		// Json of the current level

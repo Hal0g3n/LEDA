@@ -42,6 +42,7 @@ float triangle[] = {
 unsigned int triangle_[] = {
 	0, 1, 2,
 };
+// rectangle, circle, and line are all the same! wow!
 float rectangle[] = {
 	0.5f, 0.5f, 0.0f,
 	0.5f, -0.5f, 0.0f,
@@ -52,6 +53,27 @@ unsigned int rectangle_[] = {
 	0, 1, 3,
 	1, 2, 3,
 };
+float circle[] = {
+	0.5f, 0.5f, 0.0f,
+	0.5f, -0.5f, 0.0f,
+	-0.5f, -0.5f, 0.0f,
+	-0.5f, 0.5f, 0.0f,
+};
+unsigned int circle_[] = {
+	0, 1, 3,
+	1, 2, 3,
+};
+float line[] = {
+	0.5f, 0.5f, 0.0f,
+	0.5f, -0.5f, 0.0f,
+	-0.5f, -0.5f, 0.0f,
+	-0.5f, 0.5f, 0.0f,
+};
+unsigned int line_[] = {
+	0, 1, 3,
+	1, 2, 3,
+};
+/*
 float line[] = {
 	0.501f, 0.001f, 0.0f,
 	0.501f, -0.001f, 0.0f,
@@ -62,6 +84,7 @@ unsigned int line_[] = {
 	0, 1, 3,
 	1, 2, 3,
 };
+*/
 float pentagon[] = {
 	0.0f, 0.5f, 0.0f,
 	0.4755f, 0.1545f, 0.0f,
@@ -73,16 +96,6 @@ unsigned int pentagon_[] = {
 	0, 1, 2,
 	0, 2, 3,
 	0, 3, 4,
-};
-float circle[] = {
-	0.5f, 0.5f, 0.0f,
-	0.5f, -0.5f, 0.0f,
-	-0.5f, -0.5f, 0.0f,
-	-0.5f, 0.5f, 0.0f,
-};
-unsigned int circle_[] = {
-	0, 1, 3,
-	1, 2, 3,
 };
 float amogus[] = {
 	// TODO: amogus vertices
