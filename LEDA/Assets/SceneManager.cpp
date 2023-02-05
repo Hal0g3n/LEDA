@@ -74,6 +74,10 @@ void LEDA::makeSegment(TransformComponent* tc, double x1, double y1, double x2, 
 
 }
 
+void LEDA::setColor(GraphicsComponent* gc, std::string hex) {
+	gc->color = string2rgba(hex);
+}
+
 GameObject* loadObject(object* entry, std::string objectId = "") {
 
 	json& objectData = entry->value();
