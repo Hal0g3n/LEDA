@@ -23,6 +23,7 @@ const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 800;
 
 const double PADDLE_SPEED = 200.0;
+const unsigned int BALLS = 1;
 
 double paddle_vx = 0.0;
 double paddle_size = 100.0;
@@ -64,6 +65,13 @@ void _init() {
     GameObject* background = retrieveGameObject("background");
     LogicComponent* lc = getComponent<LogicComponent>(background);
     lc->update = background_update;
+
+    for (int i = 0; i < BALLS; i++) {
+        GameObject* ball = sceneManager->createObject("ball", std::string("ball") + std::to_string(i + 1));
+        TransformComponent* tc = getComponent<TransformComponent>(ball);
+        tc->position.x = 0;
+        tc->position.y = -280;
+    }
 
 }
 

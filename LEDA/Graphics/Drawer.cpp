@@ -219,6 +219,9 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 		unsigned int EBO = std::get<2>(meshes.at(shape));
 		unsigned int numberOfVertices = std::get<3>(meshes.at(shape));
 
+		glBindVertexArray(VAO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+
 		for (GameObject* object : it.second) {
 
 			// get transform data
@@ -234,6 +237,9 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 			}
 			// get shader too, initialize it with shader type (material)
 			Shader shader = shaders.at(material);
+
+			// USE THE SHADER BEFORE SETTING UNIFORMS!!!
+			shader.use();
 
 			// set shader uniforms
 
@@ -252,15 +258,11 @@ void LEDA::drawObjects(std::vector<GameObject*> objects) {
 			std::vector<double> cv_temp = graphicsComponent->color;
 			glUniform4f(c_temp, (float)cv_temp[0], (float)cv_temp[1], (float)cv_temp[2], (float)cv_temp[3]);
 
-			shader.use();
-
-			glBindVertexArray(VAO);
-			// glDrawArrays(GL_TRIANGLES, 0, 3);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 			glDrawElements(GL_TRIANGLES, numberOfVertices, GL_UNSIGNED_INT, 0);
-			glBindVertexArray(0);
 
 		}
+
+		glBindVertexArray(0);
 
 		/*
 		glDeleteVertexArrays(1, &VAO);

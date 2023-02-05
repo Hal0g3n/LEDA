@@ -205,9 +205,15 @@ GameObject* loadObject(object* entry, std::string objectId = "") {
 			else if (shapeType == "circle") {
 				cc->shape = new Circle();
 			}
+			else if (shapeType == "line" || shapeType == "segment") {
+				cc->shape = new LineSegment();
+			}
+			else {
+				LOG_WARNING(std::string("funny/invalid collision shape: ") + shapeType);
+			}
 			// remove
 			if (!value["mass"].is_null()) {
-				
+				cc->m_mass = value["mass"];
 			}
 
 			// add the collision component to the game object

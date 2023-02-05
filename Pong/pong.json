@@ -55,16 +55,13 @@
     },
     "ball": {
       "transform": {
-        "scale": {
-          "x": 30,
-          "y": 30
-        },
+        "scale": 25,
         "rotation": 0
       },
       "graphics": {
         "shape": "circle",
         "material": "solid",
-        "color": "#c00c0c"
+        "color": "#c00cc0"
       },
       "kinematics": {
         "vel": {
@@ -73,7 +70,7 @@
         }
       },
       "collision": {
-        "type": "rectangle"
+        "type": "circle"
       }
     }
   }

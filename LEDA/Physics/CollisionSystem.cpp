@@ -55,10 +55,23 @@ namespace LEDA {
 				Circle* circle = dynamic_cast<Circle*>(objCom->shape);
 				circle->m_center.x = tc->position.x;
 				circle->m_center.y = tc->position.y;
-				circle->m_radius = (tc->scale.x + tc->scale.y) / 2.0 / 2.0;
+				circle->m_radius = (tc->scale.x + tc->scale.y) / 2.0 / 2.0; // double halve
+			}
+			else if (instanceof<LineSegment>(objCom->shape)) {
+				LineSegment* segment = dynamic_cast<LineSegment*>(objCom->shape);
+				// calculate pt0, pt1
+				Vector2D delta = Vector2D{ tc->scale.x / 2.0 * cos(tc->rotation), tc->scale.y / 2.0 * sin(tc->rotation) };
+				segment->m_pt0 = tc->position + delta;
+				segment->m_pt1 = tc->position - delta;
+				// m_normal = (y, -x)
+				segment->m_normal = segment->m_pt1 - segment->m_pt0;
+				segment->m_normal.x = -segment->m_normal.x; // negate x
+				std::swap(segment->m_normal.x, segment->m_normal.y); // swap (-x) and y
+				// make the normal normal
+				segment->m_normal = segment->m_normal.normalize();
 			}
 			else {
-
+				LOG_WARNING("this shouldn't happen!");
 			}
 		}
 
@@ -82,7 +95,6 @@ namespace LEDA {
 
 				// AABB check
 				if (instanceof<AABB>(objCom->shape) && instanceof<AABB>(otherCom->shape)) {
-
 					// perform collision check
 					if (CollisionIntersection_AABB(dynamic_cast<AABB*>(objCom->shape), objVel, dynamic_cast<AABB*>(otherCom->shape), otherVel)) {
 						// they both trigger!
