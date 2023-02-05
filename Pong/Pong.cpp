@@ -26,11 +26,12 @@ const int WALL_Y = 350;
 const double WALL_THICKNESS = 3.0;
 
 const double PADDLE_SPEED = 400.0;
+const double PADDLE_ACCELERATION = 3000.0;
 const double BALL_X_SPEED = 300.0;
 const double BALL_Y_SPEED = 400.0;
 const unsigned int BALLS = 1;
 
-double paddle_vx = 0.0;
+double paddle_ax = 0.0;
 const double paddle_w_mult = 1.0;
 double paddle_size = 100.0;
 
@@ -41,15 +42,26 @@ T bound(T number, T min, T max) {
     return std::max(std::min(number, max), min);
 }
 
+template<typename T>
+T bound(T number, T a) {
+    return bound(number, -a, a);
+}
+
+bool starts_with(std::string s, std::string with) {
+    return s.rfind(with, 0) == 0;
+}
+
 void background_update() {
 
     GameObject* paddle = retrieveGameObject("paddle");
     TransformComponent* p_tc = getComponent<TransformComponent>(paddle);
     KinematicsComponent* p_kc = getComponent<KinematicsComponent>(paddle);
 
+    p_tc->position.x = bound(p_tc->position.x, WALL_X - paddle_size / 2);
     p_tc->scale.x = paddle_size;
-    p_kc->vel.x = bound(paddle_vx, -PADDLE_SPEED, PADDLE_SPEED);
-    p_kc->rot_vel = paddle_vx / PADDLE_SPEED * paddle_w_mult;
+    p_kc->acc.x = bound(paddle_ax, -PADDLE_ACCELERATION, PADDLE_ACCELERATION);
+    p_kc->vel.x *= 0.90;
+    p_kc->rot_vel = paddle_ax / PADDLE_ACCELERATION * paddle_w_mult;
     p_tc->rotation *= 0.90;
 
 }
@@ -59,12 +71,33 @@ void start() {
     if (started) return;
     started = true;
 
+    // reset the paddle
+    GameObject* paddle = retrieveGameObject("paddle");
+    TransformComponent* p_tc = getComponent<TransformComponent>(paddle);
+    p_tc->position.x = 0;
+    p_tc->rotation = 0;
+    KinematicsComponent* p_kc = getComponent<KinematicsComponent>(paddle);
+    p_kc->acc.x = 0;
+    p_kc->vel.x = 0;
+    p_kc->rot_vel = 0;
+
     // start the ball
     GameObject* ball = retrieveGameObject("ball1"); // this looks like balll
+    TransformComponent* tc = getComponent<TransformComponent>(ball);
+    tc->position.x = 0.0;
+    tc->position.y = -280.0;
     KinematicsComponent* kc = getComponent<KinematicsComponent>(ball);
     kc->vel.x = BALL_X_SPEED;
     kc->vel.y = BALL_Y_SPEED;
 
+}
+
+void wall_touch(GameObject* wall, GameObject* ball) {
+    std::string id = ball->getId();
+    if (starts_with(id, "ball")) {
+        started = false;
+        start();
+    }
 }
 
 unsigned int number_of_walls = 0;
@@ -75,6 +108,8 @@ void add_wall(double x1, double y1, double x2, double y2, bool death = false) {
     if (death) {
         GraphicsComponent* gc = getComponent<GraphicsComponent>(wall);
         setColor(gc, "#c00c0c");
+        CollisionComponent* cc = getComponent<CollisionComponent>(wall);
+        cc->collisionResponse = wall_touch;
     }
 }
 
@@ -84,20 +119,18 @@ void _init() {
         // nothing (for now)
     });
     addKeyTriggerCallback({ INPUT_KEY::KEY_RIGHT, INPUT_KEY::KEY_D }, []() {
-        paddle_vx += PADDLE_SPEED;
+        paddle_ax += PADDLE_ACCELERATION;
         start();
     });
     addKeyTriggerCallback({ INPUT_KEY::KEY_LEFT, INPUT_KEY::KEY_A }, []() {
-        paddle_vx -= PADDLE_SPEED;
+        paddle_ax -= PADDLE_ACCELERATION;
         start();
     });
     addKeyReleaseCallback({ INPUT_KEY::KEY_RIGHT, INPUT_KEY::KEY_D }, []() {
-        paddle_vx -= PADDLE_SPEED;
-        start();
+        paddle_ax -= PADDLE_ACCELERATION;
     });
     addKeyReleaseCallback({ INPUT_KEY::KEY_LEFT, INPUT_KEY::KEY_A }, []() {
-        paddle_vx += PADDLE_SPEED;
-        start();
+        paddle_ax += PADDLE_ACCELERATION;
     });
 
     GameObject* background = retrieveGameObject("background");
