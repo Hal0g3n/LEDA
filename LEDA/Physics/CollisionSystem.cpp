@@ -200,12 +200,13 @@ namespace LEDA {
 						Vec2 otherInterPos, collisionNormal;
 						double interTime;
 						if (CollisionIntersection_CircleLineSegment(*dynamic_cast<Circle*>(otherCom->shape), otherPrevPos, *dynamic_cast<LineSegment*>(objCom->shape), otherInterPos, collisionNormal, interTime)) {
-							if (objCom->reflect) {
+							if (otherCom->reflect) {
 								Vec2 reflect;
 								CollisionResponse_CircleLineSegment(otherInterPos, collisionNormal, otherPos, reflect);
+								getComponent<KinematicsComponent>(other)->vel = Vec2{ otherVel.length() * reflect.x, otherVel.length() * reflect.y };
 							}
 							else {
-								otherPos = otherInterPos;
+								otherPos = otherInterPos; // otherInterPt?
 								// maybe do something with the velocity
 							}
 							// collision response
