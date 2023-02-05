@@ -173,6 +173,7 @@ namespace LEDA {
 							if (objCom->reflect) {
 								Vec2 reflect;
 								CollisionResponse_CircleLineSegment(objInterPt, collisionNormal, objPos, reflect);
+								getComponent<KinematicsComponent>(obj)->vel = Vec2{ objVel.length() * reflect.x, objVel.length() * reflect.y};
 							}
 							else {
 								objPos = objInterPt;

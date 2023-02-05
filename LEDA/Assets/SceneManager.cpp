@@ -246,9 +246,11 @@ GameObject* loadObject(object* entry, std::string objectId = "") {
 			else {
 				LOG_WARNING(std::string("funny/invalid collision shape: ") + shapeType);
 			}
-			// remove
 			if (!value["mass"].is_null()) {
 				cc->m_mass = value["mass"];
+			}
+			if (!value["reflect"].is_null()) {
+				cc->reflect = !(!value["reflect"]);
 			}
 
 			// add the collision component to the game object

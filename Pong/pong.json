@@ -53,7 +53,8 @@
         "color": "#000000"
       },
       "collision": {
-        "type": "line"
+        "type": "line",
+        "reflect": true
       }
     },
     "ball": {
@@ -73,7 +74,8 @@
         }
       },
       "collision": {
-        "type": "circle"
+        "type": "circle",
+        "reflect": true
       }
     }
   }
