@@ -126,8 +126,8 @@ int LEDA::CheckMovingCircleToLineEdge(bool withinBothLines,
 		else if (!touch0 && !touch1) return 0; // Both are untouched
 
 		// Calculate Distance along path till collision
-		float m0 = ((lineSeg.m_pt0 - ptStart) * v) / v.length();
-		float m1 = ((lineSeg.m_pt1 - ptStart) * v) / v.length();
+		float m0 = ((lineSeg.m_pt0 - ptStart) * v.normalize());
+		float m1 = ((lineSeg.m_pt1 - ptStart) * v.normalize());
 
 		// Only case for this to be true is if both are true
 		if (touch0 == touch1) P0Side = fabs(m0) < fabs(m1);
@@ -150,7 +150,7 @@ int LEDA::CheckMovingCircleToLineEdge(bool withinBothLines,
 	s = sqrt(circle.m_radius * circle.m_radius - s * s);
 
 	// Compute collision time based on m and s
-	interTime = (m - s) / v.length();
+	interTime = v.length() <= 0 ? 0 : (m - s) / v.length();
 
 	if (interTime > 1) return 0;
 
@@ -182,17 +182,17 @@ int LEDA::CollisionIntersection_CircleCircle(const Circle &circleA,
 	double rad_sum = circleA.m_radius + circleB.m_radius;
 
 	// m is distance from circle to closest point
-	double m = ((circleB.m_center - circleA.m_center) * v_rel) / v_rel.length();
+	double m = ((circleB.m_center - circleA.m_center) * v_rel.normalize());
 
 	// s is shortast distance from closest point in circle's path
-	double s = (fabs((circleB.m_center - circleA.m_center) * v_rel_normal)) / v_rel.length();
+	double s = (fabs((circleB.m_center - circleA.m_center) * v_rel_normal.normalize()));
 
 	if (m < 0) return 0; // A moving away from circle
 	if (s > rad_sum) return 0; // Line does not intersect circle
 
 	// Compute s as defined in notes
 	s = sqrt(rad_sum * rad_sum - s * s);
-	interTime = (m - s) / v_rel.length();
+	interTime = v_rel.length() <= 0 ? 0 : (m - s) / v_rel.length();
 
 	// Checks that it is not extension of v_rel that intersects circle
 	if (interTime > 1 || interTime < 0) return 0;
@@ -263,7 +263,7 @@ void LEDA::CollisionResponse_CircleCircle(LEDA::Vec2D &normal,
 									LEDA::Vec2D &ptEndB) {
 
 	// Calculate P defined in notes (Scaled down by mA * mB to reduce computations)
-	float P = 2.0f * (float) (velA * normal - velB * normal) / (massA + massB);
+	float P = (massA + massB) == 0 ? 0 : 2.0f * (float) (velA * normal - velB * normal) / (massA + massB);
 
 	// Calculate Reflection Vectors
 	reflectedVectorA = (velA - P * massB * normal);
