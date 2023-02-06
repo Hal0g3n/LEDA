@@ -79,17 +79,22 @@ namespace LEDA {
 			}
 		}
 
-		// checks collisions for everything
-		for (unsigned int i = 0; i < objects.size(); ++i) {
+		std::vector<GameObject*> temp_objects;
+		for (GameObject* o : objects) {
+			temp_objects.push_back(o);
+		}
 
-			GameObject* obj = objects.at(i);
+		// checks collisions for everything
+		for (unsigned int i = 0; i < temp_objects.size(); ++i) {
+
+			GameObject* obj = temp_objects.at(i);
 
 			CollisionComponent* objCom = getComponent<CollisionComponent>(obj);
 			if (!objCom || !objCom->collide) continue; // this object does not collide
 
-			for (unsigned int j = i + 1; j < objects.size(); ++j) {
+			for (unsigned int j = i + 1; j < temp_objects.size(); ++j) {
 
-				GameObject* other = objects.at(j);
+				GameObject* other = temp_objects.at(j);
 
 				CollisionComponent* otherCom = getComponent<CollisionComponent>(other);
 				if (!otherCom || !otherCom->collide) continue; // the other object does not collide

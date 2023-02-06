@@ -79,7 +79,8 @@ namespace LEDA {
 
 	// member functions
 	Vec2D Vec2D::normalize() const {
-		return *this / this->length();
+		double funny_length_that_could_be_zero = this->length();
+		return funny_length_that_could_be_zero <= 0 ? *this : *this / funny_length_that_could_be_zero;
 	}
 
 	Vec2D Vec2D::rotateDeg(double angle) const {

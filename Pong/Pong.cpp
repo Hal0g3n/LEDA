@@ -18,6 +18,15 @@
 using namespace LEDA;
 
 #include <vector>
+#include <random>
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+// randomness
+std::random_device random_device;
+std::mt19937 mt{ random_device() };
+std::uniform_int_distribution<> random_x, random_y;
+std::uniform_real_distribution<> random_angle;
 
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 800;
@@ -26,10 +35,11 @@ const int WALL_Y = 350;
 const double WALL_THICKNESS = 3.0;
 
 const double PADDLE_UP_SPEED = 400.0;
-const double PADDLE_ACCELERATION = 3000.0;
-const double BALL_X_SPEED = 300.0;
-const double BALL_Y_SPEED = 400.0;
+const double PADDLE_ACCELERATION = 4000.0;
+const double BALL_X_SPEED = 450.0;
+const double BALL_Y_SPEED = 600.0;
 const unsigned int BALLS = 1;
+const unsigned int BLOCKS = 10;
 
 double paddle_ax = 0.0;
 double paddle_ay = 0.0;
@@ -76,6 +86,9 @@ void background_update() {
         TransformComponent* tc = getComponent<TransformComponent>(ball);
         tc->position.x = p_tc->position.x;
     }
+
+    GameObject* ball = retrieveGameObject("ball1");
+    std::cout << printGameObject(ball);
 
 }
 
@@ -137,7 +150,31 @@ void add_wall(double x1, double y1, double x2, double y2, bool death = false) {
     }
 }
 
+void block_touch(GameObject* block, GameObject* ball) {
+    std::string id = ball->getId();
+    if (starts_with(id, "ball")) {
+        //removeGameObject(block);
+    }
+}
+
+unsigned int number_of_blocks = 0;
+void add_block() {
+    GameObject* block = sceneManager->createObject("block", std::string("block") + std::to_string(++number_of_blocks));
+    TransformComponent* tc = getComponent<TransformComponent>(block);
+    int x = random_x(mt);
+    int y = random_y(mt);
+    double a = random_angle(mt);
+    double r = 20;
+    makeSegment(tc, x, y, x + r * cos(a), y + r * sin(a), WALL_THICKNESS);
+    CollisionComponent* cc = getComponent<CollisionComponent>(block);
+    cc->collisionResponse = block_touch;
+}
+
 void _init() {
+
+    random_x = std::uniform_int_distribution<>{ -WALL_X, WALL_X };
+    random_y = std::uniform_int_distribution<>{ -WALL_Y, WALL_Y };
+    random_angle = std::uniform_real_distribution<>{ -M_PI, M_PI };
 
     addKeyTriggerCallback({ INPUT_KEY::KEY_UP, INPUT_KEY::KEY_W }, []() {
         paddle_ay += PADDLE_ACCELERATION;
@@ -165,7 +202,7 @@ void _init() {
 
     // add balls
 
-    for (int i = 0; i < BALLS; i++) {
+    for (unsigned int i = 0; i < BALLS; i++) {
         GameObject* ball = sceneManager->createObject("ball", std::string("ball") + std::to_string(i + 1));
         TransformComponent* tc = getComponent<TransformComponent>(ball);
         tc->position.x = 0.0;
@@ -181,6 +218,12 @@ void _init() {
     //add_wall(0.1, -0.2, 0.5, -0.4);
     //add_wall(-0.2, -0.2, -0.3, 0.4);
     //add_wall(0.5, 0.5, 1, 1);
+
+    // add blocks
+
+    for (unsigned int i = 0; i < BLOCKS; i++) {
+        add_block();
+    }
 
 }
 

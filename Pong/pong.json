@@ -59,6 +59,21 @@
         "reflect": true
       }
     },
+    "block": {
+      "transform": {
+        "x": 0,
+        "y": 0
+      },
+      "graphics": {
+        "shape": "line",
+        "material": "solid",
+        "color": "#c0c00c"
+      },
+      "collision": {
+        "type": "line",
+        "reflect": true
+      }
+    },
     "ball": {
       "transform": {
         "scale": 25,

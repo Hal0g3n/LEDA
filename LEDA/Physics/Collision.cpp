@@ -106,7 +106,7 @@ int LEDA::CheckMovingCircleToLineEdge(bool withinBothLines,
 		P0Side = ((lineSeg.m_pt0 - ptStart) * (lineSeg.m_pt1 - lineSeg.m_pt0) > 0);
 
 		// Computes the values
-		m = (((P0Side ? lineSeg.m_pt0 : lineSeg.m_pt1) - ptStart) * v) / v.length();
+		m = (((P0Side ? lineSeg.m_pt0 : lineSeg.m_pt1) - ptStart) * v.normalize());
 		s = fabs(((P0Side ? lineSeg.m_pt0 : lineSeg.m_pt1) - ptStart) * M);
 
 		// Checks if circle is actually facing P0
