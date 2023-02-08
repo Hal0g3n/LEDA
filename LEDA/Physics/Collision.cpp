@@ -57,7 +57,7 @@ int LEDA::CollisionIntersection_CircleLineSegment(const Circle &circle,
 
 	// Calculate Time of Intersection
 	interTime = (lineSeg.m_normal * (lineSeg.m_pt0 - circle.m_center)) + d * circle.m_radius;
-	interTime /= lineSeg.m_normal * v;
+	interTime = (lineSeg.m_normal * v) == 0 ? INFINITY : interTime / (lineSeg.m_normal * v);
 
 	// Ignore if intersection does not happen this loop
 	if (interTime < 0 || interTime > 1) return 0;
@@ -150,7 +150,7 @@ int LEDA::CheckMovingCircleToLineEdge(bool withinBothLines,
 	s = sqrt(circle.m_radius * circle.m_radius - s * s);
 
 	// Compute collision time based on m and s
-	interTime = v.length() <= 0 ? 0 : (m - s) / v.length();
+	interTime = v.length() <= 0 ? INFINITY : (m - s) / v.length();
 
 	if (interTime > 1) return 0;
 
@@ -192,7 +192,7 @@ int LEDA::CollisionIntersection_CircleCircle(const Circle &circleA,
 
 	// Compute s as defined in notes
 	s = sqrt(rad_sum * rad_sum - s * s);
-	interTime = v_rel.length() <= 0 ? 0 : (m - s) / v_rel.length();
+	interTime = (v_rel.length() <= 0) ? INFINITY : (m - s) / v_rel.length();
 
 	// Checks that it is not extension of v_rel that intersects circle
 	if (interTime > 1 || interTime < 0) return 0;
@@ -263,7 +263,7 @@ void LEDA::CollisionResponse_CircleCircle(LEDA::Vec2D &normal,
 									LEDA::Vec2D &ptEndB) {
 
 	// Calculate P defined in notes (Scaled down by mA * mB to reduce computations)
-	float P = (massA + massB) == 0 ? 0 : 2.0f * (float) (velA * normal - velB * normal) / (massA + massB);
+	float P = (massA + massB) == 0 ? INFINITY : 2.0f * (float) (velA * normal - velB * normal) / (massA + massB);
 
 	// Calculate Reflection Vectors
 	reflectedVectorA = (velA - P * massB * normal);

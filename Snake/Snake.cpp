@@ -38,7 +38,7 @@ std::vector<GameObject*> game_apples;
 // snake
 std::vector<std::pair<int, int>> snake_bodies;
 std::vector<GameObject*> game_bodies;
-std::deque<std::pair<std::pair<int, int>, double>> head_positions; // pair<position, time>
+std::deque<std::pair<std::pair<int, int>, double>> shadows; // pair<position, time>
 
 int current_direction = 1; // up
                    // = 0; // down
@@ -166,9 +166,9 @@ void background_update() {
 
     // more snakey stuff (but not LEDA related this time)
 
-    head_positions.push_front(std::make_pair(snake_bodies[0], appTime));
-    while (head_positions.back().second < appTime - SNAKE_MAX_TIME) {
-        head_positions.pop_back();
+    shadows.push_front(std::make_pair(snake_bodies[0], appTime));
+    while (shadows.back().second < appTime - SNAKE_MAX_TIME) {
+        shadows.pop_back();
     }
 
     int dir = current_direction;
@@ -181,11 +181,11 @@ void background_update() {
 
     int j = 1;
     std::pair<std::pair<int, int>, double> old_position = std::make_pair(snake_bodies[0], appTime);
-    for (size_t i = 0; i < head_positions.size(); ++i) {
+    for (size_t i = 0; i < shadows.size(); ++i) {
         if (j >= snake_bodies.size()) {
             break;
         }
-        const std::pair<std::pair<int, int>, double> position = head_positions[i];
+        const std::pair<std::pair<int, int>, double> position = shadows[i];
         if (position.second < appTime - SNAKE_TIME * j) {
             double t = (appTime - SNAKE_TIME * j - position.second) / (old_position.second - position.second);
             snake_bodies[j].first = lerp(position.first.first, old_position.first.first, t);

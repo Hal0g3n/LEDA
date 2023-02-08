@@ -67,7 +67,7 @@
       "graphics": {
         "shape": "line",
         "material": "solid",
-        "color": "#c0c00c"
+        "color": "#a0a00a"
       },
       "collision": {
         "type": "line",
@@ -93,6 +93,17 @@
       "collision": {
         "type": "circle",
         "reflect": true
+      }
+    },
+    "shadow": {
+      "transform": {
+        "scale": 25,
+        "rotation": 0
+      },
+      "graphics": {
+        "shape": "circle",
+        "material": "solid",
+        "color": "#c99fe2"
       }
     }
   }

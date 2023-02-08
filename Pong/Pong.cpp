@@ -21,6 +21,7 @@ using namespace LEDA;
 #include <random>
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <queue>
 
 // randomness
 std::random_device random_device;
@@ -32,12 +33,12 @@ const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 800;
 const int WALL_X = 350;
 const int WALL_Y = 350;
-const double WALL_THICKNESS = 3.0;
+const double WALL_THICKNESS = 5.0;
 
-const double PADDLE_UP_SPEED = 400.0;
+const double PADDLE_UP_SPEED = 300.0;
 const double PADDLE_ACCELERATION = 4000.0;
-const double BALL_X_SPEED = 450.0;
-const double BALL_Y_SPEED = 600.0;
+const double BALL_X_SPEED = 300.0;
+const double BALL_Y_SPEED = 400.0;
 const unsigned int BALLS = 1;
 const unsigned int BLOCKS = 10;
 
@@ -47,6 +48,9 @@ const double paddle_w_mult = 1.0;
 double paddle_size = 100.0;
 
 bool started = false;
+
+std::vector<GameObject*> blocks;
+std::deque<std::pair<Vec2, double>> shadows; // pair<position, time>
 
 template<typename T>
 T bound(T number, T min, T max) {
@@ -80,15 +84,19 @@ void background_update() {
     
     p_kc->rot_vel = paddle_ax / PADDLE_ACCELERATION * paddle_w_mult;
     p_tc->rotation *= 0.90;
-    
+
+    GameObject* ball = retrieveGameObject("ball1"); // this looks like balll
+    TransformComponent* tc = getComponent<TransformComponent>(ball);
+
     if (!started) {
-        GameObject* ball = retrieveGameObject("ball1"); // this looks like balll
-        TransformComponent* tc = getComponent<TransformComponent>(ball);
         tc->position.x = p_tc->position.x;
     }
-
-    GameObject* ball = retrieveGameObject("ball1");
-    std::cout << printGameObject(ball);
+    else {
+        shadows.push_front(std::make_pair(tc->position, appTime));
+        while (shadows.back().second < appTime - 1) {
+            shadows.pop_back();
+        }
+    }
 
 }
 
@@ -150,8 +158,13 @@ void add_wall(double x1, double y1, double x2, double y2, bool death = false) {
     }
 }
 
+bool inside_play_area(double x, double y) {
+    return bound(x, WALL_X + 0.0) == x && bound(y, 0.0, WALL_Y + 0.0) == y;
+}
+
 void block_touch(GameObject* block, GameObject* ball) {
     std::string id = ball->getId();
+    std::cout << block->getId() << " " << id << std::endl;
     if (starts_with(id, "ball")) {
         //removeGameObject(block);
     }
@@ -161,13 +174,19 @@ unsigned int number_of_blocks = 0;
 void add_block() {
     GameObject* block = sceneManager->createObject("block", std::string("block") + std::to_string(++number_of_blocks));
     TransformComponent* tc = getComponent<TransformComponent>(block);
-    int x = random_x(mt);
-    int y = random_y(mt);
-    double a = random_angle(mt);
-    double r = 20;
+    double x = -WINDOW_WIDTH;
+    double y = -WINDOW_HEIGHT;
+    double a = 0;
+    double r = 40;
+    while (!inside_play_area(x, y) || !inside_play_area(x + r * cos(a), y + r * sin(a))) {
+        x = random_x(mt);
+        y = random_y(mt);
+        a = random_angle(mt);
+    }
     makeSegment(tc, x, y, x + r * cos(a), y + r * sin(a), WALL_THICKNESS);
     CollisionComponent* cc = getComponent<CollisionComponent>(block);
     cc->collisionResponse = block_touch;
+    blocks.push_back(block);
 }
 
 void _init() {
@@ -224,6 +243,8 @@ void _init() {
     for (unsigned int i = 0; i < BLOCKS; i++) {
         add_block();
     }
+
+    std::cout << "1";
 
 }
 
