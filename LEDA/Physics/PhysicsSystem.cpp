@@ -27,7 +27,9 @@ namespace LEDA {
 	}
 
 	void PhysicsSystem::onRemoveGameObject(GameObject* obj) {
-		objects.erase(std::find(objects.begin(), objects.end(), obj));
+		std::vector<GameObject*>::iterator found = std::find(objects.begin(), objects.end(), obj);
+		if (found != objects.end())
+			objects.erase(found);
 	}
 
 	void PhysicsSystem::init() {

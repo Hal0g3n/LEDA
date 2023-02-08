@@ -38,5 +38,7 @@ void LogicSystem::onRemoveGameObject(GameObject* obj) {
 	logic->free();
 
 	// Find and Erase Object from the logic system list
-	objects.erase(std::find(objects.begin(), objects.end(), obj));
+	std::vector<GameObject*>::iterator found = std::find(objects.begin(), objects.end(), obj);
+	if (found != objects.end())
+		objects.erase(found);
 }

@@ -31,6 +31,7 @@ std::uniform_real_distribution<> random_angle;
 
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 800;
+const double FRAME_RATE = 60.0;
 const int WALL_X = 350;
 const int WALL_Y = 350;
 const double WALL_THICKNESS = 5.0;
@@ -42,6 +43,13 @@ const double BALL_Y_SPEED = 400.0;
 const unsigned int BALLS = 1;
 const unsigned int BLOCKS = 10;
 
+const unsigned int SHADOW_NUMBER = 10;
+const unsigned int SHADOW_PERIOD = 2;
+
+unsigned int number_of_walls = 0;
+unsigned int number_of_blocks = 0;
+unsigned int number_of_shadows = 0;
+
 double paddle_ax = 0.0;
 double paddle_ay = 0.0;
 const double paddle_w_mult = 1.0;
@@ -51,6 +59,10 @@ bool started = false;
 
 std::vector<GameObject*> blocks;
 std::deque<std::pair<Vec2, double>> shadows; // pair<position, time>
+
+void add_wall();
+void add_block();
+void add_shadow();
 
 template<typename T>
 T bound(T number, T min, T max) {
@@ -93,7 +105,7 @@ void background_update() {
     }
     else {
         shadows.push_front(std::make_pair(tc->position, appTime));
-        while (shadows.back().second < appTime - 1) {
+        while (shadows.back().second < appTime - SHADOW_NUMBER * SHADOW_PERIOD / FRAME_RATE) {
             shadows.pop_back();
         }
     }
@@ -145,7 +157,6 @@ void wall_touch(GameObject* wall, GameObject* ball) {
     }
 }
 
-unsigned int number_of_walls = 0;
 void add_wall(double x1, double y1, double x2, double y2, bool death = false) {
     GameObject* wall = sceneManager->createObject("wall", std::string("wall") + std::to_string(++number_of_walls));
     TransformComponent* tc = getComponent<TransformComponent>(wall);
@@ -166,11 +177,10 @@ void block_touch(GameObject* block, GameObject* ball) {
     std::string id = ball->getId();
     std::cout << block->getId() << " " << id << std::endl;
     if (starts_with(id, "ball")) {
-        //removeGameObject(block);
+        removeGameObject(block);
     }
 }
 
-unsigned int number_of_blocks = 0;
 void add_block() {
     GameObject* block = sceneManager->createObject("block", std::string("block") + std::to_string(++number_of_blocks));
     TransformComponent* tc = getComponent<TransformComponent>(block);
@@ -187,6 +197,10 @@ void add_block() {
     CollisionComponent* cc = getComponent<CollisionComponent>(block);
     cc->collisionResponse = block_touch;
     blocks.push_back(block);
+}
+
+void add_shadow() {
+    GameObject* shadow = sceneManager->createObject("shadow", std::string("shadow") + std::to_string(++number_of_shadows));
 }
 
 void _init() {
@@ -244,8 +258,6 @@ void _init() {
         add_block();
     }
 
-    std::cout << "1";
-
 }
 
 void _free() {
@@ -258,7 +270,7 @@ int main() {
 
     LEDA::LEDA_INIT("pong", _init, _free);
 
-    LEDA::LEDA_START(true, 60.0, "pong", "pong");
+    LEDA::LEDA_START(true, FRAME_RATE, "pong", "pong");
 
     return 0;
 

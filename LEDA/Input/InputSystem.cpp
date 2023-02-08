@@ -55,12 +55,6 @@ void InputSystem::onRegisterGameObject(GameObject* obj) {
 void InputSystem::onRemoveGameObject(GameObject* obj) {
 	// find object
 	std::vector<GameObject*>::iterator found = std::find(objects.begin(), objects.end(), obj);
-	if (found == objects.end()) {
-		LOG_WARNING(std::string("this game object wasn't found in input system list:\n") + printGameObject(obj));
-		return;
-	}
-	else {
-		// delete object from list
+	if (found != objects.end())
 		objects.erase(found);
-	}
 }
