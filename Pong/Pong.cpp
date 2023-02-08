@@ -103,11 +103,23 @@ void background_update() {
     if (!started) {
         tc->position.x = p_tc->position.x;
     }
-    else {
-        shadows.push_front(std::make_pair(tc->position, appTime));
-        while (shadows.back().second < appTime - SHADOW_NUMBER * SHADOW_PERIOD / FRAME_RATE) {
-            shadows.pop_back();
+
+    shadows.push_front(std::make_pair(tc->position, appTime));
+    while (shadows.back().second < appTime - SHADOW_NUMBER * SHADOW_PERIOD / FRAME_RATE) {
+        shadows.pop_back();
+    }
+
+    for (unsigned int i = 0; i < shadows.size(); i++) {
+        if (i % SHADOW_PERIOD != 0) continue;
+        Vec2 v = shadows[i].first;
+        int index = i / SHADOW_PERIOD;
+        if (number_of_shadows < index + 1) {
+            add_shadow();
         }
+        GameObject* shadow = retrieveGameObject(std::string("shadow") + std::to_string(index + 1));
+        tc = getComponent<TransformComponent>(shadow);
+        tc->position.x = v.x;
+        tc->position.y = v.y;
     }
 
 }
