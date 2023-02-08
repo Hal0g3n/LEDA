@@ -247,6 +247,10 @@ void _init() {
 
     // add balls
 
+    for (unsigned int i = 0; i < SHADOW_NUMBER; i++) {
+        add_shadow();
+    }
+
     for (unsigned int i = 0; i < BALLS; i++) {
         GameObject* ball = sceneManager->createObject("ball", std::string("ball") + std::to_string(i + 1));
         TransformComponent* tc = getComponent<TransformComponent>(ball);

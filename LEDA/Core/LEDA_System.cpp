@@ -192,14 +192,11 @@ bool actuallyRemoveGameObject(GameObject* obj) {
 	if (obj == nullptr) return false;
 
 	for (ISystem* sys : systems) {
-		std::cout << "deleting object from system '" << typeid(system).name() << "': " << obj->getId() << std::endl; // debug
 		sys->onRemoveGameObject(obj);
 	}
 
 	// remove all components from object
 	deleteAllComponents(obj);
-
-	std::cout << "deleting object: " << obj->getId() << std::endl; // debug
 
 	// Erase from mapping
 	objects.erase(obj->getId());
