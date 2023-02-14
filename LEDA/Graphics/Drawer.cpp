@@ -21,6 +21,9 @@
 #include <iterator>
 #include <unordered_map>
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 
 // WINDOW_STUFF
 const unsigned int WINDOW_WIDTH = 800;

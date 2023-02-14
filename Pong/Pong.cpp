@@ -41,7 +41,7 @@ const double PADDLE_ACCELERATION = 4000.0;
 const double BALL_X_SPEED = 300.0;
 const double BALL_Y_SPEED = 400.0;
 const unsigned int BALLS = 1;
-const unsigned int BLOCKS = 10;
+const unsigned int BLOCKS = 20;
 
 const unsigned int SHADOW_NUMBER = 10;
 const unsigned int SHADOW_PERIOD = 2;
