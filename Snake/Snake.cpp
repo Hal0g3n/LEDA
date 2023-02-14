@@ -25,7 +25,7 @@ const int WINDOW_HEIGHT = 800;
 
 int SNAKE_SPEED = 200;
 int SNAKE_SIZE = 30;
-int STARTING_SNAKE = 500;
+int STARTING_SNAKE = 5;
 int APPLE_SIZE = 30;
 int MAX_APPLES = 10;
 double SNAKE_TIME = (double) SNAKE_SIZE / SNAKE_SPEED;
@@ -65,6 +65,10 @@ bool very_simple_rect_rect(double x1, double y1, double w1, double h1, double x2
     return abs(x1 - x2) < (w1 + w2) / 2 && abs(y1 - y2) < (h1 + h2) / 2;
 }
 
+void restart() {
+    setGameStateRestart();
+}
+
 void add_snake_body() {
     std::pair<int, int> last_body = snake_bodies.empty() ? std::make_pair<int, int>(0, 0) : snake_bodies[snake_bodies.size() - 1];
     snake_bodies.push_back(std::make_pair(last_body.first, last_body.second));
@@ -92,6 +96,26 @@ void apple_collide(GameObject* apple, GameObject* head) {
         }
         // increase snake size by 1
         add_snake_body();
+    }
+    else {
+        return;
+    }
+}
+
+void body_collide(GameObject* body, GameObject* head) {
+    // check if apple is collected by the head (and not another apple)
+    if (body->getId() == "body1" || appTime < 1.0) {
+        return;
+    }
+    if (head->getId() == "head") {
+        if (true) {
+            GameObject* background = retrieveGameObject("background");
+            GraphicsComponent* gc = getComponent<GraphicsComponent>(background);
+            setColor(gc, "#000000");
+        }
+        else {
+            restart();
+        }
     }
     else {
         return;
@@ -147,6 +171,8 @@ void background_update() {
         TransformComponent* tc = getComponent<TransformComponent>(o);
         tc->position.x = snake_bodies[game_bodies.size() - 1].first;
         tc->position.y = snake_bodies[game_bodies.size() - 1].second;
+        CollisionComponent* cc = getComponent<CollisionComponent>(o);
+        cc->collisionResponse = body_collide;
     }
     for (size_t i = 0; i < snake_bodies.size(); ++i) {
         std::pair<int, int>& body = snake_bodies[i];
@@ -230,16 +256,24 @@ void snakey_init() {
 
     // keyboard input (snake control)
     addKeyTriggerCallback({ INPUT_KEY::KEY_UP, INPUT_KEY::KEY_W }, []() {
-        current_direction = 1;
+        if (current_direction != 0) {
+            current_direction = 1;
+        }
     });
     addKeyTriggerCallback({ INPUT_KEY::KEY_DOWN, INPUT_KEY::KEY_S }, []() {
-        current_direction = 0;
+        if (current_direction != 1) {
+            current_direction = 0;
+        }
     });
     addKeyTriggerCallback({ INPUT_KEY::KEY_RIGHT, INPUT_KEY::KEY_D }, []() {
-        current_direction = 3;
+        if (current_direction != 2) {
+            current_direction = 3;
+        }
     });
     addKeyTriggerCallback({ INPUT_KEY::KEY_LEFT, INPUT_KEY::KEY_A }, []() {
-        current_direction = 2;
+        if (current_direction != 3) {
+            current_direction = 2;
+        }
     });
 
     GameObject* background = retrieveGameObject("background");

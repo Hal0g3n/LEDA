@@ -60,6 +60,8 @@ namespace LEDA {
 	std::string LEDA_API getCurrentGameStateFile();
 	std::string LEDA_API getNextGameStateFile();
 	void LEDA_API setNextGameStateFile(std::string stateFile);
+	void LEDA_API setGameStateRestart();
+	void LEDA_API setGameStateQuit();
 
 	// GameObjectManager Functions //
 	GameObject LEDA_API * retrieveGameObject(std::string id);

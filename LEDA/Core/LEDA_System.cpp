@@ -86,6 +86,8 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 		system->init();
 	}
 
+	initializeDrawer();
+
 	while (cur != "quit") { // while application isn't quitted
 
 		std::cout << "Loading scene '" << cur << "'..." << std::endl;
@@ -134,11 +136,11 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 
 		// clear all loaded objects
 		for (std::pair<std::string, GameObject*> pairs : objects) {
-			removeGameObject(pairs.second);
+			actuallyRemoveGameObject(pairs.second);
 		}
 
 		// Assets Manager Unload level (Persistent Assets)
-		if (nxt != "reset") {
+		if (nxt == "reset") {
 			// Set up to load same file again
 			nxt = cur;
 		}
@@ -150,6 +152,8 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 		pre = cur;
 		cur = nxt;
 	}
+
+	freeDrawer();
 
 	// destroy all systems (poof)
 	for (ISystem* system : systems) {
@@ -166,7 +170,9 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 std::string LEDA::getPreviousGameStateFile()		{ return pre; }
 std::string LEDA::getCurrentGameStateFile()			{ return cur; }
 std::string LEDA::getNextGameStateFile()			{ return nxt; }
-void LEDA::setNextGameStateFile(std::string state)  { nxt = state; }
+void LEDA::setNextGameStateFile(std::string state) { nxt = state; }
+void LEDA::setGameStateRestart() { nxt = "reset"; }
+void LEDA::setGameStateQuit() { nxt = "quit"; }
 
 // SceneManager Functions //
 

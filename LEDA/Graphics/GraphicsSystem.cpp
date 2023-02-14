@@ -19,7 +19,7 @@ using namespace LEDA;
 
 void GraphicsSystem::init(void) {
 
-	initializeDrawer();
+	//initializeDrawer();
 
 }
 
@@ -31,7 +31,7 @@ void GraphicsSystem::update(void) {
 
 void GraphicsSystem::free(void) {
 
-	freeDrawer();
+	//freeDrawer();
 
 }
 
