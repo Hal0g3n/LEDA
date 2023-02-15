@@ -113,6 +113,40 @@ namespace LEDA {
             )SHADER";
 
         }
+        else if (shaderType == "text") {
+
+            vertexShaderCode = R"SHADER(
+
+                #version 330 core
+                layout (location = 0) in vec4 position;
+                out vec2 coordinates;
+
+                uniform mat4 projection;
+
+                void main() {
+                    gl_Position = projection * vec4(position.xy, 0.0, 1.0);
+                    coordinates = vertex.zw;
+                }
+
+            )SHADER";
+
+            fragmentShaderCode = R"SHADER(
+
+                #version 330 core
+                in vec2 coordinates;
+                out vec4 color;
+
+                uniform sampler2D text;
+                uniform vec3 text_color;
+
+                void main() {    
+                    vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, coordinates).r);
+                    color = vec4(text_color, 1.0) * sampled;
+                }
+
+            )SHADER";
+
+        }
         else if (shaderType == "transparent") {
 
             vertexShaderCode = R"SHADER(

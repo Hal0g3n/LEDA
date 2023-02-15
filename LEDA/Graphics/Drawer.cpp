@@ -12,8 +12,6 @@
 #include "pch.h"
 
 #include "LEDA_Graphics.h"
-#include "TransformComponent.h"
-#include "GraphicsComponent.h"
 #include "Drawer.h"
 
 #include <GLFW/glfw3.h>
@@ -21,14 +19,11 @@
 #include <iterator>
 #include <unordered_map>
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
 
 // WINDOW_STUFF
 const unsigned int WINDOW_WIDTH = 800;
 const unsigned int WINDOW_HEIGHT = 800;
-const char * WINDOW_NAME = "ok"; // not used
+
 void WINDOW_RESIZE(GLFWwindow* window, int width, int height) {
 	glOrtho(0.0, width, 0.0, height, -1.0, 1.0);
 }
@@ -133,6 +128,11 @@ void LEDA::initializeDrawer() {
 		std::cout << "error: failed to initialize GLAD! [>:( <-- not glad]\n";
 		return;
 	}
+
+	// enable gl stuff
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// set resize window callback
 	glfwSetFramebufferSizeCallback(window, WINDOW_RESIZE);
