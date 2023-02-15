@@ -140,7 +140,7 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 		}
 
 		// Assets Manager Unload level (Persistent Assets)
-		if (nxt == "reset") {
+		if (nxt == "restart") {
 			// Set up to load same file again
 			nxt = cur;
 		}
@@ -171,7 +171,7 @@ std::string LEDA::getPreviousGameStateFile()		{ return pre; }
 std::string LEDA::getCurrentGameStateFile()			{ return cur; }
 std::string LEDA::getNextGameStateFile()			{ return nxt; }
 void LEDA::setNextGameStateFile(std::string state) { nxt = state; }
-void LEDA::setGameStateRestart() { nxt = "reset"; }
+void LEDA::setGameStateRestart() { nxt = "restart"; }
 void LEDA::setGameStateQuit() { nxt = "quit"; }
 
 // SceneManager Functions //

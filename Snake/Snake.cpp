@@ -112,6 +112,7 @@ void body_collide(GameObject* body, GameObject* head) {
             GameObject* background = retrieveGameObject("background");
             GraphicsComponent* gc = getComponent<GraphicsComponent>(background);
             setColor(gc, "#000000");
+            //exit(1);
         }
         else {
             restart();
