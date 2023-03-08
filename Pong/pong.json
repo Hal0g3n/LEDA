@@ -73,6 +73,21 @@
         "type": "line",
         "reflect": true
       }
+    },
+    {
+      "id": "paddle_launch",
+      "transform": {
+        "x1": 0,
+        "y1": -260,
+        "x2": 0,
+        "y2": -230,
+        "thickness": 4
+      },
+      "graphics": {
+        "shape": "line",
+        "material": "solid",
+        "color": "#0cc0ae"
+      }
     }
   ],
   "templates": {

@@ -29,6 +29,8 @@ std::mt19937 mt{ random_device() };
 std::uniform_int_distribution<> random_x, random_y;
 std::uniform_real_distribution<> random_angle;
 
+const double PI = M_PI;
+
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 800;
 const double FRAME_RATE = 60.0;
@@ -38,8 +40,8 @@ const double WALL_THICKNESS = 5.0;
 
 const double PADDLE_UP_SPEED = 300.0;
 const double PADDLE_ACCELERATION = 4000.0;
-const double BALL_X_SPEED = 300.0;
-const double BALL_Y_SPEED = 400.0;
+const double PADDLE_LAUNCH_BOUNCE_TIME = 2.0; // seconds
+const double BALL_SPEED = 500.0;
 const unsigned int BALLS = 1;
 const unsigned int BLOCKS = 25;
 
@@ -57,6 +59,7 @@ double paddle_ax = 0.0;
 double paddle_ay = 0.0;
 const double paddle_w_mult = 1.0;
 double paddle_size = 100.0;
+double paddle_launch_angle = 0;
 
 bool started = false;
 
@@ -71,6 +74,15 @@ void stop();
 
 double lerp(double a, double b, double t) {
     return a * (1 - t) + b * t;
+}
+
+double bounce(double period, double multiplier = 1.0) {
+    return std::abs(period - std::fmod(appTime, period * 2.0)) / period * multiplier;
+}
+
+Vec2 polar(double x, double y, double r, double a) {
+    return Vec2(x + r * std::cos(a),
+                y + r * std::sin(a));
 }
 
 template<typename T>
@@ -91,7 +103,8 @@ void background_update() {
 
     GameObject* background = retrieveGameObject("background");
     GraphicsComponent* b_gc = getComponent<GraphicsComponent>(background);
-    if (cleared_blocks > 0 && number_of_blocks - cleared_blocks <= 0) {
+    const bool cleared = cleared_blocks > 0 && number_of_blocks - cleared_blocks <= 0;
+    if (cleared) {
         setColor(b_gc, "#d1ffe0");
         stop();
     }
@@ -127,22 +140,36 @@ void background_update() {
     p_kc->rot_vel = paddle_ax / PADDLE_ACCELERATION * paddle_w_mult;
     p_tc->rotation *= 0.90;
 
+    GameObject* paddle_launch = retrieveGameObject("paddle_launch");
+    TransformComponent* pl_tc = getComponent<TransformComponent>(paddle_launch);
+    if (!started && !cleared) {
+        // paddle launch stuff
+        GameObject* ball = retrieveGameObject("ball1");
+        TransformComponent* b_tc = getComponent<TransformComponent>(ball);
 
-    GameObject* ball = retrieveGameObject("ball1"); // this looks like balll
-    TransformComponent* tc = getComponent<TransformComponent>(ball);
-
-    if (!started) {
-        tc->position.x = p_tc->position.x;
+        paddle_launch_angle = bounce(PADDLE_LAUNCH_BOUNCE_TIME, PI);
+        pl_tc->position = polar(b_tc->position.x, b_tc->position.y, 40, paddle_launch_angle);
+        pl_tc->rotation = paddle_launch_angle;
     }
     else {
-        double bx = tc->position.x;
-        double by = tc->position.y;
+        pl_tc->position = Vec2(-WINDOW_WIDTH * 10, -WINDOW_HEIGHT * 10);
+    }
+
+    GameObject* ball = retrieveGameObject("ball1"); // this looks like balll
+    TransformComponent* b_tc = getComponent<TransformComponent>(ball);
+
+    if (!started) {
+        b_tc->position.x = p_tc->position.x;
+    }
+    else {
+        double bx = b_tc->position.x;
+        double by = b_tc->position.y;
         if (bx < -WALL_X || bx > WALL_X || by < -WALL_Y || by > WALL_Y) {
             stop();
         }
     }
 
-    shadows.push_front(std::make_pair(tc->position, appTime));
+    shadows.push_front(std::make_pair(b_tc->position, appTime));
     while (shadows.back().second < appTime - SHADOW_NUMBER * SHADOW_PERIOD / FRAME_RATE) {
         shadows.pop_back();
     }
@@ -155,9 +182,9 @@ void background_update() {
             add_shadow();
         }
         GameObject* shadow = retrieveGameObject(std::string("shadow") + std::to_string(index + 1));
-        tc = getComponent<TransformComponent>(shadow);
-        tc->position.x = v.x;
-        tc->position.y = v.y;
+        TransformComponent* shadow_tc = getComponent<TransformComponent>(shadow);
+        shadow_tc->position.x = v.x;
+        shadow_tc->position.y = v.y;
     }
 
 }
@@ -170,8 +197,9 @@ void start() {
     // start the ball
     GameObject* ball = retrieveGameObject("ball1"); // this looks like balll
     KinematicsComponent* kc = getComponent<KinematicsComponent>(ball);
-    kc->vel.x = BALL_X_SPEED;
-    kc->vel.y = BALL_Y_SPEED;
+    const double a = paddle_launch_angle;
+    kc->vel.x = BALL_SPEED * std::cos(a);
+    kc->vel.y = BALL_SPEED * std::sin(a);
 
 }
 
@@ -270,8 +298,9 @@ void add_ball() {
     b_tc->position.x = p_tc->position.x;
     b_tc->position.y = p_tc->position.y;
     KinematicsComponent* b_kc = getComponent<KinematicsComponent>(ball);
-    b_kc->vel.x = BALL_X_SPEED;
-    b_kc->vel.y = BALL_Y_SPEED;
+    const double a = paddle_launch_angle;
+    b_kc->vel.x = BALL_SPEED * std::cos(a);
+    b_kc->vel.y = BALL_SPEED * std::sin(a);
 }
 
 void add_shadow() {
