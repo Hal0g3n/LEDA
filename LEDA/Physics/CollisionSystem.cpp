@@ -134,6 +134,7 @@ namespace LEDA {
 
 					// check: other is also circle
 					if (instanceof<Circle>(otherCom->shape)) {
+						continue;
 						// retrieve the old position of the other object
 						Vec2 otherPrevPos = otherPos - otherVel * frameTime;
 						

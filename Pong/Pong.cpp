@@ -41,14 +41,16 @@ const double PADDLE_ACCELERATION = 4000.0;
 const double BALL_X_SPEED = 300.0;
 const double BALL_Y_SPEED = 400.0;
 const unsigned int BALLS = 1;
-const unsigned int BLOCKS = 20;
+const unsigned int BLOCKS = 50;
 
-const unsigned int SHADOW_NUMBER = 10;
-const unsigned int SHADOW_PERIOD = 2;
+const unsigned int SHADOW_NUMBER = 20;
+const unsigned int SHADOW_PERIOD = 1;
 
+unsigned int number_of_balls = 10;
 unsigned int number_of_walls = 0;
 unsigned int number_of_blocks = 0;
 unsigned int number_of_shadows = 0;
+unsigned int cleared_blocks = 0;
 
 double paddle_ax = 0.0;
 double paddle_ay = 0.0;
@@ -60,9 +62,11 @@ bool started = false;
 std::vector<GameObject*> blocks;
 std::deque<std::pair<Vec2, double>> shadows; // pair<position, time>
 
-void add_wall();
+void add_ball();
+void add_wall(double x1, double y1, double x2, double y2, bool death);
 void add_block();
 void add_shadow();
+void stop();
 
 template<typename T>
 T bound(T number, T min, T max) {
@@ -84,6 +88,12 @@ void background_update() {
     TransformComponent* p_tc = getComponent<TransformComponent>(paddle);
     KinematicsComponent* p_kc = getComponent<KinematicsComponent>(paddle);
 
+    if (cleared_blocks > 0 && number_of_blocks - cleared_blocks < 0) {
+        GameObject* background = retrieveGameObject("background");
+        GraphicsComponent* b_gc = getComponent<GraphicsComponent>(background);
+        setColor(b_gc, "#d1ffe0");
+    }
+
     p_tc->position.x = bound(p_tc->position.x, WALL_X - paddle_size / 2);
     p_tc->scale.x = paddle_size;
 
@@ -102,6 +112,13 @@ void background_update() {
 
     if (!started) {
         tc->position.x = p_tc->position.x;
+    }
+    else {
+        double bx = tc->position.x;
+        double by = tc->position.y;
+        if (bx < -WALL_X || bx > WALL_X || by < -WALL_Y || by > WALL_Y) {
+            stop();
+        }
     }
 
     shadows.push_front(std::make_pair(tc->position, appTime));
@@ -165,7 +182,15 @@ void stop() {
 void wall_touch(GameObject* wall, GameObject* ball) {
     std::string id = ball->getId();
     if (starts_with(id, "ball")) {
-        stop();
+        if (id == "ball1") {
+            for (int i = 0; i < 5; i++) {
+                add_block();
+            }
+            stop();
+        }
+        else {
+            removeGameObject(retrieveGameObject(id));
+        }
     }
 }
 
@@ -182,7 +207,7 @@ void add_wall(double x1, double y1, double x2, double y2, bool death = false) {
 }
 
 bool inside_play_area(double x, double y) {
-    return bound(x, WALL_X + 0.0) == x && bound(y, 0.0, WALL_Y + 0.0) == y;
+    return bound(x, WALL_X - 50.0) == x && bound(y, 0.0, WALL_Y - 50.0) == y;
 }
 
 void block_touch(GameObject* block, GameObject* ball) {
@@ -190,6 +215,7 @@ void block_touch(GameObject* block, GameObject* ball) {
     std::cout << block->getId() << " " << id << std::endl;
     if (starts_with(id, "ball")) {
         removeGameObject(block);
+        cleared_blocks++;
     }
 }
 
@@ -211,8 +237,22 @@ void add_block() {
     blocks.push_back(block);
 }
 
+void add_ball() {
+    GameObject* ball = sceneManager->createObject("ball", std::string("ball") + std::to_string(++number_of_balls));
+    TransformComponent* b_tc = getComponent<TransformComponent>(ball);
+    TransformComponent* p_tc = getComponent<TransformComponent>(retrieveGameObject("paddle"));
+    b_tc->position.x = p_tc->position.x;
+    b_tc->position.y = p_tc->position.y;
+    KinematicsComponent* b_kc = getComponent<KinematicsComponent>(ball);
+    b_kc->vel.x = BALL_X_SPEED;
+    b_kc->vel.y = BALL_Y_SPEED;
+}
+
 void add_shadow() {
     GameObject* shadow = sceneManager->createObject("shadow", std::string("shadow") + std::to_string(++number_of_shadows));
+    TransformComponent* tc = getComponent<TransformComponent>(shadow);
+    tc->scale.x = 25 - number_of_shadows;
+    tc->scale.y = 25 - number_of_shadows;
 }
 
 void _init() {
@@ -239,6 +279,15 @@ void _init() {
     });
     addKeyReleaseCallback({ INPUT_KEY::KEY_LEFT, INPUT_KEY::KEY_A }, []() {
         paddle_ax += PADDLE_ACCELERATION;
+    });
+    addKeyTriggerCallback({ INPUT_KEY::KEY_SPACE }, []() {
+        add_ball();
+    });
+    addKeyTriggerCallback({ INPUT_KEY::KEY_1 }, []() {
+        add_block();
+    });
+    addKeyRepeatCallback({ INPUT_KEY::KEY_1 }, []() {
+        add_block();
     });
 
     GameObject* background = retrieveGameObject("background");
@@ -281,8 +330,6 @@ void _free() {
 }
 
 int main() {
-
-    std::cout << "note: this doesn't work yet." << std::endl;
 
     LEDA::LEDA_INIT("pong", _init, _free);
 

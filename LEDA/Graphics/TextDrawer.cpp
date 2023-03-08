@@ -8,8 +8,9 @@
  * @copyright   Copyright (c) 2023
  */
 
-
 #include "pch.h"
+
+/*
 
 #include "LEDA_Graphics.h"
 #include "TextDrawer.h"
@@ -111,3 +112,5 @@ void LEDA::drawText(std::string string) {
 void LEDA::freeTextDrawer() {
 
 }
+
+*/
