@@ -41,7 +41,7 @@ const double PADDLE_ACCELERATION = 4000.0;
 const double BALL_X_SPEED = 300.0;
 const double BALL_Y_SPEED = 400.0;
 const unsigned int BALLS = 1;
-const unsigned int BLOCKS = 50;
+const unsigned int BLOCKS = 25;
 
 const unsigned int SHADOW_NUMBER = 20;
 const unsigned int SHADOW_PERIOD = 1;
@@ -51,6 +51,7 @@ unsigned int number_of_walls = 0;
 unsigned int number_of_blocks = 0;
 unsigned int number_of_shadows = 0;
 unsigned int cleared_blocks = 0;
+double progress_ratio_display = 0;
 
 double paddle_ax = 0.0;
 double paddle_ay = 0.0;
@@ -68,6 +69,10 @@ void add_block();
 void add_shadow();
 void stop();
 
+double lerp(double a, double b, double t) {
+    return a * (1 - t) + b * t;
+}
+
 template<typename T>
 T bound(T number, T min, T max) {
     return std::max(std::min(number, max), min);
@@ -84,15 +89,30 @@ bool starts_with(std::string s, std::string with) {
 
 void background_update() {
 
+    GameObject* background = retrieveGameObject("background");
+    GraphicsComponent* b_gc = getComponent<GraphicsComponent>(background);
+    if (cleared_blocks > 0 && number_of_blocks - cleared_blocks <= 0) {
+        setColor(b_gc, "#d1ffe0");
+        stop();
+    }
+    else {
+        setColor(b_gc, "#d1e0ff");
+    }
+
+    GameObject* progress = retrieveGameObject("progress");
+    TransformComponent* progress_tc = getComponent<TransformComponent>(progress);
+    progress_ratio_display = lerp(progress_ratio_display, (double)(number_of_blocks - cleared_blocks) / BLOCKS, 0.02);
+    progress_tc->scale.x = WINDOW_WIDTH * 2.0 * progress_ratio_display;
+    if (progress_ratio_display > 1) {
+        GameObject* progress2 = retrieveGameObject("progress2");
+        TransformComponent* progress2_tc = getComponent<TransformComponent>(progress2);
+        progress2_tc->scale.x = WINDOW_WIDTH * 2.0 * (progress_ratio_display - 1);
+    }
+
+
     GameObject* paddle = retrieveGameObject("paddle");
     TransformComponent* p_tc = getComponent<TransformComponent>(paddle);
     KinematicsComponent* p_kc = getComponent<KinematicsComponent>(paddle);
-
-    if (cleared_blocks > 0 && number_of_blocks - cleared_blocks < 0) {
-        GameObject* background = retrieveGameObject("background");
-        GraphicsComponent* b_gc = getComponent<GraphicsComponent>(background);
-        setColor(b_gc, "#d1ffe0");
-    }
 
     p_tc->position.x = bound(p_tc->position.x, WALL_X - paddle_size / 2);
     p_tc->scale.x = paddle_size;
@@ -106,6 +126,7 @@ void background_update() {
     
     p_kc->rot_vel = paddle_ax / PADDLE_ACCELERATION * paddle_w_mult;
     p_tc->rotation *= 0.90;
+
 
     GameObject* ball = retrieveGameObject("ball1"); // this looks like balll
     TransformComponent* tc = getComponent<TransformComponent>(ball);
@@ -220,6 +241,11 @@ void block_touch(GameObject* block, GameObject* ball) {
 }
 
 void add_block() {
+    
+    if (number_of_blocks - cleared_blocks >= 2 * BLOCKS) {
+        return;
+    }
+
     GameObject* block = sceneManager->createObject("block", std::string("block") + std::to_string(++number_of_blocks));
     TransformComponent* tc = getComponent<TransformComponent>(block);
     double x = -WINDOW_WIDTH;

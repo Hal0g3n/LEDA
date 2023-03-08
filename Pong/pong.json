@@ -18,6 +18,38 @@
       }
     },
     {
+      "id": "progress",
+      "transform": {
+        "x": -400,
+        "y": 395,
+        "scale": {
+          "x": 1600,
+          "y": 10
+        }
+      },
+      "graphics": {
+        "shape": "rectangle",
+        "material": "solid",
+        "color": "#4c34eb"
+      }
+    },
+    {
+      "id": "progress2",
+      "transform": {
+        "x": -400,
+        "y": 385,
+        "scale": {
+          "x": 0,
+          "y": 10
+        }
+      },
+      "graphics": {
+        "shape": "rectangle",
+        "material": "solid",
+        "color": "#eb34d0"
+      }
+    },
+    {
       "id": "paddle",
       "transform": {
         "x1": -50,
