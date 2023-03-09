@@ -40,7 +40,7 @@ const double WALL_THICKNESS = 5.0;
 
 const double PADDLE_UP_SPEED = 300.0;
 const double PADDLE_ACCELERATION = 4000.0;
-const double PADDLE_LAUNCH_BOUNCE_TIME = 2.0; // seconds
+const double PADDLE_LAUNCH_BOUNCE_TIME = 1.5; // seconds
 const double BALL_SPEED = 500.0;
 const unsigned int BALLS = 1;
 const unsigned int BLOCKS = 25;
@@ -147,7 +147,7 @@ void background_update() {
         GameObject* ball = retrieveGameObject("ball1");
         TransformComponent* b_tc = getComponent<TransformComponent>(ball);
 
-        paddle_launch_angle = bounce(PADDLE_LAUNCH_BOUNCE_TIME, PI);
+        paddle_launch_angle = bounce(PADDLE_LAUNCH_BOUNCE_TIME, PI * 0.6) + PI * 0.2;
         pl_tc->position = polar(b_tc->position.x, b_tc->position.y, 40, paddle_launch_angle);
         pl_tc->rotation = paddle_launch_angle;
     }
@@ -186,6 +186,14 @@ void background_update() {
         shadow_tc->position.x = v.x;
         shadow_tc->position.y = v.y;
     }
+
+    /*
+    for (unsigned int i = 0; i < number_of_blocks; i++) {
+        GameObject* block = retrieveGameObject(std::string("block") + std::to_string(i + 1));
+        TransformComponent* block_tc = getComponent<TransformComponent>(block);
+        block_tc->rotation += 0.00;        
+    }
+    */
 
 }
 
@@ -336,6 +344,9 @@ void _init() {
         paddle_ax += PADDLE_ACCELERATION;
     });
     addKeyTriggerCallback({ INPUT_KEY::KEY_SPACE }, []() {
+        add_ball();
+    });
+    addKeyRepeatCallback({ INPUT_KEY::KEY_SPACE }, []() {
         add_ball();
     });
     addKeyTriggerCallback({ INPUT_KEY::KEY_1 }, []() {
