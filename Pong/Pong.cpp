@@ -355,6 +355,9 @@ void _init() {
     addKeyRepeatCallback({ INPUT_KEY::KEY_1 }, []() {
         add_block();
     });
+    addKeyTriggerCallback({ INPUT_KEY::KEY_ESCAPE }, []() {
+        LEDA::setGameStateQuit();
+    });
 
     GameObject* background = retrieveGameObject("background");
     LogicComponent* lc = getComponent<LogicComponent>(background);
@@ -400,7 +403,6 @@ int main() {
     LEDA::LEDA_INIT("pong", _init, _free);
 
     LEDA::LEDA_START(true, FRAME_RATE, "pong", "pong");
-
     return 0;
 
 }

@@ -135,9 +135,15 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 		}
 
 		// clear all loaded objects
+		std::vector<std::pair<std::string, GameObject*>> temppairs;
 		for (std::pair<std::string, GameObject*> pairs : objects) {
-			actuallyRemoveGameObject(pairs.second);
+			temppairs.push_back(pairs);
 		}
+
+		for (int i = 0; i < temppairs.size(); ++i) {
+			actuallyRemoveGameObject(temppairs[i].second);
+		}
+		
 
 		// Assets Manager Unload level (Persistent Assets)
 		if (nxt == "restart") {
@@ -146,7 +152,9 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 		}
 
 		// free all our systems for the current state
-		for (ISystem* system : systems) system->free();
+		for (ISystem* system : systems) {
+			system->free();
+		}
 
 		// set up for next loop
 		pre = cur;
@@ -156,13 +164,12 @@ void LEDA::LEDA_START(bool showConsole, double frameRate, std::string windowTitl
 	freeDrawer();
 
 	// destroy all systems (poof)
-	for (ISystem* system : systems) {
-		delete system;
+	for (int i = 0; i < systems.size(); ++i) {
+		delete systems[i];
 	}
 
 	// gone too
 	delete sceneManager;
-
 }
 
 // Replace with SceneManager->onSceneEnter(state);
@@ -209,7 +216,6 @@ bool actuallyRemoveGameObject(GameObject* obj) {
 
 	// Delete the object (pointer)
 	delete obj;
-
 	return true;
 
 }
